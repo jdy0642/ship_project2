@@ -1,11 +1,11 @@
 <template>
-<div id="app" >
+<div id="app"  >
 <layout>
    <template #header="h" >
     <v-app id="inspire" style="height:800;" >
   <!-- --------------------------------------- 네비 ------------------------------------------ -->
       <div >
-        <v-toolbar class="sticky" color="indigo darken-1" >
+        <v-toolbar fixed class="sticky" color="indigo darken-1" >
         <!-- <v-toolbar color="#3F51B5" :src="'https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg'"> -->
           <v-toolbar-title class="white--text" style="margin-left:240px;" @click="home()" > 
             <v-icon large color="white">mdi-vuetify</v-icon>
