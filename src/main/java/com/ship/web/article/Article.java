@@ -1,5 +1,5 @@
 package com.ship.web.article;
-
+//22
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
