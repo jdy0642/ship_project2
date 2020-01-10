@@ -1,4 +1,10 @@
 <template>
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
 <!-- test -->
   <div class="back">
      <div align = "center" ><h2> {{name}} 님의 어드민</h2> 
