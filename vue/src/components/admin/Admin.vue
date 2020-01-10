@@ -1,5 +1,5 @@
 <template>
-
+<!-- test -->
   <div class="back">
      <div align = "center" ><h2> {{name}} 님의 어드민</h2>
      <h3> <a href="#" @click="logout">로그아웃  </a><a href="#" @click.prevent="withdrawal">회원탈퇴</a></h3>
