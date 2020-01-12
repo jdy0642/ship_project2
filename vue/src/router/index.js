@@ -19,7 +19,7 @@ import Remove from '@/components/article/Remove.vue'
 import Search from '@/components/article/Search.vue'
 import Update from '@/components/article/Update.vue'
 import Write from '@/components/article/Write.vue'
-import Futsal from '@/components/contents/Futsal.vue'
+//import Futsal from '@/components/contents/Futsal.vue'
 import Lol from '@/components/contents/Lol.vue'
 import StudentFindSome from  '@/components/admin/StudentFindSome.vue'
 import StudentFindId from  '@/components/admin/StudentFindId.vue'
@@ -50,11 +50,11 @@ export default new Router({
           {path:'/search', name:'search', component:  Search},
           {path:'/update', name:'update', component:  Update},
           {path:'/write', name:'write', component: Write},
-          {path:'/futsal', name:'futsal', component:  Futsal},
+          //{path:'/futsal', name:'futsal', component:  Futsal},
           {path:'/lol', name:'lol', component: Lol},
           {path:'/remove', name:'remove', component:  Remove},
-          {path: '/futsalhome', name: 'futsalhome', component: FutsalHome},
-          {path: '/futsalhome/match', name: 'futsalmatch', component: FutsalMatch},
+          {path: '/futsal', name: 'futsalhome', component: FutsalHome},
+          {path: '/futsal/match', name: 'futsalmatch', component: FutsalMatch},
           {path: '/createroom', name: 'createroom', component: CreateRoom},
           {path: '/register', name: 'register', component: Register},
           {path: '/test', name: 'test', component: Test},

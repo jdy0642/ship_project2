@@ -1,13 +1,12 @@
 <template>
-<v-card :style="pageNation" justify="center" elevation="20">
-  <div style="margin: auto;" v-for="(time,index) in timeArray(now,selectIndex)" :key="index">
-    <v-btn max-width="120" max-height="80" min-height="50" min-width="70"  
-      rounded :color="selected(time,selectTime)" @click="tableChange(index,time)">
-      {{timeToDateAndWeek(time)}}
-    </v-btn>
+<v-card class="d-flex justify-space-around pa-1" elevation="20">
+  <v-btn v-for="(time,index) in timeArray(now,selectIndex)" :key="index"
+    class="d-inline" rounded max-width="120" max-height="80" min-height="50" min-width="70"  
+    :color="selected(time,selectTime)" @click="tableChange(index,time)">
+    {{timeToDateAndWeek(time)}}
+  </v-btn>
     <!-- boot strap
     <button @click="tableChange(index,time)" :class="selected(time,selectTime)">{{timeToDateAndWeek(time)}}</button> -->    
-  </div>
 </v-card>  
 </template>
 <script>
@@ -15,10 +14,13 @@ export default {
   data () {
     return {
       now : Date.now(),
-      selectIndex : 0,
-      selectTime : Date.now(),
+      selectIndex : '',
+      selectTime : '',
       blockSize : 8
     }
+  },
+  created(){
+    this.selectTime = this.now
   },
   computed:{
     pageNation(){

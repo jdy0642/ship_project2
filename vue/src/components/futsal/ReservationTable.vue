@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="ma-auto">
 	{{timeToDate(proptime)}}  {{propstadium}}
 	<!-- <div v-for="(match,index) of matchFilter(propstadium,proptime)" :key="index"
 	style="display: grid; grid-template-columns: 10% 20% 45% 25%; border: solid 1px;">
@@ -7,7 +7,7 @@
 			{{key!='time' ? item : timeToDate(item)}}
 		</div>
 	</div> -->
-	<v-card raised>
+	<v-card raised ma-auto>
 		<v-data-table
 		:headers="headers"
 		:items="matchFilter(propstadium,proptime)"
@@ -17,7 +17,7 @@
 			<!-- <v-btn @click="click(item)">{{timeToDate(item.time)}}</v-btn> -->
 		</template>
 		<template v-slot:item.id="{item}">
-			<v-btn @click="click(item.id)">{{item.id}}</v-btn>
+			<v-btn @click="click()">{{item.id}}</v-btn>
 		</template>
 		</v-data-table>
 	</v-card>
@@ -33,13 +33,24 @@ export default({
 	data(){
 		return{
 			headers: [
-				{ text: '경기날짜', value: 'time' },
+				{ text: '경기날짜', width: 200, value: 'time' },
 				{ text: '경기장', value: 'stadium' },
 				{ text: '인원', value: 'num' },
-				{text: '경기 번호', align: 'left',sortable: false,value: 'id'}
+				{ text: '성별', value: 'gender' },
+				{text: '경기 번호', align: 'center',sortable: false,value: 'id'}
 			],
-			table: this.testTables()
+			table: []
 		}
+	},
+	created(){
+		const ranloc = () => ['신촌','강남','용인','종각','평양','부산','응암','보스턴'][parseInt(Math.random()*8)]
+		const rantime = x => x + Math.random()*1000*3600*24*13
+		const rannum = () => parseInt(Math.random()*3+4)
+		const gender = () => parseInt(Math.random()*2)
+		const level = () => parseInt(Math.random()*3+1)
+		this.table = Array.from({length : 200},(_,i) =>
+			({id: i, time: rantime(this.proptime), stadium: ranloc(), num: rannum(), gender: gender(), level: level()}))
+		store.state.matchList = this.table
 	},
 	methods:{
 		timeToDate(time){
@@ -53,19 +64,14 @@ export default({
 				.filter(i => time <= i.time && i.time < utc(time))
 				.sort((a,b) => a.time > b.time ? 1 : (a.time < b.time ? -1 : 0))
 		},
-		testTables(){
-			const ranloc = () => ['신촌','강남','용인','종각','평양','부산','응암','보스턴'][parseInt(Math.random()*8)]
-			const rantime = x => x + Math.random()*1000*3600*24*13
-			const rannum = () => parseInt(Math.random()*5)
-			store.state.matchlist = Array.from({length : 200},(_,i) =>
-				({id: i, time: rantime(this.proptime), stadium: ranloc(), num: rannum()}))
-			return store.state.matchlist
-		},
-		click(item){
-			this.$router.push({path:`/futsal/match`, params: item.id}) 
+		click(){
+			this.$router.push({path:`/futsal/match`}) 
 		}
 	}
 })
 </script>
 <style scoped>
+td:not(td){
+	vertical-align: middle;
+}
 </style>

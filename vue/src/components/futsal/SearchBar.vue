@@ -1,6 +1,6 @@
 <template>
 <div>
-	<div class="row">
+	<div class="row" ma-auto>
 		<div style="width: 100%">
 			<div style="margin: auto; width: 40%;" class="input-group">
 			<input v-model="stadium" @keyup.enter="submit" type="text" class="form-control" placeholder="Search for...">
