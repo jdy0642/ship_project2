@@ -46,9 +46,9 @@ export default {
         state : store.state,
         dialog: false,
         icons: [
-                         'mdi-facebook-box',
-                         'mdi-google-plus',
-                         'mdi-instagram',
+                'mdi-facebook-box',
+                'mdi-google-plus',
+                'mdi-instagram',
     ]
       }
    },

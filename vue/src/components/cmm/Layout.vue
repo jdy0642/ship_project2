@@ -3,11 +3,11 @@
      <header id="header">
           <slot name="header" :title="header"></slot>
      </header>
-     <section id="content">
+     <section id="content" style="background-color:#303030;">
           <slot name="content" :content="content"></slot>
      </section>
      <footer id="footer">
-          <v-footer dark padless >
+          <v-footer dark padless  >
                <v-card flat tile class="flex" style="width:1982px;Padding:0px" height="auto">
                     <!-- <v-card-title style="place-content:center" >
                          <strong class="mt-1">푸터 타이틀</strong>

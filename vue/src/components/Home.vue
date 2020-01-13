@@ -96,10 +96,10 @@
   </template>
    <!-- --------------------- 컨텐츠  ------------------------- -->
 <template #content ="c">
-  <div id="app" style="width:70%;" >
+  <div id="app" style="width:65%;" >
     <v-app id="inspire" >
         <v-card   >
-        <v-navigation-drawer absolute right width="100%" height="auto" >
+        <v-navigation-drawer  width="100%"  >
           <template>
             <router-view></router-view>
           </template>
