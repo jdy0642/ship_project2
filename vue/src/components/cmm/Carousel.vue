@@ -1,6 +1,6 @@
 <template>
 <div id="app" >
-    <v-carousel height="873px">
+    <v-carousel height="auto">
       <v-carousel-item v-for="item of items" :key="item.id" v-html="item.content" @click="carougo(item.link)">
           </v-carousel-item>
     </v-carousel>

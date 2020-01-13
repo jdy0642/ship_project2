@@ -1,10 +1,9 @@
 <template>
 <div id="app">
   <v-btn color="indigo darken-1" dark fixed center @click="dialog = !dialog" style="font-size:15px"> join </v-btn>
-    <v-dialog v-model="dialog" width="550px">
+    <v-dialog v-model="dialog" width="600px"  >
       <v-card>
         <v-card-title class="red darken-2" style="font-color:white" > CREATE ACCOUNT </v-card-title>
-        
   <v-container>   
     <v-layout justify-center >
       <v-flex >
@@ -13,56 +12,69 @@
             <v-container >
               <v-layout wrap justify-center>
 
+                <v-flex   md8 style="padding:0px;">
+                  <v-text-field style="margin:0px;" v-validate="'required|max:10'"  required
+                  center v-model="userid" label="ID" :rules="idRules"></v-text-field>
+                </v-flex>
+
+                <v-flex xs8 md8 style="padding:0px;">
+                  <v-text-field  style="margin:0px;" label="PASSWORD" v-model="passwd"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" required
+                    :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1"></v-text-field>
+                </v-flex>
+
                 <v-flex  md8 style="padding:0px;">
-                <v-text-field style="margin:0px;" v-validate="'required|max:10'"  required
-                center v-model="userid" label="ID" :rules="idRules"></v-text-field>
+                  <v-text-field style="margin:0px;" required label="NAME" class="purple-input"></v-text-field>
+                </v-flex>
+                
+                <v-flex xs8 md8 style="padding:0px;">
+                    <v-text-field style="margin:0px;" required label="TEL"></v-text-field>
+                </v-flex>
+
+                <v-flex  md8 style="padding:0px;">
+                  <v-text-field style="margin:0px;" v-validate="'required|max:10'"  required
+                  center v-model="email" label="EMAIL" :rules="emailRules"></v-text-field>
                 </v-flex>
 
                 <v-flex xs8 md8 style="padding:0px;">
-                <v-text-field  style="margin:0px;" label="PASSWORD" v-model="passwd"
-                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
-                  :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1"></v-text-field>
+                    <v-text-field style="margin:0px;" required label="JOB"></v-text-field>
                 </v-flex>
 
-                <v-flex xs8 md8 style="padding:0px;">
-                <v-text-field style="margin:0px;" label="NAME" class="purple-input"></v-text-field>
+                <v-flex xs8 md8>
+                  <v-select :items="['남', '여']" label="GENDER" required></v-select>
                 </v-flex>
 
-            <v-flex xs8 md8 style="padding:0px;">
-                <v-text-field style="margin:0px;" label="JOB"></v-text-field>
-            </v-flex>
+                <!-- <v-flex xs8 md8 style="padding:0px;" >
+                  <v-menu ref="startMenu" :close-on-content-click="false" offset-y
+                    :return-value.sync="trip.start" min-width="290px">
+                    <template v-slot:activator="{ on }">
+                      <v-text-field v-model="trip.start" label="BIRTHDAY" 
+                      readonly v-on="on"></v-text-field>
+                    </template>
+                    <v-date-picker v-model="date" no-title scrollable>
+                      <v-spacer></v-spacer>
+                      
+                      <v-btn text color="primary" @click="$refs.startMenu.save(date)">
+                        OK</v-btn>
+                      <v-btn text color="error" @click="$refs.startMenu.isActive = false">
+                        Cancel</v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-flex> -->
 
-            <v-flex xs8 md8 style="padding:0px;" >
-              <v-menu ref="startMenu" :close-on-content-click="false" offset-y
-                :return-value.sync="trip.start" min-width="290px">
-                <template v-slot:activator="{ on }">
-                  <v-text-field v-model="trip.start" label="BIRTHDAY" 
-                  readonly v-on="on"></v-text-field>
-                </template>
-                <v-date-picker v-model="date" no-title scrollable>
-                  <v-spacer></v-spacer>
-                  
-                  <v-btn text color="primary" @click="$refs.startMenu.save(date)">
-                    OK</v-btn>
-                  <v-btn text color="error" @click="$refs.startMenu.isActive = false">
-                    Cancel</v-btn>
-                </v-date-picker>
-              </v-menu>
-            </v-flex>
+                <v-flex xs8 md8>
+                  <v-select :items="['10 - 19', '20 - 29', '30 - 39', '40 - 49', '50↑']" label="AGE" required></v-select>
+                </v-flex>
 
-          <v-flex xs8 md8>
-            <v-select :items="['0-17', '18-29', '30-54', '54+']" label="AGE" required></v-select>
-          </v-flex>
+                <v-flex xs8 md8> 
+                  <v-autocomplete label="INTERESTS" multiple :items="['FUTSAL', 'BASKETBALL', 'LOL', 
+                  'FIFA', 'STARCRAFT']" required></v-autocomplete>
+                </v-flex>
 
-          <v-flex xs8 md8> 
-             <v-autocomplete label="INTERESTS" multiple :items="['Skiing', 'Ice hockey', 'Soccer', 
-             'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"></v-autocomplete>
-          </v-flex>
-
-          <v-flex xs8 md8> 
-            <v-checkbox v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']"
-                      label="Do you agree?" required></v-checkbox>
-          </v-flex>
+                <v-flex xs8 md8> 
+                  <v-checkbox v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']"
+                            label="Do you agree?" required></v-checkbox>
+                </v-flex>
 
               </v-layout>
             </v-container>
@@ -95,8 +107,8 @@ export default {
         v => v.length <= 10 || '아이디는 10자를 넘을 수 없습니다',
       ],
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid',
+        v => !!v || '이메일을 입력해주세요',
+        v => /.+@.+/.test(v) || '유효하지 않은 이메일 형태입니다',
       ],
       date: null,
       trip: {
@@ -140,8 +152,5 @@ export default {
 @import 'https://fonts.googleapis.com/css?family=Montserrat|Open+Sans';
 .theme--light.v-card{
   color:white;
-}
-div.flex{
-  
 }
 </style>
