@@ -350,7 +350,7 @@ export default {
       panel: [0,1]
     }
   }
-}
+}//sss
 </script>
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Abel');
