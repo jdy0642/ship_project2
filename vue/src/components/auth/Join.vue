@@ -100,6 +100,8 @@ export default {
     name: 'join',
     data () {
       return {
+      userid:'',
+      passwd:'',
       show1: false,
       checkbox:false,
       idRules: [
