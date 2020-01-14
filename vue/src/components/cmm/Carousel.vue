@@ -1,17 +1,16 @@
 <template>
 <div id="app">
   <v-app id="inspire" >
-    <v-container class="pa-4 text-center">
+    <v-container class="text-center">
       <v-row class="fill-height" align="center" justify="center">
         <template v-for="(item, i) of items">
           <v-col :key="i" cols="12"  md="6" >
             <v-hover v-slot:default="{ hover }">
               <v-card :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }">
-                <v-img :src="item.img" height="800px" >
+                <v-img :src="item.img" height="830px" >
                   <v-card-title class="title white--text">
                     <v-row class="fill-height flex-column" justify="space-between">
                       <p class="mt-4 subheading text-left">{{ item.title }}</p>
-  
 <!--   
                       <div class="align-self-center">
                         <v-btn v-for="(icon, index) of icons" :key="index" :class="{ 'show-btns': hover }" color="transparent" icon >
@@ -20,7 +19,6 @@
                           </v-icon>
                         </v-btn>
                       </div> -->
-
                     </v-row>
                   </v-card-title>
                 </v-img>

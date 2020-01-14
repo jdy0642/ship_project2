@@ -1,5 +1,5 @@
 <template>
-<div class="mypagemain">
+<div class="mypagemain" >
   <v-card>
     <v-toolbar flat>
       <v-toolbar-title class="title">MY Page</v-toolbar-title>
