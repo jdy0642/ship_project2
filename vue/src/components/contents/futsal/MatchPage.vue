@@ -1,14 +1,18 @@
 <template>
 <div>
-	<fut-head :style="`height: ${height}vh`"/>
+	<fut-head :style="`height: ${height}vh`" :propImg="stadiumImg"/>
   <v-card class="card">
-    <v-card-title><h1><a href="/stadium/19/matches/">{{matchInfo.name}}</a></h1></v-card-title> 
-    <v-card-subtitle>{{matchInfo.addr}}<br />{{matchInfo.time}}</v-card-subtitle>
+    <v-card-title><h1>
+      <router-link to="/futsal/stadium">{{selectMatch.stadiumName}}</router-link>
+    </h1></v-card-title> 
+    <v-card-subtitle>{{selectMatch.addr}}<br/>{{timeToDate}}</v-card-subtitle>
     <v-card-action>
-      <v-chip outlined>ddd</v-chip><v-chip outlined>ddd</v-chip><v-chip outlined>ddd</v-chip>
+      <v-chip outlined @click="linkCopy">주소복사하기</v-chip>
+      <v-chip outlined>지도보기</v-chip>
+      <v-chip outlined>가는길보기</v-chip>
     </v-card-action>
-    <v-card-text>{{matchInfo.name}} {{matchInfo.time}} 의 경기는
-        <code>100%</code> 확률로 정상 진행되고 있습니다.
+    <v-card-text>{{selectMatch.stadiumName}} {{timeToDate}} 의 경기는
+        <code>{{success}}%</code> 확률로 정상 진행되고 있습니다.
     </v-card-text>
   </v-card>
   <v-card class="card">
@@ -16,11 +20,11 @@
     <v-card-subtitle>{{rating}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
     <v-row class="justify-center pa-1">
       <v-col
-        v-for="n of matchInfo.rule"
-        :key="n" :cols="12/`${matchInfo.rule.length}`">
+        v-for="n of selectMatch.rule.split(',')"
+        :key="n" :cols="`12/${selectMatch.rule.split(',').length}`">
         <v-card>
-          <v-img :src="n.img" :alt="n.text"/>
-          <v-card-text class="justify-center">{{n.text}}</v-card-text>
+          <v-img :src="require(`@/assets/img/matchRule/${n}.svg`)" :alt="n"/>
+          <v-card-text class="justify-center">{{n}}</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -30,11 +34,10 @@
     <h3>구장 시설</h3>
     <v-row class="justify-center pa-1">
       <v-col
-        v-for="n of matchInfo.stadium"
-        :key="n" :cols="12/`${matchInfo.stadium.length}`">
+        v-for="n of selectMatch.facility.split(',')"
+        :key="n" :cols="`12/${selectMatch.facility.split(',').length}`">
         <v-card>
-          <v-img :src="n.img" :alt="n.text"/>
-          <v-card-text>{{n.text}}</v-card-text>
+          <v-img :src="require(`@/assets/img/stadium/${n}.svg`)"/>
         </v-card>
       </v-col>
     </v-row>
@@ -42,31 +45,20 @@
   <v-card class="card">
     <h4>구장 특이사항</h4>
     <li justify-left 
-      v-for="item of [
-        '5대5 구장의 최소 인원은 8명입니다.',
-        '모든 5vs5구장은 정원 모집 시 삼파전으로 진행합니다.',
-        '신분당선 판교역 1번 출구 방',
-        '다산건물 전용 엘리베이터 사용',
-        '주차 : 평일 2시간 무료 / 주말 무료',
-        '(평일 이용시 주차 차량 번호 기입 필수, 2시간 이상 주차시 추가 비용 발생)',
-        '화장실은1층 화장실 이용',
-        '자판기 및 흡연 구역 있음'
-      ]" :key="item">
+      v-for="item of stadiumText" :key="item">
       {{item}}
     </li>
-
-    <span class="contentAnchor">더 자세한 정보는 <a href="">{{matchInfo.name}} 의 시설 정보</a>에서 확인하세요</span>
+    <span>더 자세한 정보는 <router-link to="/futsal/stadium">{{selectMatch.stadiumName}}</router-link> 의 시설 정보 에서 확인하세요</span>
   </v-card>
   <v-divider/>
   <v-card class="card">
     <div class="d-flex">
       <v-img elevation-6 src="https://pds.joins.com/news/component/htmlphoto_mmdata/201910/26/ce877ed2-0800-457f-b9a6-a86044718d40.jpg"/>
       <div>
-        <v-card-title>매니저  : {{matchInfo.adminName}}</v-card-title>
-        <v-card-subtitle>한분한분 같이 웃고 즐기며 소통하는 매니저 박상준입니다. 
+        <v-card-title>매니저  : {{selectMatch.adminName}}</v-card-title>
+        <v-card-subtitle>한분한분 같이 웃고 즐기며 소통하는 매니저 {{selectMatch.adminName}}입니다. 
                 매 경기 안 다치고 소중한 시간 재미있게 즐길수 있게 최선을 다하겠습니다. 
                 같이 플랩으로 오세요!</v-card-subtitle>
-        <a class="pa-4" href="/manager/apply/">플랩풋볼 매니저에 대해 알아보기</a>
       </div>
     </div>
   </v-card>
@@ -114,41 +106,49 @@
       <li>경기 중 부상에 대한 책임은 해당 개인에게 귀속됩니다.</li>
     </ul>
   </v-card>
+  <v-btn pa-3 fab x-large block rounded>신 청 하 기</v-btn>
 </div>
 </template>
 
 <script>
+import {store} from '@/store'
 import FutHead from './FutHead'
 export default {
   components:{FutHead},
   data(){
-    return{
+    return {
       height: 30,
-      matchInfo: {
-        time: "xx일 xx월 xx년 xx시",
-        name: "어디어디 경기장",
-        addr: "어디어디 어디 어디  주소",
-        rating: "별이 3개",
-        gender: "게이",
-        adminName: "펭수",
-        rule: [
-          {text:'주소 복사하기', img:'https://plab-football.s3.amazonaws.com/static/img/ic_6vs6.svg'},
-          {text: '주소 복사하기', img:'https://plab-football.s3.amazonaws.com/static/img/ic_male.svg'},
-          {text: '주소 복사하기', img:'https://plab-football.s3.amazonaws.com/static/img/ic_every.svg'},
-          {text:'주소 복사하기', img:'https://plab-football.s3.amazonaws.com/static/img/ic_turf.svg'} ,
-          {text: '주소 복사하기', img:'https://plab-football.s3.amazonaws.com/static/img/ic_minmax.svg'}
-        ],
-        stadium: [
-          {text:' 2',img:'https://plab-football.s3.amazonaws.com/static/img/ic_size.svg'},
-          {text: ' 3',img:'https://plab-football.s3.amazonaws.com/static/img/ic_shower.svg'},
-          {text: ' 4',img:'https://plab-football.s3.amazonaws.com/static/img/ic_parking_pay.svg'},
-          {text: ' 5',img:'https://plab-football.s3.amazonaws.com/static/img/ic_rentalshoes.svg'},
-          {text: ' 6',img:'https://plab-football.s3.amazonaws.com/static/img/ic_rentalwear.svg'}
-        ],
-      texts: ''}
+      success: 100,
+      selectMatch: store.state.selectMatch,
+      stadiumText: [
+        '5대5 구장의 최소 인원은 8명입니다.',
+        '모든 5vs5구장은 정원 모집 시 삼파전으로 진행합니다.',
+        '신분당선 판교역 1번 출구 방',
+        '다산건물 전용 엘리베이터 사용',
+        '주차 : 평일 2시간 무료 / 주말 무료',
+        '(평일 이용시 주차 차량 번호 기입 필수, 2시간 이상 주차시 추가 비용 발생)',
+        '화장실은1층 화장실 이용',
+        '자판기 및 흡연 구역 있음'
+      ],
+      temp: ''
     }
   },
-  methods:{
+  computed: {
+    stadiumImg(){
+      return this.selectMatch.stadiumImg.split(",")
+        .map(i => require(`@/assets/img/stadium/${i}.jpg`))
+    },
+    timeToDate(){
+      const time = new Date(this.selectMatch.time)
+      return `${time.getFullYear()}년 ${time.getMonth()+1}월 ${time.getDate()}일 
+      ${["일","월","화","수","목","금","토"][time.getDay()]}요일 ${time.getHours()}:00`
+    },
+  },
+  methods: {
+    linkCopy(){
+      alert('주소 복사 ')
+      return '주소 복사'
+    }
   }
 }
 </script>

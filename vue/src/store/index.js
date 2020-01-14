@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
   state: {
       person:{},
       matchList:{},
+      selectMatch:{},
       authCheck : false
   }
 })

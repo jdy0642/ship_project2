@@ -24,7 +24,8 @@ export default {
   },
   computed:{
     pageNation(){
-      return `display: grid; grid-template-columns: repeat(${this.blockSize}, ${100/this.blockSize}%); height: 100%;`
+      return `display: grid; grid-template-columns: repeat
+        (${this.blockSize},${100/this.blockSize}%); height: 100%;`
     }
   },
   methods: {
