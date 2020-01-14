@@ -1,19 +1,19 @@
 <template>
 <div style="height:870px;">
-<div class="panels">
-<div class="panels__container">
-  <div class="panel">
-    <div class="panel__content" style="background-image: url(https://image.redbull.com/rbcom/052/2019-05-17/0e0d5093-854c-41a6-b383-56fd6dfc16e5/0012/0/0/449/717/1023/1150/1/ezreal-league-of-legends.jpg);">
-    <v-text @click="lol()" class="panel__title">league of legends</v-text>
+  <div class="panels">
+    <div class="panels__container">
+      <div class="panel">
+        <div class="panel__content" style="background-image: url(https://image.redbull.com/rbcom/052/2019-05-17/0e0d5093-854c-41a6-b383-56fd6dfc16e5/0012/0/0/449/717/1023/1150/1/ezreal-league-of-legends.jpg);">
+          <v-text @click="lol()" class="panel__title">league of legends</v-text>
+        </div>
+      </div>
+      <div href="#" class="panel">
+        <div class="panel__content" style="background-image: url(https://i.pinimg.com/originals/e2/42/90/e24290842bcc0e7d9bf566492ee36923.jpg)">
+          <v-text @click="futsal()" class="panel__title">FUTSAL</v-text>
+        </div>
+      </div>
     </div>
   </div>
-  <div href="#" class="panel">
-    <div class="panel__content" style="background-image: url(https://i.pinimg.com/originals/e2/42/90/e24290842bcc0e7d9bf566492ee36923.jpg)">
-    <v-text @click="futsal()" class="panel__title">FUTSAL</v-text>
-    </div>
-  </div>
-</div>
-</div>
 </div>
 </template>
 <script>
@@ -26,7 +26,7 @@ export default {
       this.$router.push({path:'/futsal'})
     }
   }
-}//커밋테스트
+}
 </script>
 <style scoped>
 /* @offsetSize * 2 means the content won't appear to move at all. Set to a lower value for squishing effects. */

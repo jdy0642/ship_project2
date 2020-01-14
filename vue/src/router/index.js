@@ -11,6 +11,7 @@ import MyPage from '@/components/auth/MyPage.vue'
 import Admin from '@/components/admin/Admin.vue'
 import Register from '@/components/admin/Register.vue'
 import MemberManage from '@/components/admin/MemberManage.vue'
+import RevenueManage from '@/components/admin/RevenueManage.vue'
 import FutsalMypage from  '@/components/member/FutsalMypage.vue'
 import StudentList from  '@/components/member/StudentList.vue'
 import MyPageUpdate from  '@/components/member/MyPageUpdate.vue'
@@ -62,6 +63,7 @@ export default new Router({
           {path: '/joinkal', name: 'joinkal', component: JoinKal},
           {path: '/kalbaram', name: 'kalbaram', component: Kalbaram},
           {path: '/membermanage', name: 'membermanage', component: MemberManage},
+          {path: '/revenuemanage', name: 'revenuemanage', component: RevenueManage},
           {path: '/', name: 'carousel', component: Carousel}
           
      ]    
