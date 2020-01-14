@@ -54,9 +54,9 @@ public class Article extends Proxy implements Serializable {
 	@Column(name="REGDATE") @NotNull
 		private Date regdate;
 	
-	  @ManyToOne(fetch = FetchType.LAZY)
-	  @JoinColumn(name = "personid")
-	  private Person personid;
+//	  @ManyToOne(fetch = FetchType.LAZY)
+//	  @JoinColumn(name = "personseq")
+//	  private Person person;
 	
 	@Builder
 	private Article(String title, String content,

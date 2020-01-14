@@ -13,7 +13,7 @@
               <v-layout wrap justify-center>
 
                 <v-flex   md8 style="padding:0px;">
-                  <v-text-field style="margin:0px;" v-validate="'required|max:10'"  required
+                  <v-text-field style="margin:0px;" v-validate="'required|max:10'"  required="required"
                   center v-model="userid" label="ID" :rules="idRules"></v-text-field>
                 </v-flex>
 
@@ -24,11 +24,11 @@
                 </v-flex>
 
                 <v-flex  md8 style="padding:0px;">
-                  <v-text-field style="margin:0px;" required label="NAME" class="purple-input"></v-text-field>
+                  <v-text-field v-model="name" style="margin:0px;" required label="NAME" class="purple-input"></v-text-field>
                 </v-flex>
                 
                 <v-flex xs8 md8 style="padding:0px;">
-                    <v-text-field style="margin:0px;" required label="TEL"></v-text-field>
+                    <v-text-field v-model="tel" style="margin:0px;" required label="TEL"></v-text-field>
                 </v-flex>
 
                 <v-flex  md8 style="padding:0px;">
@@ -37,11 +37,11 @@
                 </v-flex>
 
                 <v-flex xs8 md8 style="padding:0px;">
-                    <v-text-field style="margin:0px;" required label="JOB"></v-text-field>
+                    <v-text-field v-model="job" style="margin:0px;" required label="JOB"></v-text-field>
                 </v-flex>
 
                 <v-flex xs8 md8>
-                  <v-select :items="['남', '여']" label="GENDER" required></v-select>
+                  <v-select v-model="male" :items="['남', '여']" label="GENDER" required></v-select>
                 </v-flex>
 
                 <!-- <v-flex xs8 md8 style="padding:0px;" >
@@ -62,13 +62,15 @@
                   </v-menu>
                 </v-flex> -->
 
-                <v-flex xs8 md8>
-                  <v-select :items="['10 - 19', '20 - 29', '30 - 39', '40 - 49', '50↑']" label="AGE" required></v-select>
+               <v-flex xs8 md8 style="padding:0px;">
+                    <v-text-field v-model="age" style="margin:0px;" required label="AGE"></v-text-field>
                 </v-flex>
-
+                <!-- <v-flex xs8 md8 style="padding:0px;">
+                    <v-text-field v-model="interest" style="margin:0px;" required label="INTEREST"></v-text-field>
+                </v-flex> -->
                 <v-flex xs8 md8> 
-                  <v-autocomplete label="INTERESTS" multiple :items="['FUTSAL', 'BASKETBALL', 'LOL', 
-                  'FIFA', 'STARCRAFT']" required></v-autocomplete>
+                  <v-autocomplete v-model="interest" label="INTEREST" :items="['FUTSAL', 'BASKETBALL', 'LOL', 
+                  'FIFA', 'STARCRAFT', 'X']" required></v-autocomplete>
                 </v-flex>
 
                 <v-flex xs8 md8> 
@@ -82,9 +84,9 @@
         
         <v-card-actions >
           <v-spacer></v-spacer>
-          <v-btn text color="success" @click="$refs.form.validate()"> validate</v-btn>
+          <!-- <v-btn text color="success" @click="$refs.form.validate()"> validate</v-btn> -->
           <v-btn text color="warning" @click="$refs.form.reset()"> Reset</v-btn>
-          <v-btn text color="primary" @click="dialog = false">Submit</v-btn>
+          <v-btn text color="primary" @click="join();$refs.form.reset()">Submit</v-btn>
           <v-btn text color="error" @click="dialog = false">Cancel</v-btn>
         </v-card-actions>
 
@@ -96,56 +98,83 @@
 </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
     name: 'join',
     data () {
       return {
-      show1: false,
-      checkbox:false,
-      idRules: [
-        v => !!v || '아이디를 입력해주세요',
-        v => v.length <= 10 || '아이디는 10자를 넘을 수 없습니다',
-      ],
-      emailRules: [
-        v => !!v || '이메일을 입력해주세요',
-        v => /.+@.+/.test(v) || '유효하지 않은 이메일 형태입니다',
-      ],
-      date: null,
-      trip: {
-      name: '',
-      location: null,
-      start: null,
-      end: null,
-    },
-      dialog:false,
-      name: '',
-      email: '',
-      select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
-      dictionary: {
-      attributes: {
-        email: 'E-mail Address',
-        // custom attributes
+        context : 'http://localhost:8080',
+        dialog:false,
+        show1: false,
+        checkbox:false,
+        idRules: [
+          v => !!v || '아이디를 입력해주세요',
+          v => v.length <= 10 || '아이디는 10자를 넘을 수 없습니다',
+        ],
+        emailRules: [
+          v => !!v || '이메일을 입력해주세요',
+          v => /.+@.+/.test(v) || '유효하지 않은 이메일 형태입니다',
+        ],
+        // date: null,
+      //   trip: {
+      //     name: '',
+      //     location: null,
+      //     start: null,
+      //     end: null,
+      // },
+        select: null,
+        userid:'',
+        passwd:'',
+        name: '',
+        tel:'',
+        email:'',
+        job:'',
+        male:'',
+        age:'',
+        interest:''
+        }
       },
-      custom: {
-        name: {
-          required: () => '이름을 입력해야 합니다',
-          max: '이름을 10자를 초과할 수 없습니다',
-          // custom messages
-        },
-        select: {
-          required: 'Select field is required',
-        },
-      },
-    },
+      methods:{
+      join(){
+        alert('조인 진입')
+        alert(this.interest)
+        let url = `${this.context}/join`
+        let data =  {
+          userid : this.userid,
+          passwd : this.passwd,
+          name: this.name,
+          tel:this.tel,
+          email:this.email,
+          job:this.job,
+          male:this.male=="남" ? true :false,
+          age:this.age,
+          interest:this.interest
+        }
+        let headers= {
+              'authorization': 'JWT fefege..',
+              'Accept' : 'application/json',
+              'Content-Type': 'application/json'
+        }
+      axios
+      .post(url, data, headers)
+      .then(res=>{
+          
+            if(res.data.result === "SUCCESS"){
+                this.dialog= false
+                this.$router.push({path:'/'})
+
+            }else{
+                alert(`조인 실패`)
+                this.$router.go({path: '/login'})
+            }
+         this.result = res.data
+      })
+      .catch(()=>{
+         alert('axios fail')
+        })
+      }
+   }
     }
-  }
-}
 </script>
 
 <style scoped>

@@ -1,116 +1,85 @@
 <template>
-<v-app>
-<v-row style="margin:20px;float:left;">
-
-<div class="card" style="text-align:left;width:700px;height:1050px">
-  <div class="card-body">
-    <h2 class="card-title" style="text-align:center">구장 등록</h2>
-    <div style="margin:20px;padding:20px">
 <div>
-<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-<div class="form-group row">
-<label class="col-md-3 col-form-label" for="text-input" style="">구장 이름</label>
-<div class="col-md-9">
-<input class="form-control" id="text-input" type="text" name="text-input" placeholder="신촌 1경기장">
-</div>
-</div>
-<div class="form-group row">
-<label class="col-md-3 col-form-label" for="text-input">관리자 이름</label>
-<div class="col-md-9">
-<input class="form-control" id="text-input" type="text" name="text-input" placeholder="이름">
-</div>
-</div>
-<div class="form-group row">
-<label class="col-md-3 col-form-label">관리자 연락처 </label>
-<div class="col-md-9">
-<input class="form-control" id="tel-input" type="tel" name="tel-input" placeholder="연락처 ">
-</div>
-</div>
-<div class="form-group row">
-<label class="col-md-3 col-form-label" for="email-input">관리자  Email </label>
-<div class="col-md-9">
-<input class="form-control" id="email-input" type="email" name="email-input" placeholder="Email" autocomplete="email">
-</div>
-</div>
-<!-- <div class="form-group row">
-<label @click="show()" type="date" class="col-md-3 col-form-label" for="date-input">경기 구장 등록 날짜 입력</label>
+<v-row style="margin:20px;float:left;text-align:center;">
+<v-card style="text-align:center;width:700px;">
+    <v-card-title>구장 등록</v-card-title>
+    <div style="margin:20px;padding:20px">
+<v-select
+          :items="snames"
+          label="구장을 선택해주세요."
+          dense
+          solo
+        ></v-select>
 
-<div class="col-md-9">
-
-<input class="form-control" id="date-input" type="date" name="date-input" placeholder="date">
-</div>
-</div> -->
-<div class="form-group row">
+          <v-text-field
+            label="관리자 이름"
+            outlined
+            v-model="state.person.name"
+          ></v-text-field>
+          <v-text-field
+            label="관리자 연락처"
+            v-model="state.person.tel"
+            outlined
+          ></v-text-field>
+          <v-text-field
+            label="관리자 이메일"
+            v-model="state.person.email"
+            outlined
+          ></v-text-field>
+          <v-text-field
+            label="구장 담당자 연락처"
+            placeholder="Placeholder"
+            outlined
+          ></v-text-field>
+          <v-combobox
+          v-model="select"
+          :items="items"
+          label="경기장 옵션 선택"
+          multiple
+          chips
+        ></v-combobox>
+<template>
+  <v-card float="center">
 <label class="col-md-3 col-form-label" for="disabled-input">경기 예약  비용</label>
-<div class="col-md-9">
-<input class="form-control" id="disabled-input" type="text" name="disabled-input" placeholder="10000원" disabled="">
-</div>
-</div>
-
-<div class="form-group row">
+<v-radio-group  row v-model="radioGroup">
+      <v-radio
+        v-for="price of prices"
+        :key="price"
+        :label="`${price}`"
+        :value="price"
+        color="blue"
+      ></v-radio>
+    </v-radio-group>
+</v-card>
+</template>
+<br />
+<template>
+  <v-card>
 <label class="col-md-3 col-form-label" for="select1">경기 인원 선택</label>
-<div class="col-md-9">
-<select class="form-control" id="select1" name="select1">
-<option value="0">- - - - - - - - - -</option>
-<option value="1">10명 </option>
-<option value="2">12명</option>
-<option value="3">14명</option>
-<option value="4">16명</option>
-</select>
+<v-card-text>
+      <v-slider
+        v-model="fruits"
+        :tick-labels="ticksLabels"
+        :max="2"
+        step="1"
+        ticks="always"
+        tick-size="3"
+      ></v-slider>
+    </v-card-text>
+</v-card>
+</template>
+<br />
+<v-textarea
+          outlined
+          name="input-7-4"
+          label="구장 특이사항"
+          value="우천 시 경기 취소.. & 풋살화 공급 제한 & 최소 경기 인원 & 기타 등등..."
+        ></v-textarea>
 </div>
-</div>
-
-<div class="form-group row">
-<label class="col-md-3 col-form-label">등록 관리자 </label>
-<div class="col-md-9 col-form-label">
-<div class="form-check">
-<input class="form-check-input" id="radio1" type="radio" value="radio1" name="radios">
-<label class="form-check-label" for="radio1">Option 1</label>
-</div>
-<div class="form-check">
-<input class="form-check-input" id="radio2" type="radio" value="radio2" name="radios">
-<label class="form-check-label" for="radio2">Option 2</label>
-</div>
-<div class="form-check">
-<input class="form-check-input" id="radio3" type="radio" value="radio2" name="radios">
-<label class="form-check-label" for="radio3">Option 3</label>
-</div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-md-3 col-form-label">Inline Checkboxes</label>
-<div class="col-md-9 col-form-label">
-<div class="form-check form-check-inline mr-1">
-<input class="form-check-input" id="inline-checkbox1" type="checkbox" value="check1">
-<label class="form-check-label" for="inline-checkbox1">One</label>
-</div>
-<div class="form-check form-check-inline mr-1">
-<input class="form-check-input" id="inline-checkbox2" type="checkbox" value="check2">
-<label class="form-check-label" for="inline-checkbox2">Two</label>
-</div>
-<div class="form-check form-check-inline mr-1">
-<input class="form-check-input" id="inline-checkbox3" type="checkbox" value="check3">
-<label class="form-check-label" for="inline-checkbox3">Three</label>
-</div>
-</div>
-</div>
-</form>
-</div>
-<div class="form-group row">
-<label class="col-md-3 col-form-label" for="textarea-input">등록 시  특이사항</label>
-<div class="col-md-9">
-<textarea class="form-control" id="textarea-input" name="textarea-input" rows="5" placeholder="우천 시 경기 취소.. & 풋살화 공급 제한 & 최소 경기 인원 & 기타 등등..."></textarea>
-</div>
-</div>
-</div>
-<button class="btn btn-block btn-primary" style="width:50%;float : left; margin:0 auto" @click="register()">등록하기</button>
-<button class="btn btn-block btn-warning" style="width:50%; float : right; margin:0 auto" @click="cancel()">취소</button>
-</div>
-</div>
+</v-card>
 <!-- -----------------------------------날짜 등록 ------------------------------------------- -->
-<div class="card-body" width:autocomplete text-align="center" >
-    <h3 class="card-title" >구장 등록 날짜 선택</h3>
+<div class="card-body" text-align="center" >
+    <h3 class="card-title" >등록 날짜 & 시간 연동</h3>
  <v-date-picker 
   margin:auto
   v-model="picker"
@@ -119,8 +88,10 @@
   width="300"
   :allowed-dates="allowedDates"
   color = "blue"
+  
   >
-  <v-btn text color="primary" @click="adds()" >해당 날짜 날씨 연동</v-btn></v-date-picker>
+  <v-btn text outlined color="primary" @click="adds()" bold>---------해당 날짜 날씨 연동---------</v-btn>
+  </v-date-picker>
   <template>
 
 <!-- -----------------------------------날씨------------------------------------------- -->
@@ -128,7 +99,7 @@
     width="300"
    left
    style="margin-top:20px;"
-  color="#BBDEFB"
+  color="#303030"
   >
     <v-list-item two-line>
       <v-list-item-content>
@@ -137,13 +108,13 @@
       </v-list-item-content>
       <v-icon
         right
-        color="blue"
+        color="white"
         @click="refresh()"
         >refresh</v-icon>
     </v-list-item>
    <legend></legend>
   <div id="openweathermap-widget-24"></div>
-    <v-card-text>
+    <v-card-text >
       <v-row align="center">
         <v-col class="display-3" cols="6">
           {{Math.ceil(temp-273.15)}}&deg;c
@@ -157,7 +128,7 @@
       </v-row>
     </v-card-text>
     <v-list-item>
-      <v-img
+      <v-img style="color:white"
       src="@/assets/cloud.png"
       ></v-img><v-list-item-title>날씨: {{cloud}}</v-list-item-title>
     </v-list-item>
@@ -185,6 +156,7 @@
       class="mx-4"
       ticks
       @click="timebars"
+      
     ></v-slider>
     <!-- <v-list class="transparent">
       <v-list-item
@@ -203,11 +175,15 @@
     </v-list> -->
   </v-card>
 </template>
+<br />
+<button class="btn btn-block btn-primary" style="width:150px;height:60px; float : left; margin:0 auto" @click="register()">등록하기</button>
+<button class="btn btn-block btn-warning" style="width:150px;height:60px; float : left; margin:0 auto" @click="cancel()">취소</button>
 </div>
 </v-row>
-</v-app>
+</div>
 </template>
 <script>
+import {store} from '@/store'
 import axios from 'axios'
 export default{
   created(){
@@ -223,34 +199,6 @@ export default{
         alert('axios fail'+e)
         
       })
-// -----------------------------------현재 시간 기반 데이터 가지고 오기 -------------------------------------------     
-      // 현재 서울 날씨 API
-      // let url = `http://api.openweathermap.org/data/2.5/weather?q=Seoul,KR&APPID=cd9a51369c3fc19f9fb85b2f2508b5d5`
-      // let data = {
-      //   city : this.city,
-      //   temp : this.temp,
-      //   img : this.temp,
-      //   wind : this.wind
-      // }
-      // let headers= {
-      //         'authorization': 'JWT fefege..',
-      //         'Accept' : 'application/json',
-      //         'Content-Type': 'application/json'
-      //   }
-     
-      // axios
-      // .get(url,data,headers)
-      // .then(res=>{
-      //   this.city = res.data.name
-      //   this.temp = res.data.main.temp
-      //   this.img = res.data.weather[0].icon
-      //   this.imgUrl = `http://openweathermap.org/img/wn/${this.img}@2x.png`
-      //   this.wind = res.data.wind.speed
-      // })
-      // .catch(e=>{
-      //   alert('axios fail'+e)
-        
-      // })
 // -----------------------------------데이터-------------------------------------------
       },
    data(){
@@ -265,13 +213,42 @@ export default{
       city:'',
       img:'',
       imgUrl:'',
-      adata:[],
+      adata:[], 
       wind:'',
       humidity:'',
       today:'',
       time:'',
       timebar:[],
-      cloud:''
+      cloud:'',
+      state:store.state,
+      radioGroup: 1,
+      select: [],
+        items: [
+          '풋살화 대여 가능',
+          '운동복 대여 가능',
+          '주차 가능',
+          '샤워장 이용 가능',
+        ],
+      snames:[
+        '서울 경기장',
+        '부산 경기장',
+        '인천 경기장',
+        '강원 경기장 '
+      ],
+      value: 0,
+        fruits: 0,
+        ticksLabels: [
+          '4 vs 4',
+          '5 vs 5',
+          '6 vs 6',
+        ],
+      prices:[
+        '10000원',
+        '12000원',
+        '15000원',
+        '18000원',
+        '20000원',
+      ]
       }
   },
 // -----------------------------------메소드-------------------------------------------

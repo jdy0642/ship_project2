@@ -52,6 +52,8 @@
 export default {
      data(){
           return{
+               header:'',
+               content:'',
                footer:[
                     {text:'매치', title:'전체 매치'},
                     {text:'서비스 지역 ', title:'서울'},

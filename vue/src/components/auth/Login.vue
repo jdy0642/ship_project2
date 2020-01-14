@@ -36,29 +36,24 @@ export default {
   },
    data(){
       return {
-        checkbox:false,
-        rating:3,
+        checkbox: false,
+        dialog: false,
         context : 'http://localhost:8080',
         result : '',
         userid : '',
         passwd : '',
         person : '',
         state : store.state,
-        dialog: false,
         icons: [
                 'mdi-facebook-box',
                 'mdi-google-plus',
                 'mdi-instagram',
-    ]
+        ]
       }
-   },
+    },
    methods:{
-        join(){
-            this.dialog = false
-            this.$router.push({path:'/join'})
-        },
       login(){
-      let   url = `${this.context}/login`
+        let url = `${this.context}/login`
         let data =  {
          userid : this.userid,
          passwd : this.passwd

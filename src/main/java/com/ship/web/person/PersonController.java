@@ -63,7 +63,8 @@ public class PersonController {
 	public HashMap<String, Object> join(@RequestBody Person person) {
 		HashMap<String, Object> map = new HashMap<>();
 		
-		p.accept(String.format("bday: %s", person.getBirthday()));
+		p.accept(String.format("bday: %s", person.getInterest()));
+		
 		person = personRepository.save(person);
 		
 		if(person!= null) {
@@ -100,8 +101,8 @@ public class PersonController {
 				list.add(dto);
 		}
 		return  list.stream()
-					.filter(role-> role.getRole().equals("student"))
-						.sorted(Comparator.comparing(Person::getPersonid)
+					.filter(role-> role.getJob().equals("student"))
+						.sorted(Comparator.comparing(Person::getPersonseq)
 							.reversed()).collect(Collectors.toList());
 		
 	}
@@ -157,13 +158,13 @@ public class PersonController {
 		case "multiGroupingGrade" : break;
 		case "groupByHak" : break;
 		}
-		Iterable<Person> entities = personRepository.findGroupByHak();
+		Iterable<Person> entities = personRepository.findGroupByJob();
 		List<Person> list = new ArrayList<>();
 		for(Person p : entities) {
 			Person dto = modelMapper.map(p, Person.class);
 			list.add(dto);
 		}
 		return list.stream()
-				.filter(role-> role.getRole().equals("student"));
+				.filter(role-> role.getJob().equals("student"));
 	}
 }
