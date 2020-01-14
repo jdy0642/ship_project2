@@ -9,6 +9,10 @@
             <v-flex xs8  >
               <v-text-field center prepend-icon="people" v-model="userid" label="ID" required></v-text-field>
               <v-text-field prepend-icon="lock" label="PASSWORD" type="password" v-model="passwd"></v-text-field>
+              <v-checkbox v-model="checkbox" label="로그인 유지" ></v-checkbox>
+              <v-btn v-for="icon of icons" :key="icon" class="mx-4 white--text" icon @click="socialgo()">
+                <v-icon size="24px">{{ icon }}</v-icon>
+              </v-btn>
             </v-flex>
             
           </v-layout>
@@ -32,6 +36,7 @@ export default {
   },
    data(){
       return {
+        checkbox:false,
         rating:3,
         context : 'http://localhost:8080',
         result : '',
@@ -40,6 +45,11 @@ export default {
         person : '',
         state : store.state,
         dialog: false,
+        icons: [
+                'mdi-facebook-box',
+                'mdi-google-plus',
+                'mdi-instagram',
+    ]
       }
    },
    methods:{
@@ -91,4 +101,5 @@ export default {
 .theme--light.v-card{
   color:white;
 }
+
 </style>

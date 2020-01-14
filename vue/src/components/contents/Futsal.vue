@@ -1,7 +1,7 @@
 <template>
  <div>
- <futsal-home></futsal-home>
-  </div>
+  <futsal-home></futsal-home>
+ </div>
 </template>
 
 <script>

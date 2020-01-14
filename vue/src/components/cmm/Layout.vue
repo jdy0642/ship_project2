@@ -3,17 +3,17 @@
      <header id="header">
           <slot name="header" :title="header"></slot>
      </header>
-     <section id="content">
+     <section id="content" style="background-color:#303030;">
           <slot name="content" :content="content"></slot>
      </section>
      <footer id="footer">
-          <v-footer dark padless >
-               <v-card flat tile class="flex" style="width:1982px;Padding:0px">
+          <v-footer dark padless  >
+               <v-card flat tile class="flex" style="width:1982px;Padding:0px" height="auto">
                     <!-- <v-card-title style="place-content:center" >
                          <strong class="mt-1">푸터 타이틀</strong>
                     </v-card-title> -->
                     <!-- <v-divider></v-divider> -->
-                    <v-card-text class="">
+                    <v-card-text >
                     </v-card-text>
                     <v-card-text class=" white--text py-2" >
                          <v-row no-gutters> 
@@ -22,7 +22,9 @@
                                    <span style="color:white"> 서비스 지역 </span> <br />
                                         <a >서울</a><br />
                                         <a>경기</a> <br />
-                                        <span>인천</span> 
+                                        <!-- <a href="https://www.instagram.com" style="color:#999999"> 인천 </a> -->
+                                        <span>인천</span> <br />
+                                        <span>대전</span> 
                               </v-col>
                               <v-btn v-for="icon of icons" :key="icon" class="mx-4 white--text" icon @click="socialgo()">
                               <v-icon size="24px">{{ icon }}</v-icon>
