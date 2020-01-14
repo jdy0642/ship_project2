@@ -1,7 +1,7 @@
 <template>
 <div>
    <v-btn style="margin-top:20px;margin-right:20px" @click="createRoom()" top class="float-right" color="primary">카드생성하기</v-btn>
-   <v-icon style="margin-top:20px " @click="lol()" x-large top absolute class="float-right" color="primary">mdi-refresh</v-icon>
+   <v-icon style="margin-top:20px;margin-right:10px " @click="lol()" x-large top absolute class="float-right" color="primary">mdi-cached</v-icon>
    
    <v-container fluid>
      
