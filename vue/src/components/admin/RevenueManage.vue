@@ -1,67 +1,66 @@
 <template>
 <div style="padding:10px;">
-<div class="small" style="margin:10px;width:800px;">
-  <v-card style="float:left">
-  <v-card-title>수익분석 페이지</v-card-title>
+  <v-card style="float:left;">
+  <v-card-title>수익분석 페이지 <v-btn @click="fillData()" color:blue>요일 별 남녀 구매차트</v-btn></v-card-title>
   <v-card-subtitle>담당 구장 수익 분석 페이지</v-card-subtitle>
-  <v-col cols="12" >
+  
       <v-hover v-slot:default="{ hover }">
         <v-card
           :elevation="hover ? 12 : 2"
           class="mx-auto"
-          height="400"
-          width="800px"
           style="float:right"
+          width="1100px"
         >
-        <line-chart :chart-data="datacollection"></line-chart>
+        <bar-chart :chart-data="datacollection"></bar-chart>
+        
         </v-card>
+        
       </v-hover>
-  </v-col>
-  </v-card>
-</div>
-<div class="small" style="width:800px;">
-  <v-col cols="12">
-      <v-hover v-slot:default="{ hover }">
-        <v-card
-          :elevation="hover ? 12 : 2"
-          class="mx-auto"
-          height="400"
-          max-width="350"
-          style="float:left"
-        >
-        <v-card-title></v-card-title>
-        <bar-chart :chartdata="datacollection"></bar-chart>
-        </v-card>
-        </v-hover>
-        <br />
+        <br /><br />
+        <v-row>
         <v-hover v-slot:default="{ hover }">
         <v-card
           :elevation="hover ? 12 : 2"
           class="mx-auto"
-          height="400"
+          height="450"
           max-width="350"
-          style="float:right"
+          style="float:left"
         >
-        <bar-chart :chart-data="datacollection"></bar-chart>
+        <line-chart :chart-data="ager"></line-chart>
         </v-card>
         </v-hover>
-    </v-col>
-</div>
-  <v-btn @click="fillData()" color:blue>요일 별 남녀 구매차트</v-btn>
+  <v-hover v-slot:default="{ hover }">
+        <v-card
+          :elevation="hover ? 12 : 2"
+          class="mx-auto"
+          height="450"
+          max-width="350"
+          style="float:left"
+        >
+  <pie-chart :chart-data="gender"></pie-chart>
+  </v-card>
+        </v-hover>
+        </v-row>
+  </v-card>
+    
 </div>
 </template>
 
 <script>
   import BarChart from '@/chart/BarChart.js'
   import LineChart from '@/chart/LineChart.js'
+  import PieChart from '@/chart/PieChart.js'
   export default {
     components: {
       BarChart,
-      LineChart
+      LineChart,
+      PieChart
     },
     data () {
       return {
-        datacollection: null
+        datacollection: null,
+        gender:null,
+        ager:null
       }
     },
     mounted () {
@@ -73,13 +72,44 @@
           labels: ['월요일', '화요일','수요일','목요일', '금요일', '토요일', '일요일'],
           datasets: [
             {
-              label: '여성',
-              backgroundColor: '#D32F2F',
+              label: '서울 경기장',
+              backgroundColor: '#FF1744',
               data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }, {
-              label: '남성',
-              backgroundColor: '#1976D2',
+              label: '인천 경기장',
+              backgroundColor: '#FF6D00',
               data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+            }, {
+              label: '강원  경기장',
+              backgroundColor: '#FFD600',
+              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+            }, {
+              label: '수원 경기장',
+              backgroundColor: '#64DD17',
+              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+            }, {
+              label: '부산 경기장',
+              backgroundColor: '#0091EA',
+              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+            }
+          ]
+        },
+        this.gender = {
+          labels:['남성 ', '여성'],
+          datasets: [
+            {
+              label: '여성',
+              backgroundColor: ['#4DD0E1','#FF4081'],
+              data: [this.getRandomInt(), this.getRandomInt()]
+            }]
+        },
+        this.ager={
+          labels:['10대 ', '20대', '30대', '40대'],
+          datasets: [
+            {
+              label: '예약현황',
+              backgroundColor: ['#EA80FC'],
+              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }
           ]
         }

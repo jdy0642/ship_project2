@@ -11,7 +11,7 @@ export default {
         {
           label: 'data one',
           backgroundColor: '#f87979',
-          data: [40, 20,30,15,20,20,35,20,35,30,25,40]
+          data: [40,0]
         }
       ]
     },

@@ -41,53 +41,76 @@ public class Person extends Proxy implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="PERSONID") @NotNull
-		private Long personid;
+	@Column(name="PERSONSEQ") @NotNull
+	private Long personseq;
 	@Column(name="USERID", length= 64 ) @NotNull
 		private String userid;
 	@Column(name="PASSWD") @NotNull
 		private String passwd;
 	@Column(name="NAME") @NotNull
 		private String name;
-	@Temporal(TemporalType.DATE)
-	@Column(name="BIRTHDAY") @NotNull
-		private Date birthday;
+	@Column(name="TEL") @NotNull
+		private String tel;
+	@Column(name="POINT") 
+		private String point;
+//	@Temporal(TemporalType.DATE)
+//	@Column(name="BIRTHDAY") @NotNull
+//		private Date birthday;
+	@Column(name="AGE")@NotNull
+		private int age;
 	@Column(name="MALE")@NotNull
 		private boolean male;
-	@Column(name="HAK")@NotNull
-		private int hak;
-	@Column(name="BAN")@NotNull
-		private int ban;
-	@Column(name="SCORE")@NotNull
+//	@Column(name="EMAIL") @NotNull
+//		private String email;
+	@Column(name="SCORE") 
 		private int score;
-	@Column(name="ROLE")@NotNull
-	private String role;
+	@Column(name="MVP") 
+		private int mvp;
+	@Column(name="WIN") 
+		private int win;
+	@Column(name="KM") 
+		private int km;
+	@Column(name="BOOKMARK") 
+		private boolean bookmark;
+	@Column(name="INTEREST") @NotNull
+		private String interest;
+	@Column(name="LOLBLACK") 
+		private boolean lolblack;
+	@Column(name="FUTBLACK") 
+		private boolean futblack;
+	@Column(name="JOB")@NotNull
+		private String job;
+	@Column(name="EMAIL")@NotNull
+		private String email;
 	enum Level{HIGH, MID, LOW}
 	
-	@OneToMany(mappedBy = "personid",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true)
-    private List<Article> articles = new ArrayList<>();
-	
+//	@OneToMany(mappedBy = "personseq",
+//			cascade = CascadeType.ALL,
+//			orphanRemoval = true)
+//    private List<Article> articles = new ArrayList<>();
+
 	@Builder
-	private Person(String userid, String passwd, String name,
-		Date birthday, boolean male, int hak, int ban, int score) {
-		Assert.hasText(userid, "userid must not be empty");
-		Assert.hasText(passwd, "passwd must not be empty");
-		Assert.hasText(name, "name must not be empty");
-		Assert.hasText(string(birthday), "birthday must not be empty");
-		Assert.hasText(string(male), "male must not be empty");
-		Assert.hasText(string(hak), "hak must not be empty");
-		Assert.hasText(string(ban), "ban must not be empty");
-		Assert.hasText(string(score), "score must not be empty");
+	private Person(String userid, String name, String passwd, String tel,
+			 String point, int age, boolean male, int score, int mvp,
+			 int win, int km, boolean bookmark, String interest,
+			 boolean lolblack, boolean futblack, String job, String email) {
 		
 		this.userid = userid;
-		this.passwd = passwd;
 		this.name = name;
-		this.birthday = birthday;
+		this.passwd = passwd;
+		this.tel = tel;
+		this.point = point;
+		this.age = age;
 		this.male = male;
-		this.hak = hak;
-		this.ban = ban;
 		this.score = score;
+		this.mvp = mvp;
+		this.win = win;
+		this.km = km;
+		this.bookmark = bookmark;
+		this.interest = interest;
+		this.lolblack = lolblack;
+		this.futblack = futblack;
+		this.job = job;
+		this.email = email;
 	}
 }//testYOHAN

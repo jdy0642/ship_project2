@@ -5,9 +5,9 @@
     <v-app id="inspire" style="height:1010px;" >
   <!-- --------------------------------------- 네비 ------------------------------------------ -->
       <div >
-        <v-toolbar fixed class="sticky" color="indigo darken-1" >
+        <v-toolbar fixed class="sticky" color="indigo darken-1 " >
         <!-- <v-toolbar color="#3F51B5" :src="'https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg'"> -->
-          <v-toolbar-title class="white--text" style="margin-left:240px;" @click="home()" > 
+          <v-toolbar-title class="white--text" style="margin-left:300px;" @click="home()" > 
             <v-icon large color="white">mdi-vuetify</v-icon>
               SHIP 
           </v-toolbar-title>
@@ -64,7 +64,7 @@
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on }">
-                  <v-btn style="margin-top:12px;font-size:15px" color="indigo darken-1" v-on="on">  Contents  </v-btn>
+                  <v-btn style="margin-top:12px;font-size:15px;margin-right:70px" color="indigo darken-1" v-on="on">  Contents  </v-btn>
                 </template>
                 <v-list>
                   <v-list-item v-for="(item) of items" :key="item.title" @click="contgo(item.link)">
