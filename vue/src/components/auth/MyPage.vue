@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="mypagemain">
   <v-card>
     <v-toolbar flat>
       <v-toolbar-title class="title">MY Page</v-toolbar-title>
@@ -350,7 +350,7 @@ export default {
       panel: [0,1]
     }
   }
-}//sss
+}
 </script>
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Abel');
@@ -360,7 +360,7 @@ html, body {
 }
 .center {
   position: absolute;
-  top: 60%;
+  top: 59%;
   left: 20%;
   -webkit-transform: translate(-50%, -50%);
 }
@@ -506,11 +506,14 @@ html, body {
   margin-top: 1%;
 }
 .gameinfo{
-  width: 60%;
+  width: 58%;
   margin-left: 40%;
 }
 .paybtn{
   float: right;
+}
+.mypagemain{
+  height: 880px;
 }
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
 
