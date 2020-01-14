@@ -108,7 +108,7 @@
 <button class="btn btn-block btn-warning" style="width:50%; float : right; margin:0 auto" @click="cancel()">취소</button>
 </div>
 </div>
-
+<!-- -----------------------------------날짜 등록 ------------------------------------------- -->
 <div class="card-body" width:autocomplete text-align="center" >
     <h3 class="card-title" >구장 등록 날짜 선택</h3>
  <v-date-picker 
@@ -120,9 +120,10 @@
   :allowed-dates="allowedDates"
   color = "blue"
   >
-  <v-btn text color="primary" @click="adds()">해당 날짜 날씨 연동</v-btn></v-date-picker>
-  
+  <v-btn text color="primary" @click="adds()" >해당 날짜 날씨 연동</v-btn></v-date-picker>
   <template>
+
+<!-- -----------------------------------날씨------------------------------------------- -->
 <v-card
     width="300"
    left
@@ -145,7 +146,7 @@
     <v-card-text>
       <v-row align="center">
         <v-col class="display-3" cols="6">
-          {{Math.ceil(temp-273)}}&deg;c
+          {{Math.ceil(temp-273.15)}}&deg;c
         </v-col>
         <v-col>
           <v-img
@@ -155,6 +156,11 @@
         </v-col>
       </v-row>
     </v-card-text>
+    <v-list-item>
+      <v-img
+      src="@/assets/cloud.png"
+      ></v-img><v-list-item-title>날씨: {{cloud}}</v-list-item-title>
+    </v-list-item>
     <v-list-item>
       <v-img
       src="@/assets/wind.png"
@@ -168,10 +174,10 @@
     <v-list-item>
       <v-img
       src="@/assets/thermometer.png"
-      ></v-img><v-list-item-title>최고온도: {{Math.ceil(maxtemp-273)}}&deg;c / 최저온도: {{Math.ceil(mintemp-273)}}&deg;c</v-list-item-title>
+      ></v-img><v-list-item-title>최고온도: {{Math.ceil(maxtemp-273.15)}}&deg;c / 최저온도: {{Math.ceil(mintemp-273.15)}}&deg;c</v-list-item-title>
     </v-list-item>
 
-    
+<!-- -----------------------------------시간대 선택 ------------------------------------------- -->    
     <v-slider
       v-model="time"
       :max="7"
@@ -209,14 +215,9 @@ export default{
       axios
       .get(url)
       .then(res=>{
-        // for(let i=0;i<40;i+8){this.days = res.data.list.slice(i,40)}
         this.adata = res.data
-        this.city = res.data.city.name
-// -----------------------------------현재 시간 -------------------------------------------
+        this.city = this.adata.city.name
         this.adds()
-        
-        // alert(this.today) // api에서 가지고 온 dt값을 대한민국 표준 시간으로 변환
-// ------------------------------------------------------------------------------
       })
       .catch(e=>{
         alert('axios fail'+e)
@@ -269,10 +270,11 @@ export default{
       humidity:'',
       today:'',
       time:'',
-      timebar:[]
+      timebar:[],
+      cloud:''
       }
   },
-// -----------------------------------메소-------------------------------------------
+// -----------------------------------메소드-------------------------------------------
    methods:{
     allowedDates: val => parseInt(val.split('-')[2], 10) >= parseInt(new Date().toISOString().substr(0,10).split('-')[2], 10),
     show(x){
@@ -282,6 +284,15 @@ export default{
       this.mintemp=this.timebar[x].main.temp_min
       this.img = this.timebar[x].weather[0].icon
       this.wind = this.timebar[x].wind.speed
+      if(parseInt(this.timebar[x].clouds.all)<25) {
+        this.cloud = '맑음'
+      }else if(parseInt(this.timebar[x].clouds.all)<45){
+        this.cloud = '구름 조금'
+      }else if(parseInt(this.timebar[x].clouds.all)<65){
+        this.cloud = '흐림'
+      }else{
+        this.cloud = '매우 흐림'
+      }
       this.imgUrl = `http://openweathermap.org/img/wn/${this.img}@2x.png`
     },
       register(){
