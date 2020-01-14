@@ -90,4 +90,4 @@ public class Person extends Proxy implements Serializable{
 		this.ban = ban;
 		this.score = score;
 	}
-}
+}//testYOHAN
