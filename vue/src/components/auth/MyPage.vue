@@ -1,5 +1,5 @@
 <template>
-<div class="mypagemain" >
+<div style="height:860px;">
   <v-card>
     <v-toolbar flat>
       <v-toolbar-title class="title">MY Page</v-toolbar-title>
@@ -68,9 +68,8 @@
 </v-card>
 <v-container class="gameinfo">
     <v-expansion-panels
-      v-model="panel"
-      :readonly="readonly"
-      multiple
+        v-for="(item,i) in 1"
+        :key="i"
     >
       <v-expansion-panel>
         <v-expansion-panel-header>Match 1</v-expansion-panel-header>
@@ -291,10 +290,7 @@
         </div>
       </div>
     </div>
-    <div class="general">
-      <h1>최근 경기</h1>
-      <span class="more">마우스를 올려보세요.</span>
-    </div>
+      <img class="futsalimg" src="https://s3.eu-north-1.amazonaws.com/norkring/_articleLandscape/iStock-1149063259.jpg?mtime=20190925151000">
   </div>
   <div class="card green">
     <div class="additional">
@@ -333,10 +329,7 @@
         </div>
       </div>
     </div>
-    <div class="general">
-      <h1>Hide on bush</h1>
-      <span class="more">마우스를 올려보세요.</span>
-    </div>
+    <img class="futsalimg" src="https://www.gamingdose.com/wp-content/uploads/2019/10/Qiyana-Louis-Vuitton-768x455.jpg">
   </div>
 </div>
 </div>
@@ -346,8 +339,7 @@ export default {
   data() {
     return {
       dialog : false,
-      rules: [v => v.length <= 25 || 'Max 25 characters'],
-      panel: [0,1]
+      rules: [v => v.length <= 25 || 'Max 25 characters']
     }
   }
 }
@@ -360,7 +352,7 @@ html, body {
 }
 .center {
   position: absolute;
-  top: 59%;
+  top: 60%;
   left: 20%;
   -webkit-transform: translate(-50%, -50%);
 }
@@ -484,17 +476,6 @@ html, body {
 .card .additional .stats div.value.infinity {
   font-size: 1.4rem;
 }
-.card .general {
-  width: 300px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
-  box-sizing: border-box;
-  padding: 1rem;
-  padding-top: 0;
-}
 .card .general .more {
   position: absolute;
   bottom: 1rem;
@@ -506,14 +487,15 @@ html, body {
   margin-top: 1%;
 }
 .gameinfo{
-  width: 58%;
+  width: 60%;
   margin-left: 40%;
 }
 .paybtn{
   float: right;
 }
-.mypagemain{
-  height: 880px;
+.futsalimg{
+  width: 100%;
+  height: 100%;
 }
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
 

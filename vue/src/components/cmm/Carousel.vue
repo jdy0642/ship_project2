@@ -1,74 +1,320 @@
 <template>
-<div id="app">
-  <v-app id="inspire" >
-    <v-container class="text-center">
-      <v-row class="fill-height" align="center" justify="center">
-        <template v-for="(item, i) of items">
-          <v-col :key="i" cols="12"  md="6" >
-            <v-hover v-slot:default="{ hover }">
-              <v-card :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }">
-                <v-img :src="item.img" height="830px" >
-                  <v-card-title class="title white--text">
-                    <v-row class="fill-height flex-column" justify="space-between">
-                      <p class="mt-4 subheading text-left">{{ item.title }}</p>
-<!--   
-                      <div class="align-self-center">
-                        <v-btn v-for="(icon, index) of icons" :key="index" :class="{ 'show-btns': hover }" color="transparent" icon >
-                          <v-icon :class="{ 'show-btns': hover }" color="transparent" >
-                            {{ icon }}
-                          </v-icon>
-                        </v-btn>
-                      </div> -->
-                    </v-row>
-                  </v-card-title>
-                </v-img>
-              </v-card>
-            </v-hover>
-          </v-col>
-        </template>
-      </v-row>
-    </v-container>
-  </v-app>
+<div style="height:870px;">
+  <div class="panels">
+    <div class="panels__container">
+      <div class="panel">
+        <div class="panel__content" style="background-image: url(https://image.redbull.com/rbcom/052/2019-05-17/0e0d5093-854c-41a6-b383-56fd6dfc16e5/0012/0/0/449/717/1023/1150/1/ezreal-league-of-legends.jpg);">
+          <v-text @click="lol()" class="panel__title">league of legends</v-text>
+        </div>
+      </div>
+      <div href="#" class="panel">
+        <div class="panel__content" style="background-image: url(https://i.pinimg.com/originals/e2/42/90/e24290842bcc0e7d9bf566492ee36923.jpg)">
+          <v-text @click="futsal()" class="panel__title">FUTSAL</v-text>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </template>
-
 <script>
 export default {
- data: () => ({
-    icons: ['mdi-rewind', 'mdi-play', 'mdi-fast-forward'],
-    items: [
-      {
-        // title: 'New Releases',
-        img: 'http://lorempixel.com/output/nightlife-q-c-640-480-5.jpg',
-      },
-      {
-        // title: 'Rock',
-        img: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80',
-      },
-    ],
-    transparent: 'rgba(255, 255, 255, 0)',
-  }),
   methods:{
-    carougo(x){
-      if(x===undefined){
-        alert('준비중인 컨텐츠 입니다.')
-      }else{
-        this.$router.push({path:`${x}`})
-      }
+    lol(){
+      this.$router.push({path:'/lol'})
+    },
+    futsal(){
+      this.$router.push({path:'/futsal'})
     }
   }
 }
 </script>
 <style scoped>
-.v-card {
-transition: opacity .4s ease-in-out;
+/* @offsetSize * 2 means the content won't appear to move at all. Set to a lower value for squishing effects. */
+/*////////////////////////////////////////*/
+/* Layout */
+.panels {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  pointer-events: none;
 }
-
-.v-card:not(.on-hover) {
-opacity: 0.6;
- }
-
-.show-btns {
-color: rgba(255, 255, 255, 1) !important;
+.panels__container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+  width: 120%;
+  margin: 0 -10%;
+  visibility: hidden;
+}
+.panel {
+  display: inline-block;
+  height: 100%;
+  visibility: visible;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  cursor: pointer;
+  text-decoration: none;
+}
+/*////////////////////////////////////////*/
+/* Image/Text Container */
+.panel__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: center center no-repeat;
+  background-size: cover;
+}
+.panel__content:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  transition: opacity 1s cubic-bezier(0.6, 0, 0.2, 1);
+}
+/*////////////////////////////////////////*/
+/* Title */
+.panel__title {
+  pointer-events: auto;
+  color: #FFF;
+  position: relative;
+  z-index: 1;
+  transition: color 1s cubic-bezier(0.6, 0, 0.2, 1);
+}
+.panel__title:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #000;
+  background: rgba(0, 0, 0, 0.7);
+  border: solid 2px #FFC12D;
+  z-index: -1;
+  padding: 0.5em 1em;
+  margin: -0.5em -1em;
+  opacity: 0;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+  transition: all 1s cubic-bezier(0.6, 0, 0.2, 1);
+  transition-property: opacity, -webkit-transform;
+  transition-property: opacity, transform;
+  transition-property: opacity, transform, -webkit-transform;
+}
+/*////////////////////////////////////////*/
+/* Hover States */
+.panel {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  transition: -webkit-transform 1s cubic-bezier(0.6, 0, 0.2, 1);
+  transition: transform 1s cubic-bezier(0.6, 0, 0.2, 1);
+  transition: transform 1s cubic-bezier(0.6, 0, 0.2, 1), -webkit-transform 1s cubic-bezier(0.6, 0, 0.2, 1);
+  /* Inactive panel */
+  /* Override styles for an inactive panel AFTER the hovered panel */
+  /* Active panel */
+}
+.panel .panel__content {
+  -webkit-transform: translateX(10%);
+          transform: translateX(10%);
+  transition: -webkit-transform 1s cubic-bezier(0.6, 0, 0.2, 1);
+  transition: transform 1s cubic-bezier(0.6, 0, 0.2, 1);
+  transition: transform 1s cubic-bezier(0.6, 0, 0.2, 1), -webkit-transform 1s cubic-bezier(0.6, 0, 0.2, 1);
+}
+.panel:last-child .panel__content {
+  -webkit-transform: translateX(-10%);
+          transform: translateX(-10%);
+}
+.panels:hover .panel {
+  -webkit-transform: translate3d(-10%, 0, 0);
+          transform: translate3d(-10%, 0, 0);
+}
+.panels:hover .panel .panel__content {
+  -webkit-transform: translateX(14%);
+          transform: translateX(14%);
+}
+.panels:hover .panel .panel__content:before {
+  opacity: 0.7;
+}
+.panels .panel:hover ~ .panel {
+  -webkit-transform: translate3d(10%, 0, 0);
+          transform: translate3d(10%, 0, 0);
+}
+.panels .panel:hover ~ .panel .panel__content {
+  -webkit-transform: translateX(-14%);
+          transform: translateX(-14%);
+}
+.panels .panel:hover {
+  z-index: 2;
+  -webkit-transform: translate3d(10%, 0, 0);
+          transform: translate3d(10%, 0, 0);
+  pointer-events: auto;
+}
+.panels .panel:hover:last-child {
+  -webkit-transform: translate3d(-10%, 0, 0);
+          transform: translate3d(-10%, 0, 0);
+}
+.panels .panel:hover .panel__content {
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
+}
+.panels .panel:hover .panel__content:before {
+  opacity: 0;
+}
+.panels .panel:hover .panel__title {
+  color: #FFC12D;
+}
+.panels .panel:hover .panel__title:before {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+/*////////////////////////////////////////*/
+/* Vertical layout */
+.panels--stacked {
+  /* Inactive panel */
+  /* Override styles for an inactive panel AFTER the hovered panel */
+  /* Active panel */
+}
+.panels--stacked .panels__container {
+  width: 100%;
+  height: 120%;
+  margin: -10% 0;
+  flex-direction: column;
+}
+.panels--stacked .panel {
+  height: 50%;
+  width: 100%;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.panels--stacked .panel .panel__content {
+  -webkit-transform: translate3d(0, 10%, 0);
+          transform: translate3d(0, 10%, 0);
+}
+.panels--stacked .panel:last-child .panel__content {
+  -webkit-transform: translate3d(0, -10%, 0);
+          transform: translate3d(0, -10%, 0);
+}
+.panels--stacked:hover .panel {
+  -webkit-transform: translate3d(0, -10%, 0);
+          transform: translate3d(0, -10%, 0);
+}
+.panels--stacked:hover .panel .panel__content {
+  -webkit-transform: translate3d(0, 14%, 0);
+          transform: translate3d(0, 14%, 0);
+}
+.panels--stacked .panel:hover ~ .panel {
+  -webkit-transform: translate3d(0, 10%, 0);
+          transform: translate3d(0, 10%, 0);
+}
+.panels--stacked .panel:hover ~ .panel .panel__content {
+  -webkit-transform: translate3d(0, -14%, 0);
+          transform: translate3d(0, -14%, 0);
+}
+.panels--stacked .panel:hover {
+  -webkit-transform: translate3d(0, 10%, 0);
+          transform: translate3d(0, 10%, 0);
+}
+.panels--stacked .panel:hover:last-child {
+  -webkit-transform: translate3d(0, -10%, 0);
+          transform: translate3d(0, -10%, 0);
+}
+.panels--stacked .panel:hover .panel__content {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+/* Responsive */
+@media (max-width: 550px) {
+.panels {
+    /* Inactive panel */
+    /* Override styles for an inactive panel AFTER the hovered panel */
+    /* Active panel */
+}
+.panels .panels__container {
+  width: 100%;
+  height: 120%;
+  margin: -10% 0;
+  flex-direction: column;
+}
+.panels .panel {
+  height: 50%;
+  width: 100%;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.panels .panel .panel__content {
+  -webkit-transform: translate3d(0, 10%, 0);
+  transform: translate3d(0, 10%, 0);
+}
+.panels .panel:last-child .panel__content {
+  -webkit-transform: translate3d(0, -10%, 0);
+  transform: translate3d(0, -10%, 0);
+}
+.panels:hover .panel {
+  -webkit-transform: translate3d(0, -10%, 0);
+  transform: translate3d(0, -10%, 0);
+}
+.panels:hover .panel .panel__content {
+  -webkit-transform: translate3d(0, 14%, 0);
+  transform: translate3d(0, 14%, 0);
+}
+.panels .panel:hover ~ .panel {
+  -webkit-transform: translate3d(0, 10%, 0);
+  transform: translate3d(0, 10%, 0);
+}
+.panels .panel:hover ~ .panel .panel__content {
+  -webkit-transform: translate3d(0, -14%, 0);
+  transform: translate3d(0, -14%, 0);
+  }
+.panels .panel:hover {
+  -webkit-transform: translate3d(0, 10%, 0);
+  transform: translate3d(0, 10%, 0);
+}
+.panels .panel:hover:last-child {
+  -webkit-transform: translate3d(0, -10%, 0);
+  transform: translate3d(0, -10%, 0);
+}
+.panels .panel:hover .panel__content {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+}
+/*////////////////////////////////////////*/
+/* Specific Design Setup */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/oswald/v29/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvsUZiYA.ttf) format('truetype');
+}
+.panel__title {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 2.5em;
+  letter-spacing: 0.1em;
+}
+@media (max-width: 800px) {
+  .panel__title {
+    font-size: 1.5em;
+  }
+}
+@media (max-width: 600px) {
+  .panel__title {
+    font-size: 1.25em;
+  }
+}
+html,
+body {
+  height: 100%;
 }
 </style>
