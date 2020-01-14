@@ -26,7 +26,7 @@ export default {
       this.$router.push({path:'/futsal'})
     }
   }
-}
+}//커밋테스트
 </script>
 <style scoped>
 /* @offsetSize * 2 means the content won't appear to move at all. Set to a lower value for squishing effects. */
