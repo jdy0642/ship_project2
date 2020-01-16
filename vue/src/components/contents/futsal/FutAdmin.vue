@@ -11,7 +11,8 @@
 		@load="onLoad"
 		@click="moveCenter"
 		style="width:500px;height:400px;"/>
-	<v-btn @click="search">dd</v-btn>
+	<input type="text" v-model="page"/>
+	<v-btn @click="crawl">경기장 생성</v-btn>
 </div>
 	<!--  @center_changed=""
 		@zoom_start=""
@@ -30,7 +31,8 @@
 </template>
 <script>
 import VueDaumMap from 'vue-daum-map'
-
+import axios from 'axios'
+import {store} from '@/store'
 export default{
 	components:{VueDaumMap},
 	data(){
@@ -41,7 +43,9 @@ export default{
 			mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
 			libraries: ['services','clusterer'], // 추가로 불러올 라이브러리
 			map: '', // 지도 객체. 지도가 로드되면 할당됨.
-			mapp: ''
+			result: '',
+			page:'',
+			table: ''
 		}
 	},
 	computed:{
@@ -60,8 +64,59 @@ export default{
 				this.mapp = result
 				alert(status === this.map.services.Status.Ok ? 'ok':'fail') 
 			})
+		},
+		test(){
+			axios.get(`https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/
+				yamine?api_key=RGAPI-5bfa2b4b-0bbf-4861-a97a-dfd697046e26`)
+			.then(res=>{
+				//Access-Control-Allow-Origin: '*'
+				this.lol = res.data
+			})
+			.catch(()=>{
+			})
+		},
+		//https://developers.kakao.com/docs/restapi/local#%ED%82%A4%EC%9B%8C%EB%93%9C-%EA%B2%80%EC%83%89
+		crawl(){
+			axios({url: 'http://dapi.kakao.com/v2/local/search/keyword.json',
+				headers:{
+					Authorization: 'KakaoAK 28d9076d78b899a3f85bb1c12320b0c3'
+				},
+				method: 'GET',
+				params: {
+					query: '풋살 경기장',
+					page: this.page
+				}
+			}).then(res=>{
+				this.result = res.data.documents
+				alert(`${res.data.documents.length}개`)
+			}).catch(e=>{
+				this.result = e
+			})
+			const stadiumAddr = i => this.result[i].address_name
+			const stadiumTel = i => this.result[i].phone
+			const stadiumName = i => this.result[i].place_name
+			const rannum = () => ['4','5','6'][parseInt(Math.random()*3)]
+			const rangender = () => ['female','male'][parseInt(Math.random()*2)]
+			const ranrating = () => parseInt(Math.random()*3+1)
+			const rantime = x => x + Math.random()*1000*3600*24*13
+			const ranfacility = () => 'size0,shower0,park0,shoes0,wear0'
+			const remain = () => parseInt(Math.random()*12)
+			const table = Array.from({length : 15},(_,i) => ({
+				time: rantime(Date.now()), stadiumName: stadiumName(i),
+				stadiumAddr: stadiumAddr(i), stadiumTel: stadiumTel(i),
+				num : rannum(), gender: rangender(),difficulty: ranrating(),
+				shoes: 'shoes0', stadiumFacility: ranfacility(),
+				stadiumImg: '1,2,3', remain: remain(), adminName: '펭수'
+				}))
+			this.table = table
+			axios.post(`${store.state.context}/futsal/insertdummy`,table,store.state.header)
+			.then(res => {
+				alert(res)
+			}).catch(e => {
+				alert(e)
+			})
 		}
-    }
+  }
 }
 </script>
 <style scoped>

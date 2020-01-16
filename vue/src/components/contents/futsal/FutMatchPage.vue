@@ -5,8 +5,8 @@
     <v-card-title><h1>
       <router-link :to="{name: 'futsalstadium', params: {stadiumName: selectMatch.stadiumName}}">
         {{selectMatch.stadiumName}}</router-link>
-    </h1></v-card-title> 
-    <v-card-subtitle>{{selectMatch.addr}}<br/>{{timeToDate}}</v-card-subtitle>
+    </h1></v-card-title>
+    <v-card-subtitle>{{selectMatch.stadiumAddr}}<br/>{{timeToDate}}</v-card-subtitle>
     <v-card-action>
       <v-chip outlined @click="linkCopy">주소복사하기</v-chip>
       <v-chip outlined>지도보기</v-chip>
@@ -18,7 +18,7 @@
   </v-card>
   <v-card class="card">
     <v-card-title>특이사항</v-card-title>
-    <v-card-subtitle>{{rating}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
+    <v-card-subtitle>{{difficulty}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
     <v-row class="justify-center pa-1">
       <v-col
         v-for="(n) of [
@@ -111,7 +111,7 @@
       <li>경기 중 부상에 대한 책임은 해당 개인에게 귀속됩니다.</li>
     </ul>
   </v-card>
-  <v-btn id="floatdiv" pa-3 fab x-large block rounded>신 청 하 기</v-btn>
+  <v-btn @click="payment()" id="floatdiv" pa-3 fab x-large block rounded>신 청 하 기</v-btn>
 </div>
 </template>
 
@@ -166,6 +166,14 @@ export default {
         case 'minmax' : return `${this.selectMatch.num*2 - 2} ~ ${this.selectMatch.num*2 + 4}명`
         default : return item
       }
+    },
+    payment(){
+      if(store.state.user.name == undefined){
+        alert('로그인 하세요')
+      }else{
+        alert('결제완료')
+        this.$router.push({name: 'futsalhome'})
+      }
     }
   }
 }
@@ -175,5 +183,8 @@ export default {
   width: 80%;
   padding: 4px;
   text-align: left;
+}
+#floatdiv{
+
 }
 </style>

@@ -14,6 +14,7 @@ import FutSearchBar from './futsal/FutSearchBar'
 import FutReservation from './futsal/FutReservation'
 import FutReservationTable from './futsal/FutReservationTable'
 import {store} from '@/store'
+import axios from 'axios'
 export default {
   components:{FutHead,FutSearchBar,FutReservation,FutReservationTable},
   data(){
@@ -26,7 +27,8 @@ export default {
       stadiumName : '',
       time : Date.now(),
       table : [],
-      height:[30,5,7,50]
+      height:[30,5,7,50],
+      getdata:'',
     }
   },
   created(){
@@ -40,17 +42,23 @@ export default {
 		const remain = () => parseInt(Math.random()*12)
 		let table = Array.from({length : 200},(_,i) => ({
 			matchId: i, time: rantime(this.time), stadiumName: ranloc(),
-      addr: addr(), num : rannum(), gender: rangender(), difficulty: ranrating(),
-      shoes: 'shoes0', facility: ranfacility(),
-			stadiumImg: '1,2,3', adminName: '펭수', remain: remain()
+      stadiumAddr: addr(), num : rannum(), gender: rangender(), difficulty: ranrating(),
+      shoes: 'shoes0', stadiumFacility: ranfacility(),
+			stadiumImg: '1,2,3', remain: remain(), adminName: '펭수'
 			}))
-		//위쪽은 랜덤값. 실제는 axios로 받아와야함.
+    //위쪽은 랜덤값. 실제는 axios로 받아와야함.
+    axios.get(`${store.state.context}/futsal/`)
+      .then(res => {
+        this.getdata = res
+    }).catch(e => {
+        alert(`axios fail ${e}`)
+    })
 		table.map(x =>{
-					x.groundSize = x.facility.split(",")[0]
-					x.shower = x.facility.split(",")[1]
-					x.parking = x.facility.split(",")[2]
-					x.shoesRental = x.facility.split(",")[3]
-					x.dressRental = x.facility.split(",")[4]
+					x.stadiumGroundSize = x.stadiumFacility.split(",")[0]
+					x.stadiumShower = x.stadiumFacility.split(",")[1]
+					x.stadiumParking = x.stadiumFacility.split(",")[2]
+					x.stadiumShoesRental = x.stadiumFacility.split(",")[3]
+					x.stadiumDressRental = x.stadiumFacility.split(",")[4]
 		})
 		this.table = table
 		store.state.matchList = table

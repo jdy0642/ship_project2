@@ -9,16 +9,21 @@
 				</span>
 			</div>
 			{{weather(stadiumName)}}
+			<v-btn @click="crawling()">
+				크롤링
+			</v-btn>
 		</div>
 	</div>
 </div>
 </template>
 <script>
 import axios from "axios"
+//import { store } from '@/store'
 export default{
 	data(){
 		return {
-			stadiumName : ''
+			stadiumName : '',
+			getdata: ''
 		}
 	},
 	computed: {
@@ -45,9 +50,22 @@ export default{
 				//alert('axios fail'+e)
 			})
 			return weather
+		},
+		crawling(){
+			/* let loc = '풋살 경기장'
+			let page = 1
+			let url = `https://dapi.kakao.com/v2/local/search/keyword.json`
+			axios.post(url,{},{
+			})
+			.then(res => {
+				this.getdata = res
+			}).catch(e => {
+				alert(`axios fail ${e}`)
+				this.getdata = e
+			}) */
+			
 		}
-      }
-	
+    }
 }
 </script>
 <style scoped>
