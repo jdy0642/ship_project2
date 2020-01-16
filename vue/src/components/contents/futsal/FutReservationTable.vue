@@ -1,16 +1,17 @@
 <template>
 <div class="ma-auto">
-	{{timeToDate(propTime)}}  {{propStadium}}
-	<!-- <div v-for="(match,index) of matchFilter(propstadium,proptime)" :key="index"
+	<!-- 부트 스트랩 
+		<div v-for="(match,index) of matchFilter(propstadium,proptime)" :key="index"
 	style="display: grid; grid-template-columns: 10% 20% 45% 25%; border: solid 1px;">
 		<div v-for="(item,key) of match" :key="key" @click="click(item,key)" style="text-align: center">
 			{{key!='time' ? item : timeToDate(item)}}
 		</div>
 	</div> -->
-	<v-card raised ma-auto>
-		<v-data-table style="vertical-align: interit"
+	<h3>{{timeToDate(propTime)}}  {{propStadium}}</h3>
+	<v-card raised class="ma-auto">
+		<v-data-table
 		:headers="headers" :items="table"
-		class="elevation-1" hide-default-footer>
+		class="elevation-1 ma-2" hide-default-footer>
 			<template v-slot:item.time="{item}">
 				{{timeToDate(item.time)}}
 				<!-- <v-btn @click="click(item)">{{timeToDate(item.time)}}</v-btn> -->
@@ -23,16 +24,15 @@
 				:src="require(`@/assets/img/matchRule/${item.gender}.svg`)"/>
 			</template>
 			<template v-slot:item.difficulty="{item}">
-				<v-row width="1">
-					<v-img width="1"
-						v-for="n of parseInt(item.difficulty)" 
-						:key="n" src="@/assets/img/matchRule/star.svg">
-					</v-img>
-				</v-row>
+				<v-img class="d-inline-flex"
+					v-for="n of parseInt(item.difficulty)" 
+					:key="n" src="@/assets/img/matchRule/star.svg">
+				</v-img>
 			</template>
 			<template v-slot:item.remain="{item}">
-				<v-btn @click="selectMatch(item)" :color="item.remain > 3 ? '#2478FF' : '#FF3636'">
-					{{item.remain > 3 ? `${item.remain}자리 남음` : '마감임박'}}
+				<v-btn @click="selectMatch(item)" :color="item.remain > 3 ? '#2478FF' : 
+					item.remain!=0 ? '#FF3636' : '#8C8C8C'">
+					{{item.remain > 3 ? `${item.remain}자리 남음` : item.remain!=0 ? '마감임박' : '예약마감'}}
 				</v-btn>
 			</template>
 		</v-data-table>
@@ -70,8 +70,10 @@ export default{
 			return `${(temp.getMonth()+1)}월 ${temp.getDate()}일 ${temp.getHours()}시`
 		},
 		selectMatch(param){
-			store.state.selectMatch = param
-			this.$router.push({path:`/futsal/match`})
+			if(param.remain != 0){
+				store.state.selectMatch = param
+				this.$router.push({ name: 'futsalmatch', params: { matchId: param.matchId }})
+			}
 		}
 	}
 }

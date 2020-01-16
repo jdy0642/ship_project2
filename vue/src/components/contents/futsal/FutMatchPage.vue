@@ -3,7 +3,8 @@
 	<fut-head :style="`height: ${height}vh`" :propImg="stadiumImg"/>
   <v-card class="card">
     <v-card-title><h1>
-      <router-link to="/futsal/stadium">{{selectMatch.stadiumName}}</router-link>
+      <router-link :to="{name: 'futsalstadium', params: {stadiumName: selectMatch.stadiumName}}">
+        {{selectMatch.stadiumName}}</router-link>
     </h1></v-card-title> 
     <v-card-subtitle>{{selectMatch.addr}}<br/>{{timeToDate}}</v-card-subtitle>
     <v-card-action>
@@ -20,17 +21,17 @@
     <v-card-subtitle>{{rating}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
     <v-row class="justify-center pa-1">
       <v-col
-        v-for="n of [
+        v-for="(n) of [
           selectMatch.num,
           selectMatch.gender,
           selectMatch.difficulty,
           selectMatch.shoes,
-          selectMatch.minmax]"
-        :key="n" :cols="`12/5`">
+          'minmax']"
+        :key="n" cols="2">
         <v-card>
           <v-img :src="require(`@/assets/img/matchRule/${
             ['4','5','6'].includes(n) ? n+'vs'+n : n }.svg`)" :alt="n"/>
-          <v-card-text class="justify-center">{{n}}</v-card-text>
+          <v-card-text class="text-center">{{msgSwitch(n)}}</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -41,7 +42,7 @@
     <v-row class="justify-center pa-1">
       <v-col
         v-for="n of selectMatch.facility.split(',')"
-        :key="n" :cols="`12/${selectMatch.facility.split(',').length}`">
+        :key="n" cols="2">
         <v-card>
           <v-img :src="require(`@/assets/img/stadium/${n}.svg`)"/>
         </v-card>
@@ -70,7 +71,7 @@
   <v-divider/>
   <v-card class="card">   
     <ul>
-      <h3>주의사항</h3>
+      <h2>- 주의사항 -</h2>
       <span>플랩풋볼 매치는 참가자 간의 신뢰를 바탕으로 진행됩니다.</span>
       <li>다른 참가자들을 위해 시간을 준수해 주세요.</li>
       <li>풋살화 또는 스터드가 없는 운동화를 착용해주세요.</li>
@@ -85,8 +86,8 @@
       <li>1회 위반 시 한 달, 2회 위반 시 이용이 영구 정지됩니다.</li>
     </ul>
     <v-divider/>
-    <h3>취소/환불</h3>
     <ul>
+      <h2>- 취소/환불 -</h2>
       <h4>매치가 취소되는 경우</h4>
       <li>각 구장별 최소 인원 (6 vs 6 구장 10명 / 5 vs 5 구장 8명) 이 되지 않을 경우 경기가 취소 될 수 있으며 진행 여부 안내는 1시간 30분 전까지 카카오톡 알림톡을 통해 안내드리고 있습니다.</li>
       <li>당일 기상악화의 경우에도 환급율은 동일하며 신청 전 꼭 기상 확인 바랍니다.</li>
@@ -110,7 +111,7 @@
       <li>경기 중 부상에 대한 책임은 해당 개인에게 귀속됩니다.</li>
     </ul>
   </v-card>
-  <v-btn pa-3 fab x-large block rounded>신 청 하 기</v-btn>
+  <v-btn id="floatdiv" pa-3 fab x-large block rounded>신 청 하 기</v-btn>
 </div>
 </template>
 
@@ -151,6 +152,20 @@ export default {
     linkCopy(){
       alert('주소 복사 ')
       return '주소 복사'
+    },
+    msgSwitch(item){
+      switch(item){
+        case 1 : return '초보자 게임'
+        case 2 : return '중급자 게임'
+        case 3 : return '상급자 게임'
+        case '4' : return '4vs4'
+        case '5' : return '5vs5'
+        case '6' : return '6vs6'
+        case 'shoes0' : return '풋살화 필수'
+        case 'shoes1' : return '축구화 가능'
+        case 'minmax' : return `${this.selectMatch.num*2 - 2} ~ ${this.selectMatch.num*2 + 4}명`
+        default : return item
+      }
     }
   }
 }

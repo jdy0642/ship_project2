@@ -1,5 +1,6 @@
 <template>
-<!-- <div id="demo" class="carousel slide" data-ride="carousel">
+<!-- 부트스트랩 
+  <div id="demo" class="carousel slide" data-ride="carousel">
   <ul class="carousel-indicators">
     <li data-target="#demo" data-slide-to="0" class="active"></li>
     <li data-target="#demo" data-slide-to="1"></li>

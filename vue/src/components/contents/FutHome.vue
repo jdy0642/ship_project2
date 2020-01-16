@@ -31,17 +31,17 @@ export default {
   },
   created(){
     const rannum = () => ['4','5','6'][parseInt(Math.random()*3)]
-    const rangender = () => ['fm','ma'][parseInt(Math.random()*2)]
-		const ranrating = () => parseInt(Math.random()*3+1)	
+    const rangender = () => ['female','male'][parseInt(Math.random()*2)]
+		const ranrating = () => parseInt(Math.random()*3+1)
     const ranloc = () => ['신촌','강남','용인','종각','평양','부산','응암','보스턴'][parseInt(Math.random()*8)]
 		const rantime = x => x + Math.random()*1000*3600*24*13
     const addr = () => ['어디어디어디 주소','거기어디어디 주소','어디어디거기 주소','어디어디 주소'][parseInt(Math.random()*4)]
 		const ranfacility = () => 'size0,shower0,park0,shoes0,wear0'
-		const remain = () => parseInt(Math.random()*5+1)
+		const remain = () => parseInt(Math.random()*12)
 		let table = Array.from({length : 200},(_,i) => ({
-			id: i, time: rantime(this.time), stadiumName: ranloc(),
+			matchId: i, time: rantime(this.time), stadiumName: ranloc(),
       addr: addr(), num : rannum(), gender: rangender(), difficulty: ranrating(),
-      shoes: 4, minmax: 5, facility: ranfacility(),
+      shoes: 'shoes0', facility: ranfacility(),
 			stadiumImg: '1,2,3', adminName: '펭수', remain: remain()
 			}))
 		//위쪽은 랜덤값. 실제는 axios로 받아와야함.

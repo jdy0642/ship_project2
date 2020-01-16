@@ -5,7 +5,7 @@
     :color="selected(time,selectTime)" @click="tableChange(index,time)">
     {{timeToDateAndWeek(time)}}
   </v-btn>
-    <!-- boot strap
+    <!-- 부트스트랩
     <button @click="tableChange(index,time)" :class="selected(time,selectTime)">{{timeToDateAndWeek(time)}}</button> -->    
 </v-card>  
 </template>
@@ -51,14 +51,15 @@ export default {
       this.$emit("send",time)
     },
     selected(time,selectTime){
-      //return "vspButton " + (time == selectTime ? "selected" : "") bootstrap
+      // 부트스트랩  return "vspButton " + (time == selectTime ? "selected" : "") bootstrap
       return (time == selectTime ? "#319bde" : "#a5cae8")
     }
   }
 }
 </script>
 <style scoped>
-/* .vspButton {
+/* 부트스트랩
+  .vspButton {
   max-width: 100px;
   min-width: 80px;
   height: 50px;
