@@ -23,9 +23,9 @@
     <span class="carousel-control-next-icon"></span>
   </a>
 </div> -->
-  <v-carousel :height="height"  cycle interval="2000">
+  <v-carousel cycle interval="2000">
     <v-carousel-item
-      v-for="(item, i) of items" :key="i" :src="item.src" @click="msg(item.msg)">
+      v-for="(item, i) of propImg" :key="i" :src="item" @click="msg(item)">
       <!-- <v-row class="fill-height" align="center" justify="center">
         <div class="display-3">Slide {{ i + 1 }}</div>
       </v-row> -->
@@ -33,15 +33,12 @@
   </v-carousel>
 </template>
 <script>
-export default({
+export default{
+  props: {
+		propImg: {type: Array}
+	},
 	data(){
 		return{
-      height: '100%',
-      items: [
-        {msg: '#ffddcc',src: 'https://blog.hmgjournal.com/images/contents/article/20161214-Reissue-night-football-03.jpg'},
-        {msg: '#eeddcc',src: 'http://641109.igkorea.net/data/editor/1803/7ec6014758f9af0fd497c55e30ef7fd1_1522042126_13.jpg'},
-        {msg: '#eecccc',src: 'http://641109.igkorea.net/data/editor/1803/7ec6014758f9af0fd497c55e30ef7fd1_1522042791_19.jpg'}
-      ]
     }
 	},
 	methods:{
@@ -49,7 +46,7 @@ export default({
 			alert(x)
 		}
 	}
-})
+}
 </script>
 <style scoped>
 </style>

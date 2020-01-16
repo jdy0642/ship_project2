@@ -16,10 +16,11 @@ import Remove from '@/components/article/Remove.vue'
 import Search from '@/components/article/Search.vue'
 import Update from '@/components/article/Update.vue'
 import Write from '@/components/article/Write.vue'
-import Futsal from '@/components/contents/Futsal.vue'
+import FutsalHome from '@/components/contents/FutHome.vue'
 import Lol from '@/components/contents/Lol.vue'
-import FutsalHome from '@/components/futsal/FutsalHome.vue'
-import FutsalMatch from '@/components/futsal/MatchPage.vue'
+import FutsalMatch from '@/components/contents/futsal/FutMatchPage.vue'
+import FutsalStadium from '@/components/contents/futsal/FutStadium.vue'
+import FutsalAdmin from '@/components/contents/futsal/FutAdmin.vue'
 import CreateRoom from '@/components/lol/CreateRoom.vue'
 import JoinRank from '@/components/lol/JoinRank.vue'
 import JoinKal from '@/components/lol/JoinKal.vue'
@@ -39,11 +40,12 @@ export default new Router({
           {path:'/search', name:'search', component:  Search},
           {path:'/update', name:'update', component:  Update},
           {path:'/write', name:'write', component: Write},
-          {path:'/futsal', name:'futsal', component:  Futsal},
+          {path: '/futsal', name: 'futsalhome', component: FutsalHome},
           {path:'/lol', name:'lol', component: Lol},
           {path:'/remove', name:'remove', component:  Remove},
-          {path: '/futsalhome', name: 'futsalhome', component: FutsalHome},
-          {path: '/futsalhome/match', name: 'futsalmatch', component: FutsalMatch},
+          {path: '/futsal/match', name: 'futsalmatch', component: FutsalMatch},
+          {path: '/futsal/admin', name: 'futsaladmin', component: FutsalAdmin},
+          {path: '/futsal/stadium', name: 'futsalstadium', component: FutsalStadium},
           {path: '/createroom', name: 'createroom', component: CreateRoom},
           {path: '/register', name: 'register', component: Register},
           {path: '/test', name: 'test', component: Test},
