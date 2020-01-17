@@ -51,7 +51,7 @@ export default{
 		return{
 			headers: [
 				{ text: '경기날짜', width: 200, value: 'time' },
-				{ text: '경기장', value: 'stadiumName' },
+				{ text: '경기장', value: 'stadiumname' },
 				{ text: '인원', value: 'num' },
 				{ text: '성별', value: 'gender'},
 				{ text: '난이도', value: 'difficulty' },
@@ -72,7 +72,7 @@ export default{
 		selectMatch(param){
 			if(param.remain != 0){
 				store.state.selectMatch = param
-				this.$router.push({ name: 'futsalmatch', params: { matchId: param.matchId }})
+				this.$router.push({ name: 'futsalmatch', params: { matchId: param.futsalmatchseq }})
 			}
 		}
 	}

@@ -7,9 +7,7 @@
                @click="lol()" x-large top absolute class="float-right" color="white">mdi-refresh</v-icon>
          </template>
         <span>새로 고침 </span>
-      </v-tooltip>
-      <!-- a -->
-   
+      </v-tooltip>   
    <v-container fluid>
      
       <v-radio-group style = "margin-left:40px" v-model="row" :mandatory="false">
