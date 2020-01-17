@@ -3,14 +3,14 @@
   <v-row>
   <v-responsive style="width:150px height:200px">
   <v-card style="margin-right:5px; margin-top:5px;">
-  <v-img style="width:300px" src="https://ww.namu.la/s/37a84569eff79fb982afb54f6d411b0a4e3212dda379fb3f326634358a13e36c84b8e0e379c44c288021002eecd2ae2ba479f92d3052a8afacddea23d73d69fe2aace5fb39279de96cf368f2f99ea96cfe451fed8a88a8e7731fc6c7d6893680"></v-img>
+  <img style="width:177px;" :src="temp.photo" alt="" />
    <v-card-subtitle>
    <v-icon style="margin:20px;">mdi-crown</v-icon>
    <v-icon v-bind:title="msg1">mdi-key</v-icon>
-            <v-card-text>소환사명 : yamine</v-card-text>
-               <v-card-text center>티어 : gold4</v-card-text>
+            <v-card-text>소환사명 : {{temp.summonername}}</v-card-text>
+               <v-card-text center>티어 : {{temp.rank}}</v-card-text>
           <v-card-text>승률 : 55%</v-card-text>
-          <v-card-text>최근 10경기 전적 : 4승6패</v-card-text>
+          <v-card-text>최근 10경기 전적 : {{temp.rate}}</v-card-text>
          </v-card-subtitle>
   </v-card>
   </v-responsive>
@@ -61,12 +61,21 @@
 
 </template>
 <script>
+import axios from "axios"
 export default{
   data(){
     return {
       logs: [],
       msg: null,
-      msg1: '방장위임'
+      msg1: '방장위임',
+      summonername : '',
+      rate: '',
+      most: '',
+      rank: '',
+      position: '',
+      photo: '',
+      context:'http://localhost:8080',
+      temp:''
     }
   },
   methods: {
@@ -77,6 +86,19 @@ export default{
     lol(){
       this.$router.push({path:'/lol'})
     }
+  },
+  created(){
+    let url = `${this.context}/crawl/summoner/userName=yamine`
+
+    axios
+    .get(url)
+    .then(res=>{
+      this.temp = res.data[0]
+      this.summonername = res.data[0].summonername
+    })
+
+
+
   },
   watch: {
     logs() {
