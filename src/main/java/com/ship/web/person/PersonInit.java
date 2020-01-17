@@ -26,8 +26,8 @@ public class PersonInit extends Proxy implements ApplicationRunner  {
 		if(count ==0) {
 			Person person = null;
 			String[][] mtx = {
-					{"hong", "1", "홍길동", "3", "4", "teacher", "6","7","8","9","10","false","1","false","false","false","dfhdf@naver.com"},
-					{"hong1", "11", "홍길동1", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","dfhd2f@naver.com"},
+					{"hong", "1", "홍길동", "3", "4", "teacher", "6","7","8","9","10","false","1","false","false","false","dfhdf@naver.com", "yamine"},
+					{"hong1", "11", "홍길동1", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","dfhd2f@naver.com", "거울보면문도"},
 			};
 			for(String[] arr : mtx) {
 				person = new Person();
@@ -49,6 +49,7 @@ public class PersonInit extends Proxy implements ApplicationRunner  {
 					person.setLolblack(Boolean.parseBoolean(arr[14]));
 					person.setFutblack(Boolean.parseBoolean(arr[15]));
 					person.setEmail(arr[16]);
+					person.setSummonername(arr[17]);
 					personRepository.save(person);
 			}
 		}
