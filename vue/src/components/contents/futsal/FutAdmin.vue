@@ -11,8 +11,8 @@
 		@load="onLoad"
 		@click="moveCenter"
 		style="width:500px;height:400px;"/>
-	<input type="text" v-model="page"/>
-	<v-btn @click="crawl">경기장 생성</v-btn>
+	<v-text-field v-model="page" @keyup.enter="crawl()"/>
+	<a href="http://192.168.5.54:3000">채</a>
 </div>
 	<!--  @center_changed=""
 		@zoom_start=""
@@ -43,9 +43,10 @@ export default{
 			mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
 			libraries: ['services','clusterer'], // 추가로 불러올 라이브러리
 			map: '', // 지도 객체. 지도가 로드되면 할당됨.
-			result: '',
-			page:'',
-			table: ''
+			page: '',
+			getStadiumData: '',
+			table: '',
+			axi:''
 		}
 	},
 	computed:{
@@ -83,37 +84,35 @@ export default{
 				},
 				method: 'GET',
 				params: {
-					query: '풋살 경기장',
+					query: '풋살장',
 					page: this.page
 				}
 			}).then(res=>{
-				this.result = res.data.documents
-				alert(`${res.data.documents.length}개`)
+				this.getStadiumData = res.data.documents
+				alert(`${this.page}페이지  ${res.data.documents.length}개`)
+				const stadiumAddr = i => this.getStadiumData[i].address_name
+				const stadiumTel = i => this.getStadiumData[i].phone
+				const stadiumName = i => this.getStadiumData[i].place_name
+				const rannum = () => ['4','5','6'][parseInt(Math.random()*3)]
+				const rangender = () => ['female','male'][parseInt(Math.random()*2)]
+				const ranrating = () => parseInt(Math.random()*3+1)
+				const rantime = x => x + Math.random()*1000*3600*24*13
+				const ranfacility = () => 'size0,shower0,park0,shoes0,wear0'
+				const remain = () => parseInt(Math.random()*12)
+				let table = Array.from({length : 15},(_,i) => ({
+					time: rantime(Date.now()), stadiumname: stadiumName(i),
+					stadiumaddr: stadiumAddr(i), stadiumtel: stadiumTel(i),
+					num : rannum(), gender: rangender(),difficulty: ranrating(),
+					shoes: 'shoes0', stadiumfacility: ranfacility(),
+					stadiumimg: '1,2,3', remain: remain(), adminname: '펭수'
+					}))
+				this.table = table
+				axios.post(`${store.state.context}/futsal/insertdummy`,table,store.state.header)
+				.catch(e => {
+					alert(e)
+				})
 			}).catch(e=>{
-				this.result = e
-			})
-			const stadiumAddr = i => this.result[i].address_name
-			const stadiumTel = i => this.result[i].phone
-			const stadiumName = i => this.result[i].place_name
-			const rannum = () => ['4','5','6'][parseInt(Math.random()*3)]
-			const rangender = () => ['female','male'][parseInt(Math.random()*2)]
-			const ranrating = () => parseInt(Math.random()*3+1)
-			const rantime = x => x + Math.random()*1000*3600*24*13
-			const ranfacility = () => 'size0,shower0,park0,shoes0,wear0'
-			const remain = () => parseInt(Math.random()*12)
-			const table = Array.from({length : 15},(_,i) => ({
-				time: rantime(Date.now()), stadiumName: stadiumName(i),
-				stadiumAddr: stadiumAddr(i), stadiumTel: stadiumTel(i),
-				num : rannum(), gender: rangender(),difficulty: ranrating(),
-				shoes: 'shoes0', stadiumFacility: ranfacility(),
-				stadiumImg: '1,2,3', remain: remain(), adminName: '펭수'
-				}))
-			this.table = table
-			axios.post(`${store.state.context}/futsal/insertdummy`,table,store.state.header)
-			.then(res => {
-				alert(res)
-			}).catch(e => {
-				alert(e)
+				this.getStadiumData = e
 			})
 		}
   }

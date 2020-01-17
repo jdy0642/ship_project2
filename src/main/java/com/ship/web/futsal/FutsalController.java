@@ -32,12 +32,15 @@ public class FutsalController {
 			FutsalMatch dto = footModelMapper.map(match, FutsalMatch.class);
 			list.add(dto);
 		}
+		System.out.println("findAll");
 		return list.stream().collect(Collectors.toList());
 	}
 	
 	@PostMapping("/insertdummy")
-	public void insertDummy(@RequestBody FutsalMatch param) {
+	public void insertDummy(@RequestBody List<FutsalMatch> param) {
 		System.out.println(param);
+		futsalMatchRepository.saveAll(param);
+		System.out.println("insertdummy");
 	}
 	
 

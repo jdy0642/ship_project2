@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<fut-head :style="`height: ${height}vh`" :propImg="stadiumImg"/>
-		<h1>{{stadium}}</h1>
+		<h1>{{stadiumName}}</h1>
 		<fut-reservation-table v-for="(item,index) of timeArray" :key="index"
-			:propStadium="stadium" :propTime="item" :propTable="matchFilter(item)"></fut-reservation-table>
+			:propStadium="stadiumName" :propTime="item" :propTable="matchFilter(item)"></fut-reservation-table>
 	</div>
 </template>
 <script>
@@ -17,7 +17,7 @@ export default{
 			height: 30,
 			selectMatch: store.state.selectMatch,
 			table: store.state.matchList,
-			stadiumName: store.state.selectMatch.stadiumName
+			stadiumName: store.state.selectMatch.stadiumname
 		}
 	},
 	computed: {
@@ -28,7 +28,7 @@ export default{
 				(k!=0 ? utc(Date.now()) : Date.now()) + k*3600*1000*24)
 		},
 		stadiumImg(){
-			return this.selectMatch.stadiumImg.split(",")
+			return this.selectMatch.stadiumimg.split(",")
 			.map(i => require(`@/assets/img/stadium/${i}.jpg`))
 		}
 	},
@@ -39,7 +39,7 @@ export default{
 			const utc = (x => (parseInt(x/3600/1000/24)*24 +
 				(new Date(x).getHours() >= 9 ? 15 : 39))*3600*1000)
 			return table
-				.filter(i => i.stadiumName === stadiumName)
+				.filter(i => i.stadiumname === stadiumName)
 				.filter(i => time <= i.time && i.time < utc(time))
 				.sort((a,b) => a.time > b.time ? 1 : (a.time < b.time ? -1 : 0))
 		}

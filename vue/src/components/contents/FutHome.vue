@@ -32,36 +32,23 @@ export default {
     }
   },
   created(){
-    const rannum = () => ['4','5','6'][parseInt(Math.random()*3)]
-    const rangender = () => ['female','male'][parseInt(Math.random()*2)]
-		const ranrating = () => parseInt(Math.random()*3+1)
-    const ranloc = () => ['신촌','강남','용인','종각','평양','부산','응암','보스턴'][parseInt(Math.random()*8)]
-		const rantime = x => x + Math.random()*1000*3600*24*13
-    const addr = () => ['어디어디어디 주소','거기어디어디 주소','어디어디거기 주소','어디어디 주소'][parseInt(Math.random()*4)]
-		const ranfacility = () => 'size0,shower0,park0,shoes0,wear0'
-		const remain = () => parseInt(Math.random()*12)
-		let table = Array.from({length : 200},(_,i) => ({
-			matchId: i, time: rantime(this.time), stadiumName: ranloc(),
-      stadiumAddr: addr(), num : rannum(), gender: rangender(), difficulty: ranrating(),
-      shoes: 'shoes0', stadiumFacility: ranfacility(),
-			stadiumImg: '1,2,3', remain: remain(), adminName: '펭수'
-			}))
-    //위쪽은 랜덤값. 실제는 axios로 받아와야함.
+    let table = []
     axios.get(`${store.state.context}/futsal/`)
       .then(res => {
-        this.getdata = res
+        this.getdata = res.data
+        table = res.data
+        table.map(x =>{
+					x.stadiumGroundSize = x.stadiumfacility.split(',')[0]
+					x.stadiumShower = x.stadiumfacility.split(',')[1]
+					x.stadiumParking = x.stadiumfacility.split(',')[2]
+					x.stadiumShoesRental = x.stadiumfacility.split(',')[3]
+          x.stadiumDressRental = x.stadiumfacility.split(',')[4]
+        })
+        this.table = table
+        store.state.matchList = table	
     }).catch(e => {
         alert(`axios fail ${e}`)
     })
-		table.map(x =>{
-					x.stadiumGroundSize = x.stadiumFacility.split(",")[0]
-					x.stadiumShower = x.stadiumFacility.split(",")[1]
-					x.stadiumParking = x.stadiumFacility.split(",")[2]
-					x.stadiumShoesRental = x.stadiumFacility.split(",")[3]
-					x.stadiumDressRental = x.stadiumFacility.split(",")[4]
-		})
-		this.table = table
-		store.state.matchList = table
 	},
   computed: {
     matchFilter(){
@@ -70,7 +57,7 @@ export default {
       const table = this.table
       const utc = (x => (parseInt(x/3600/1000/24)*24 +
         (new Date(x).getHours() >= 9 ? 15 : 39))*3600*1000)
-      return (stadiumName === '' ? table : table.filter(i=> i.stadiumName === stadiumName))
+      return (stadiumName === '' ? table : table.filter(i=> i.stadiumname === stadiumName))
         .filter(i => time <= i.time && i.time < utc(time))
         .sort((a,b) => a.time > b.time ? 1 : (a.time < b.time ? -1 : 0))
     }  

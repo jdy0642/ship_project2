@@ -36,7 +36,7 @@ public class FutsalMatch implements Serializable{
 	@Column(name="TIME") @NotNull
 	private Long time;
 	@Column(name="STADIUMNAME") @NotNull
-	private String stadiumName;
+	private String stadiumname;
 	@Column(name="STADIUMADDR") @NotNull
 	private String stadiumaddr;
 	@Column(name="STADIUMTEL") @NotNull
@@ -56,16 +56,16 @@ public class FutsalMatch implements Serializable{
 	@Column(name="REMAIN") @NotNull
 	private int remain;
 	@Column(name="ADMINNAME") @NotNull
-	private String adminName;
+	private String adminname;
 	
 	@Builder
-	private FutsalMatch(@NotNull Long futsalmatchseq, @NotNull Long time, @NotNull String stadiumName,
+	private FutsalMatch(@NotNull Long futsalmatchseq, @NotNull Long time, @NotNull String stadiumname,
 			@NotNull String stadiumaddr, @NotNull String stadiumtel, @NotNull int num, @NotNull String gender, @NotNull int difficulty,
 			@NotNull String shoes, @NotNull String stadiumfacility, @NotNull String stadiumimg, @NotNull int remain,
-			@NotNull String adminName) {
+			@NotNull String adminname) {
 		this.futsalmatchseq = futsalmatchseq;
 		this.time = time;
-		this.stadiumName = stadiumName;
+		this.stadiumname = stadiumname;
 		this.stadiumaddr = stadiumaddr;
 		this.stadiumtel = stadiumtel;
 		this.num = num;
@@ -75,6 +75,6 @@ public class FutsalMatch implements Serializable{
 		this.stadiumfacility = stadiumfacility;
 		this.stadiumimg = stadiumimg;
 		this.remain = remain;
-		this.adminName = adminName;
+		this.adminname = adminname;
 	}
 }
