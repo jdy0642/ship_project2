@@ -15,6 +15,6 @@ export const store = new Vuex.Store({
     person:{},
     matchList:{},
     selectMatch:{},
-    authCheck : false
+    authCheck : false,
   }
 })
