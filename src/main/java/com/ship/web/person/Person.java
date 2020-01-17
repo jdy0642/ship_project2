@@ -82,6 +82,8 @@ public class Person extends Proxy implements Serializable{
 		private String job;
 	@Column(name="EMAIL")@NotNull
 		private String email;
+	@Column(name="SUMMONERNAME")
+	private String summonername;
 	enum Level{HIGH, MID, LOW}
 	
 //	@OneToMany(mappedBy = "personseq",
@@ -93,7 +95,7 @@ public class Person extends Proxy implements Serializable{
 	private Person(String userid, String name, String passwd, String tel,
 			 String point, int age, boolean male, int score, int mvp,
 			 int win, int km, boolean bookmark, String interest,
-			 boolean lolblack, boolean futblack, String job, String email) {
+			 boolean lolblack, boolean futblack, String job, String email, String summonername) {
 		
 		this.userid = userid;
 		this.name = name;
@@ -112,5 +114,6 @@ public class Person extends Proxy implements Serializable{
 		this.futblack = futblack;
 		this.job = job;
 		this.email = email;
+		this.summonername = summonername;
 	}
 }//testYOHAN
