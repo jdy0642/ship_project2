@@ -18,15 +18,14 @@
   </v-card>
   <v-card class="card">
     <v-card-title>특이사항</v-card-title>
-    <v-card-subtitle>{{difficulty}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
+    <v-card-subtitle>{{selectMatch.difficulty}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
     <v-row class="justify-center pa-1">
       <v-col
-        v-for="(n) of [
-          selectMatch.num,
+        v-for="(n) of [selectMatch.num,
           selectMatch.gender,
           selectMatch.difficulty,
           selectMatch.shoes,
-          'minmax']"
+          `minmax`]"
         :key="n" cols="2">
         <v-card>
           <v-img :src="require(`@/assets/img/matchRule/${
@@ -41,7 +40,7 @@
     <h3>구장 시설</h3>
     <v-row class="justify-center pa-1">
       <v-col
-        v-for="n of selectMatch.facility.split(',')"
+        v-for="n of ['size0','size0','size0','size0','size0']"
         :key="n" cols="2">
         <v-card>
           <v-img :src="require(`@/assets/img/stadium/${n}.svg`)"/>
@@ -125,6 +124,13 @@ export default {
       height: 30,
       success: 100,
       selectMatch: store.state.selectMatch,
+     /*  matchRule: [
+          store.state.selectMatch.num,
+          store.state.selectMatch.gender,
+          store.state.selectMatch.difficulty,
+          store.state.selectMatch.shoes,
+          'minmax'
+        ], */
       stadiumText: [
         `${store.state.selectMatch.num}vs${store.state.selectMatch.num}
                     구장의 최소 인원은 ${parseInt(store.state.selectMatch.num)*2}명입니다.`,
@@ -139,8 +145,9 @@ export default {
   },
   computed: {
     stadiumImg(){
-      return this.selectMatch.stadiumImg.split(",")
-        .map(i => require(`@/assets/img/stadium/${i}.jpg`))
+      /* return this.selectMatch.stadiumImg.split(",") */
+      return [1,2,3]
+      .map(i => require(`@/assets/img/stadium/${i}.jpg`))
     },
     timeToDate(){
       const time = new Date(this.selectMatch.time)
