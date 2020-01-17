@@ -3,16 +3,16 @@
 	<fut-head :style="`height: ${height}vh`" :propImg="stadiumImg"/>
   <v-card class="card">
     <v-card-title><h1>
-      <router-link :to="{name: 'futsalstadium', params: {stadiumName: selectMatch.stadiumName}}">
-        {{selectMatch.stadiumName}}</router-link>
+      <router-link :to="{name: 'futsalstadium', params: {stadiumName: selectMatch.stadiumname}}">
+        {{selectMatch.stadiumname}}</router-link>
     </h1></v-card-title>
-    <v-card-subtitle>{{selectMatch.stadiumAddr}}<br/>{{timeToDate}}</v-card-subtitle>
+    <v-card-subtitle>{{selectMatch.stadiumaddr}}<br/>{{timeToDate}}</v-card-subtitle>
     <v-card-action>
       <v-chip outlined @click="linkCopy">주소복사하기</v-chip>
       <v-chip outlined>지도보기</v-chip>
       <v-chip outlined>가는길보기</v-chip>
     </v-card-action>
-    <v-card-text>{{selectMatch.stadiumName}} {{timeToDate}} 의 경기는
+    <v-card-text>{{selectMatch.stadiumname}} {{timeToDate}} 의 경기는
         <code>{{success}}%</code> 확률로 정상 진행되고 있습니다.
     </v-card-text>
   </v-card>
@@ -21,15 +21,11 @@
     <v-card-subtitle>{{selectMatch.difficulty}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
     <v-row class="justify-center pa-1">
       <v-col
-        v-for="(n) of [selectMatch.num,
-          selectMatch.gender,
-          selectMatch.difficulty,
-          selectMatch.shoes,
-          `minmax`]"
+        v-for="(n) of matchRule"
         :key="n" cols="2">
         <v-card>
           <v-img :src="require(`@/assets/img/matchRule/${
-            ['4','5','6'].includes(n) ? n+'vs'+n : n }.svg`)" :alt="n"/>
+            ['4','5','6'].includes(n) ? n+'vs'+n : n }.svg`)"/>
           <v-card-text class="text-center">{{msgSwitch(n)}}</v-card-text>
         </v-card>
       </v-col>
@@ -40,7 +36,7 @@
     <h3>구장 시설</h3>
     <v-row class="justify-center pa-1">
       <v-col
-        v-for="n of ['size0','size0','size0','size0','size0']"
+        v-for="n of selectMatch.stadiumfacility.split('\,')"
         :key="n" cols="2">
         <v-card>
           <v-img :src="require(`@/assets/img/stadium/${n}.svg`)"/>
@@ -60,8 +56,8 @@
     <div class="d-flex">
       <v-img elevation-6 src="https://pds.joins.com/news/component/htmlphoto_mmdata/201910/26/ce877ed2-0800-457f-b9a6-a86044718d40.jpg"/>
       <div>
-        <v-card-title>매니저  : {{selectMatch.adminName}}</v-card-title>
-        <v-card-subtitle>한분한분 같이 웃고 즐기며 소통하는 매니저 {{selectMatch.adminName}}입니다. 
+        <v-card-title>매니저  : {{selectMatch.adminname}}</v-card-title>
+        <v-card-subtitle>한분한분 같이 웃고 즐기며 소통하는 매니저 {{selectMatch.adminname}}입니다. 
                 매 경기 안 다치고 소중한 시간 재미있게 즐길수 있게 최선을 다하겠습니다. 
                 같이 플랩으로 오세요!</v-card-subtitle>
       </div>
@@ -124,16 +120,16 @@ export default {
       height: 30,
       success: 100,
       selectMatch: store.state.selectMatch,
-     /*  matchRule: [
+      matchRule: [
           store.state.selectMatch.num,
           store.state.selectMatch.gender,
           store.state.selectMatch.difficulty,
           store.state.selectMatch.shoes,
           'minmax'
-        ], */
+        ],
       stadiumText: [
         `${store.state.selectMatch.num}vs${store.state.selectMatch.num}
-                    구장의 최소 인원은 ${parseInt(store.state.selectMatch.num)*2}명입니다.`,
+                    구장의 최소 인원은 ${parseInt(store.state.selectMatch.num)*2 -2}명입니다.`,
         `모든 ${store.state.selectMatch.num}구장은 정원 모집 시 삼파전으로 진행합니다.`,
         '주차 : 평일 2시간 무료 / 주말 무료',
         '(평일 이용시 주차 차량 번호 기입 필수, 2시간 이상 주차시 추가 비용 발생)',
@@ -145,8 +141,7 @@ export default {
   },
   computed: {
     stadiumImg(){
-      /* return this.selectMatch.stadiumImg.split(",") */
-      return [1,2,3]
+    return this.selectMatch.stadiumimg.split(',')
       .map(i => require(`@/assets/img/stadium/${i}.jpg`))
     },
     timeToDate(){
