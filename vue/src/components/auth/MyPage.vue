@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="height:860px;">
   <v-card>
     <v-toolbar flat>
       <v-toolbar-title class="title">MY Page</v-toolbar-title>
@@ -54,15 +54,210 @@
     </v-dialog>
   </v-toolbar>
 </v-card>
+<v-card class="cardinfo" color="#26c6da"
+        max-width="500"
+        max-height="120">
+        <v-card-title>
+        <span class="title font-weight-light">최광진</span>
+        <v-card-text class="headline font-weight-bold">MY POINT
+        <span>10000원</span>
+        <v-btn class="paybtn" rounded color="#ffc107" dark>충전하기</v-btn>
+        <v-divider class="mx-4"></v-divider>
+    </v-card-text>
+    </v-card-title>
+</v-card>
+<v-container class="gameinfo">
+    <v-expansion-panels
+        v-for="(item,i) in 1"
+        :key="i"
+    >
+      <v-expansion-panel>
+        <v-expansion-panel-header>Match 1</v-expansion-panel-header>
+        <v-expansion-panel-content>
+    <v-row style="justify-content: center;">
+          <v-card style="margin:20px;" width="100">
+            <br>
+          <p
+      class="text-break"
+      style="max-width: 3rem;"
+    >
+      12/12 토요일 15:00
+    </p>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="220">
+        <p></p>
+        <v-text>부천 크라우드 76</v-text>
+        <br>
+        <v-text>남성매치</v-text>
+        <v-text>(초급)</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>개인득점</v-text>
+        <p></p>
+        <v-text>2점</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>런닝</v-text>
+        <p></p>
+        <v-text>7KM</v-text>
+    </v-card>
+    </v-row>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+
+      <v-expansion-panel>
+        <v-expansion-panel-header>Match 2</v-expansion-panel-header>
+        <v-expansion-panel-content>
+    <v-row style="justify-content: center;">
+          <v-card style="margin:20px;" width="100">
+            <br>
+          <p
+      class="text-break"
+      style="max-width: 3rem;"
+    >
+      12/12 토요일 15:00
+    </p>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="220">
+        <p></p>
+        <v-text>부천 크라우드 76</v-text>
+        <br>
+        <v-text>남성매치</v-text>
+        <v-text>(초급)</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>개인득점</v-text>
+        <p></p>
+        <v-text>2점</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>런닝</v-text>
+        <p></p>
+        <v-text>7KM</v-text>
+    </v-card>
+    </v-row>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+
+            <v-expansion-panel>
+        <v-expansion-panel-header>Match 3</v-expansion-panel-header>
+        <v-expansion-panel-content>
+    <v-row style="justify-content: center;">
+          <v-card style="margin:20px;" width="100">
+            <br>
+          <p
+      class="text-break"
+      style="max-width: 3rem;"
+    >
+      12/12 토요일 15:00
+    </p>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="220">
+        <p></p>
+        <v-text>부천 크라우드 76</v-text>
+        <br>
+        <v-text>남성매치</v-text>
+        <v-text>(초급)</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>개인득점</v-text>
+        <p></p>
+        <v-text>2점</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>런닝</v-text>
+        <p></p>
+        <v-text>7KM</v-text>
+    </v-card>
+    </v-row>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+
+            <v-expansion-panel>
+        <v-expansion-panel-header>Match 4</v-expansion-panel-header>
+        <v-expansion-panel-content>
+    <v-row style="justify-content: center;">
+          <v-card style="margin:20px;" width="100">
+            <br>
+          <p
+      class="text-break"
+      style="max-width: 3rem;"
+    >
+      12/12 토요일 15:00
+    </p>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="220">
+        <p></p>
+        <v-text>부천 크라우드 76</v-text>
+        <br>
+        <v-text>남성매치</v-text>
+        <v-text>(초급)</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>개인득점</v-text>
+        <p></p>
+        <v-text>2점</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>런닝</v-text>
+        <p></p>
+        <v-text>7KM</v-text>
+    </v-card>
+    </v-row>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+
+      <v-expansion-panel>
+        <v-expansion-panel-header>Match 5</v-expansion-panel-header>
+        <v-expansion-panel-content>
+    <v-row style="justify-content: center;">
+          <v-card style="margin:20px;" width="100">
+            <br>
+          <p
+      class="text-break"
+      style="max-width: 3rem;"
+    >
+      12/12 토요일 15:00
+    </p>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="220">
+        <p></p>
+        <v-text>부천 크라우드 76</v-text>
+        <br>
+        <v-text>남성매치</v-text>
+        <v-text>(초급)</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>개인득점</v-text>
+        <p></p>
+        <v-text>2점</v-text>
+    </v-card>
+      <v-card style="margin:20px;" class="title font-weight-light" width="100">
+        <p></p>
+        <v-text>런닝</v-text>
+        <p></p>
+        <v-text>7KM</v-text>
+    </v-card>
+    </v-row>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+</v-container>
 <div class="center">
   <div class="card">
     <div class="additional">
       <div class="user-card">
         <div class="level center">
           FutSal
-        </div>
-        <div class="points center">
-          30,000 Points
         </div>
         <!-- 이미지 -->
         <img width="100px" height="100px" src="http://mblogthumb4.phinf.naver.net/MjAxODA0MTdfMjYx/MDAxNTIzOTIzOTU2MTE0.tKtnqOKqJas0q4h-RdyVZOQA0CfIisbvIdazrbBPB4kg.bO4IRWlDtIiZthVG0NmuyjK2TjkBAKprDUALHuZKv0Mg.PNG.gaogirl/%EC%B6%95%EA%B5%AC%EA%B3%B5.png?type=w800"
@@ -95,27 +290,13 @@
         </div>
       </div>
     </div>
-    <div class="general">
-      <h1>최근 경기</h1>
-      <p>경기일자 : 2020-01-07</p>
-      <p>경기장 : 부천경기장</p>
-      <p>승,패 : 승리</p>
-      <p>득점 : 1점</p>
-      <p>경고 : 0회</p>
-      <p>런닝 : 4Km</p>
-      <p></p>
-      <p></p>
-      <span class="more">마우스를 올려보세요.</span>
-    </div>
+      <img class="futsalimg" src="https://s3.eu-north-1.amazonaws.com/norkring/_articleLandscape/iStock-1149063259.jpg?mtime=20190925151000">
   </div>
   <div class="card green">
     <div class="additional">
       <div class="user-card">
         <div class="level center">
           League of Legends
-        </div>
-        <div class="points center">
-          30,000 Points
         </div>
         <!-- 이미지 -->
         <img width="100px" height="100px" src="https://i.pinimg.com/originals/b8/3e/6f/b83e6fea403a390bd06ae17c187408e3.png"
@@ -148,30 +329,8 @@
         </div>
       </div>
     </div>
-    <div class="general">
-      <h1>Hide on bush</h1>
-      <div>선호하는 포지션
-      </div>
-      <div class="po">
-      <img height="50px" width="50px" src="https://file.namu.moe/file/8ca81569f50919ce8c07b596e4a08b118704bb95be634079b2238663368897220aafdfe4b404a23c45a3dceb079a5463">
-      <img height="50px" width="50px" src="https://w.namu.la/s/d417c241d97480f945f21476e56a337167e41bd0f19b56781ee5b4eb6c8225bccddcb64a308c85311b7937f202a9272834f581d08078cdf1c54d7ac05ba347c167b215ef430195b02b48f01b60c7e21800ea72b24d6bc946599f41078919a80f">
-      </div>
-      <div>최근 7일간 랭크 승률</div>
-      <div class="chart">
-        83%
-        <span></span>
-      </div>
-      <span class="more">마우스를 올려보세요.</span>
-    </div>
+    <img class="futsalimg" src="https://www.gamingdose.com/wp-content/uploads/2019/10/Qiyana-Louis-Vuitton-768x455.jpg">
   </div>
-</div>
-<div style="margin-top: 650px;">
-    <ul class="social-icons">
-        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-        <li><a href="#"><i class="fa fa-comment-o"></i></a></li>
-    </ul>
 </div>
 </div>
 </template>
@@ -193,8 +352,8 @@ html, body {
 }
 .center {
   position: absolute;
-  top: 47%;
-  left: 50%;
+  top: 60%;
+  left: 20%;
   -webkit-transform: translate(-50%, -50%);
 }
 .card {
@@ -244,6 +403,7 @@ html, body {
 }
 .card .additional .user-card .level,
 .card .additional .user-card .points {
+  left: 50%;
   top: 15%;
   color: #fff;
   text-transform: uppercase;
@@ -316,105 +476,27 @@ html, body {
 .card .additional .stats div.value.infinity {
   font-size: 1.4rem;
 }
-.card .general {
-  width: 300px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
-  box-sizing: border-box;
-  padding: 1rem;
-  padding-top: 0;
-}
 .card .general .more {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
   font-size: 1em;
 }
+.cardinfo{
+  margin-right: 60%;
+  margin-top: 1%;
+}
+.gameinfo{
+  width: 60%;
+  margin-left: 40%;
+}
+.paybtn{
+  float: right;
+}
+.futsalimg{
+  width: 100%;
+  height: 100%;
+}
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
-.social-icons {
-  padding: 0;
-  list-style: none;
-  margin: 1em;
-}
-.social-icons li {
-  display: inline-block;
-  margin: 0.15em;
-  position: relative;
-  font-size: 1.2em;
-}
-.social-icons i {
-  color: #fff;
-  position: absolute;
-  top: 21px;
-  left: 21px;
-  transition: all 265ms ease-out;
-}
-.social-icons a {
-  display: inline-block;
-}
-.social-icons a:before {
-  transform: scale(1);
-  -ms-transform: scale(1);
-  -webkit-transform: scale(1);
-  content: " ";
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  display: block;
-  background: linear-gradient(45deg, #FF003C, #C648C8);
-  transition: all 265ms ease-out;
-}
-.social-icons a:hover:before {
-  transform: scale(0);
-  transition: all 265ms ease-in;
-}
-.social-icons a:hover i {
-  transform: scale(2.2);
-  -ms-transform: scale(2.2);
-  -webkit-transform: scale(2.2);
-  color: #FF003C;
-  background: -webkit-linear-gradient(45deg, #FF003C, #C648C8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 265ms ease-in;
-}
-.chart {
-  margin: 22px auto;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  border-radius: 50px;
-  background: white;
-  font: bold 35px/100px Sans-Serif;
-  text-align: center;
-  line-height: 80px;
-  color: #54A2DD;
-}
-.chart:before {
-  content: "";
-  position: absolute;
-  left: -20px;
-  top: -20px;
-  bottom: -20px;
-  right: -20px;
-  border-radius: 50%;
-  background: #54A2DD;
-  z-index: -2;
-}
-.chart span {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-top: 80px solid white;
-  z-index: -1;
-  top: -25px;
-  left: 0px;
-  transform-origin: 50px 80px;
-  transform: rotate(285deg);
-}
+
 </style>

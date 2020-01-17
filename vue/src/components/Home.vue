@@ -1,13 +1,13 @@
 <template>
-<div id="app" >
+<div id="app">
 <layout>
    <template #header="h" >
-    <v-app id="inspire" style="height:800;" >
+    <v-app id="inspire" style="height:1010px;" >
   <!-- --------------------------------------- 네비 ------------------------------------------ -->
       <div >
-        <v-toolbar class="sticky" color="indigo darken-1" >
+        <v-toolbar fixed class="sticky" color="indigo darken-1 " >
         <!-- <v-toolbar color="#3F51B5" :src="'https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg'"> -->
-          <v-toolbar-title class="white--text" style="margin-left:240px;" @click="home()" > 
+          <v-toolbar-title class="white--text" style="margin-left:300px;" @click="home()" > 
             <v-icon large color="white">mdi-vuetify</v-icon>
               SHIP 
           </v-toolbar-title>
@@ -15,13 +15,32 @@
         <v-spacer></v-spacer>
           <v-toolbar-items  style="margin-right:225px;" >
 
-            <v-row style="margin-right:20px;">
+            <!-- <v-row style="margin-right:20px;">
               <v-badge :value="hover" color="deep-purple accent-4" left offset-x="100" offset-y="20"
                         content="9999+" transition="slide-x-transition">
                 <v-hover v-model="hover">
                   <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="test()"   >TEST</v-btn>
                 </v-hover>
               </v-badge>
+            </v-row> -->
+  
+            <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
+            </v-row>
+
+            <v-row v-else>
+              <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="register()">구장 등록</v-btn>
+            </v-row>
+            <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
+            </v-row>
+
+            <v-row v-else>
+              <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="membermanage()">회원 관리</v-btn>
+            </v-row>
+            <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
+            </v-row>
+
+            <v-row v-else>
+              <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="revenuemanage()">수익 관리</v-btn>
             </v-row>
 
             <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
@@ -45,7 +64,7 @@
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on }">
-                  <v-btn style="margin-top:12px;font-size:15px" color="indigo darken-1" v-on="on">  Contents  </v-btn>
+                  <v-btn style="margin-top:12px;font-size:15px;margin-right:70px" color="indigo darken-1" v-on="on">  Contents  </v-btn>
                 </template>
                 <v-list>
                   <v-list-item v-for="(item) of items" :key="item.title" @click="contgo(item.link)">
@@ -75,38 +94,12 @@
       </div>
     </v-app>
   </template>
-   <!-- --------------------- 사이드 바  ------------------------- -->
+   <!-- --------------------- 컨텐츠  ------------------------- -->
 <template #content ="c">
-  <div id="app" style="width:1400px;height:873px" >
-    <v-app id="inspire">
-        <v-card height="600px"  >
-          <!-- <v-navigation-drawer absolute temperate left width="20%" >
-      <template v-slot:prepend>
-              <v-list-item two-line>
-              <v-list-item-avatar>
-              <img src="https://randomuser.me/api/portraits/women/81.jpg">
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title>{{state.person.name}}님 환영합니다.</v-list-item-title>
-              <v-list-item-subtitle></v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-      </template>
-        <v-divider></v-divider>
-          <v-list dense>
-            <v-list-item v-for="side of sides" :key="side.title" @click="sidego(side.link)">
-                <v-list-item-icon>
-                  <v-icon>{{ side.icon }}</v-icon>
-                </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>{{ side.title }}</v-list-item-title>
-                <router-link :to="side.link"></router-link>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-navigation-drawer> -->
-      <!-- ----------------------------------------컨텐츠------------------------------------------ -->
-        <v-navigation-drawer absolute right width="100%" height="873px" >
+  <div id="app" style="width:67%;"  >
+    <v-app id="inspire" >
+        <v-card>
+        <v-navigation-drawer  width="100%" >
           <template>
             <router-view></router-view>
           </template>
@@ -161,6 +154,15 @@ export default {
     },
     mypage(){
       this.$router.push({path:'/mypage'})
+    },
+    register(){
+      this.$router.push({path:'/register'})
+    },
+    membermanage(){
+      this.$router.push({path:'/membermanage'})
+    },
+    revenuemanage(){
+      this.$router.push({path:'/revenuemanage'})
     },
     test(){
       this.$router.push({path:'/test'})

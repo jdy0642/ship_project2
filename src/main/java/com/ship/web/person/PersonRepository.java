@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 public interface PersonRepository extends CrudRepository<Person, Long> {
 	public Person findByUseridAndPasswd (String userid, String passwd);
 	public Person findByUserid (String userid);
-	@Query(value="SELECT * FROM PERSON GROUP BY HAK", nativeQuery=true)
-	public List<Person> findGroupByHak();
-	public List<Person> findByRole(String role);
+	@Query(value="SELECT * FROM PERSON GROUP BY ", nativeQuery=true)
+	public List<Person> findGroupByJob();
+	public List<Person> findByJob(String job);
 	
 }
