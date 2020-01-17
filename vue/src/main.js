@@ -8,11 +8,13 @@ import VSwitch from 'v-switch-case'
 import axios from 'axios'
 import moment from 'moment'
 import VueMonentJS from 'vue-momentjs'
+import map from 'vue-daum-map'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.use(VSwitch)
 Vue.use(require('vue-moment'));
+Vue.use(map)
 
 new Vue({
   vuetify,
