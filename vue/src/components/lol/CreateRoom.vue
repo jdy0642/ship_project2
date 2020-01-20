@@ -1,5 +1,5 @@
 <template>
-<div id="app" style="height:685px">
+<div id="app" style="height:100%">
     <form class="ma-4">
       <v-text-field
         label="카드네임"
