@@ -72,21 +72,23 @@ export default {
             text: '고유번호',
             align: 'left',
             filterable: false,
-            value: 'personid',
+            value: 'personseq',
           },
           { text: '아이디', value: 'userid' },
           { text: '비밀번호', value: 'passwd' },
           { text: '이름', value: 'name' },
-          { text: '생일', value: 'birthday' },
           { text: '연락처', value: 'tel' },
+          { text: '포인트', value: 'point' },
+          { text: '나이', value: 'age' },
+          { text: '성별', value: 'male'},
+          { text: '관심사', value: 'interest' },
           { text: '이메일', value: 'email' },
-          { text: '포인트', value: 'score' },
-          { text: '구분', value: 'role' },
-          { text: '블랙 등록', value: 'male'},
+          { text: '롤블랙', value: 'lolblack' },
+          { text: '구분', value: 'job' },
+          
         ],
       }
    },
-   //df
    methods:{
     blacklist(){
       alert('블랙 리스트 관리 창으로 이동  ')
