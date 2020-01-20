@@ -96,6 +96,25 @@ public class PersonController {
 		}
 		return list.stream().filter(role-> role.getJob().equals("teacher")).sorted(Comparator.comparing(Person::getPersonseq).reversed()).collect(Collectors.toList());
 	}
+	@PostMapping("/createroom")
+	public HashMap<String, Object> createroom(@RequestBody Person person) {
+		p.accept("카드 생성 컨트롤러");
+		HashMap<String, Object> map = new HashMap<>();
+			
+		
+		person = personRepository.save(person);
+		
+		if(person!= null) {
+			p.accept("조인 성공");
+			map.put("result","SUCCESS");
+			map.put("person",person);
+		}else {
+			p.accept("조인 실패");
+			map.put("result","FAIL");
+			map.put("person",person);
+		}
+		return map;
+	}
 
 	@PutMapping("/update/{userid}")
 	public void update(@RequestBody Person person, @PathVariable String userid) {
