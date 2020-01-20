@@ -7,7 +7,7 @@
       <div >
         <v-toolbar fixed class="sticky" color="indigo darken-1 " >
         <!-- <v-toolbar color="#3F51B5" :src="'https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg'"> -->
-          <v-toolbar-title class="white--text" style="margin-left:300px;" @click="home()" > 
+          <v-toolbar-title class="white--text" style="margin-left:300px;" @click="test()"> 
             <v-icon large color="white">mdi-vuetify</v-icon>
               SHIP 
           </v-toolbar-title>
