@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 156 120" style="enable-background:new 0 0 156 120;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFBE1E;}
+	.st1{clip-path:url(#SVGID_2_);}
+	.st2{fill:#E29213;}
+	.st3{fill:#FCFCFC;}
+	.st4{fill:#2D3033;}
+	.st5{fill:#4B4D51;}
+	.st6{fill:#959FAD;}
+	.st7{fill:#F23D46;}
+</style>
+<g>
+	<path class="st0" d="M85.2,85.7h-5L78,76.5l-2.2,9.2h-5l-3.7-14.8h4.6l2.1,9.7l2.3-9.7h4l2.4,9.7l2-9.7h4.6L85.2,85.7z"/>
+</g>
+<rect x="63.2" y="77.7" class="st0" width="28.7" height="1.2"/>
+<g>
+	<defs>
+		<rect id="SVGID_1_" x="62.3" y="68.7" width="36.2" height="8.2"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	<g class="st1">
+		<path class="st2" d="M85.2,85.7h-5L78,76.5l-2.2,9.2h-5l-3.7-14.8h4.6l2.1,9.7l2.3-9.7h4l2.4,9.7l2-9.7h4.6L85.2,85.7z"/>
+	</g>
+</g>
+<title>Group 13 Copy</title>
+<desc>Created with Sketch.</desc>
+<g>
+	<g>
+		<rect x="18" class="st3" width="9.2" height="92"/>
+		<rect x="128.8" class="st3" width="9.2" height="92"/>
+	</g>
+	<path class="st4" d="M101,74.6H55c-6.9,0-12.5-5.6-12.5-12.5V0h70.9v62.1C113.5,69,107.9,74.6,101,74.6z"/>
+	<rect x="49.6" class="st5" width="56.8" height="41.2"/>
+	<path class="st6" d="M54.4,41.2h47.3c2.7,0,5.1,2,5.6,4.7l0.8,4.6c0.6,3.4-2.1,6.6-5.6,6.6H53.6c-3.5,0-6.2-3.2-5.6-6.6l0.8-4.6
+		C49.3,43.2,51.6,41.2,54.4,41.2z"/>
+	<path class="st7" d="M64.4,71.9h-6.7c-1.1,0-2-0.9-2-2v-1.5c0-1.1,0.9-2,2-2h6.7c1.1,0,2,0.9,2,2v1.5C66.4,71,65.5,71.9,64.4,71.9z
+		"/>
+	<path class="st7" d="M97.9,71.9h-6.7c-1.1,0-2-0.9-2-2v-1.5c0-1.1,0.9-2,2-2h6.7c1.1,0,2,0.9,2,2v1.5C99.9,71,99,71.9,97.9,71.9z"
+		/>
+</g>
+</svg>

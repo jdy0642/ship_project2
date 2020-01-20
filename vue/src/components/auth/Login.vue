@@ -70,12 +70,10 @@ export default {
                 store.state.person = res.data.person
                 if(this.state.person.role != 'student'){
                     this.state.authCheck = true
-                    this.$router.push({path:'/'})
                 }else{
                     this.state.authCheck = false
                 }
                 this.dialog=false
-                this.$router.push({path:'/'})
             }else{
                 alert(`로그인 실패`)
                 this.$router.go({path: '/login'})
