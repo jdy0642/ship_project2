@@ -21,22 +21,22 @@
                 <v-radio
                   label="브론즈"
                   color="#A1887F"
-                  value="orange"
+                  value="tier6"
                 ></v-radio>
                 <v-radio
                   label="실버"
                   color="#CFD8DC"
-                  value="grey"
+                  value="tier5"
                 ></v-radio>
                 <v-radio
                   label="골드"
                   color="#FFC107"
-                  value="yellow"
+                  value="tier4"
                 ></v-radio>
                 <v-radio
                   label="플레티넘"
                   color="#A7FFEB"
-                  value="info"
+                  value="tier3"
                 ></v-radio>
                 <v-radio
                   label="다이아"
@@ -74,10 +74,11 @@
           auto-grow
           style="width:800px;"
           placeholder="내용을 입력해주세요"
+          :counter="300"
         ></v-textarea>
     </form>
-    <v-btn @click="createroom()">방생성</v-btn>
-    <v-btn @click="lol()">방취소</v-btn>
+    <v-btn color="primary" @click="createroom()">방 생성하기</v-btn>
+    <v-btn color="error" @click="lol()">취소(돌아가기)</v-btn>
 
 </div>
 </template>
