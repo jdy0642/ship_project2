@@ -86,6 +86,8 @@ public class Person extends Proxy implements Serializable{
 	private String summonername;
 	enum Level{HIGH, MID, LOW}
 	
+	//test hsc
+	
 //	@OneToMany(mappedBy = "personseq",
 //			cascade = CascadeType.ALL,
 //			orphanRemoval = true)
