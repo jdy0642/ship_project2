@@ -29,7 +29,7 @@ public class CrawlController {
 	
 	@GetMapping("/summoner/userName={a}")
 	public ArrayList<HashMap<String, String>> opgg(@PathVariable String a){
-		System.out.println("r?");
+		System.out.println("크롤링 진입");
 		return crawler.opggCrawling(a);
 	}
 }

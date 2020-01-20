@@ -8,9 +8,9 @@
    <v-icon style="margin:20px;">mdi-crown</v-icon>
    <v-icon v-bind:title="msg1">mdi-key</v-icon>
             <v-card-text>소환사명 : {{temp.summonername}}</v-card-text>
-               <v-card-text center>티어 : {{temp.rank}}</v-card-text>
-          <v-card-text>승률 : 55%</v-card-text>
-          <v-card-text>최근 10경기 전적 : {{temp.rate}}</v-card-text>
+            <v-card-text center>티어 : {{temp.tier}}</v-card-text>
+            <v-card-text>승률 : {{temp.rate}}</v-card-text>
+            <v-card-text>랭킹 : {{temp.rank}}</v-card-text>
          </v-card-subtitle>
   </v-card>
   </v-responsive>
@@ -31,7 +31,7 @@
   
   <v-content >
     
-        <v-flex style="margin-right:5px; margin-top:5px">
+        <!-- <v-flex style="margin-right:5px; margin-top:5px">
           <v-card color="grey lighten-3">
             <v-toolbar dark color="primary darken-1">
               <v-toolbar-title center>채팅</v-toolbar-title>
@@ -52,9 +52,11 @@
                 </v-form>
             </v-card-actions>
           </v-card>
-        </v-flex>
-        <v-icon @click="lol()">mdi-reply</v-icon><h4 @click="lol()">뒤로가기</h4>
+        </v-flex> -->
 
+
+        <v-icon @click="lol()">mdi-reply</v-icon><h4 @click="lol()">뒤로가기</h4>
+        <a href=""></a>
   </v-content>
   </v-row>
 </div>
@@ -62,9 +64,11 @@
 </template>
 <script>
 import axios from "axios"
-export default{
+import {store} from "@/store"
+export default {
   data(){
     return {
+      state:store.state,
       logs: [],
       msg: null,
       msg1: '방장위임',
@@ -88,25 +92,21 @@ export default{
     }
   },
   created(){
-    let url = `${this.context}/crawl/summoner/userName=yamine`
-
+    let url = `${this.context}/crawl/summoner/userName=${this.state.person.summonername}`
     axios
     .get(url)
     .then(res=>{
       this.temp = res.data[0]
       this.summonername = res.data[0].summonername
     })
-
-
-
   },
-  watch: {
-    logs() {
-      setTimeout(() => {
-        this.$refs.chat.$el.scrollTop = this.$refs.chat.$el.scrollHeight;
-      }, 0);
-    }
-  }
+  // watch: {
+  //   logs() {
+  //     setTimeout(() => {
+  //       this.$refs.chat.$el.scrollTop = this.$refs.chat.$el.scrollHeight;
+  //     }, 0);
+  //   }
+  // }
 }
 </script>
 <style scoped>
