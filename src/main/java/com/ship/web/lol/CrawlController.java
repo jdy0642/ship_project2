@@ -27,10 +27,10 @@ public class CrawlController {
 	@Autowired Proxy pxy;
 	
 	
-	@GetMapping("/summoner/userName={a}")
-	public ArrayList<HashMap<String, String>> opgg(@PathVariable String a){
+	@GetMapping("/summoner/userName={lolname}")
+	public ArrayList<HashMap<String, String>> opgg(@PathVariable String lolname){
 		System.out.println("크롤링 진입");
-		return crawler.opggCrawling(a);
+		return crawler.opggCrawling(lolname);
 	}
 }
 

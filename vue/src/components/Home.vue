@@ -26,19 +26,26 @@
   
             <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
             </v-row>
-
             <v-row v-else>
-              <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="register()">구장 등록</v-btn>
+              <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="reservationmanage()">예약 관리</v-btn>
             </v-row>
+
             <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
             </v-row>
-
             <v-row v-else>
               <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="membermanage()">회원 관리</v-btn>
             </v-row>
+
             <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
             </v-row>
+            <v-row v-else>
+              <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="register()">구장 등록</v-btn>
+            </v-row>
 
+           
+
+            <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
+            </v-row>
             <v-row v-else>
               <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="revenuemanage()">수익 관리</v-btn>
             </v-row>
@@ -46,7 +53,6 @@
             <v-row style="margin-right:85px; margin-top:12px;" v-if="!authCheck">
               <join></join>
             </v-row>
-
             <v-row v-else>
               <v-btn text style="font-size:15px;margin-top:12px" class="white--text" @click="mypage()">MY PAGE</v-btn>
             </v-row>
@@ -54,7 +60,6 @@
             <v-row style="margin-right:85px ; margin-top:12px"  v-if="!authCheck">
                 <login></login>
             </v-row>
-
             <v-row style="margin-right:5px ; margin-top:12px" v-else >
                 <v-btn text style="font-size:15px" class="white--text" @click="logout()">LOGOUT</v-btn>
             </v-row>
@@ -154,6 +159,9 @@ export default {
     },
     mypage(){
       this.$router.push({path:'/mypage'})
+    },
+    reservationmanage(){
+      this.$router.push({path:'/reservationmanage'})
     },
     register(){
       this.$router.push({path:'/register'})
