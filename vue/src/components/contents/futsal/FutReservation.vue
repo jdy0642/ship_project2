@@ -86,4 +86,5 @@ export default {
 .selected{
   background-color: #31b0d5;
 }
+
 </style>

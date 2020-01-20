@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div id="app" style="height:100%">
     <form class="ma-4">
     <v-card-title style="width:800px">
       <v-text-field

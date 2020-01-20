@@ -7,13 +7,13 @@
       <div >
         <v-toolbar fixed class="sticky" color="indigo darken-1 " >
         <!-- <v-toolbar color="#3F51B5" :src="'https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg'"> -->
-          <v-toolbar-title class="white--text" style="margin-left:300px;" @click="home()" > 
+          <v-toolbar-title class="white--text" style="margin-left:16%;" @click="home()" > 
             <v-icon large color="white">mdi-vuetify</v-icon>
               SHIP 
           </v-toolbar-title>
 
         <v-spacer></v-spacer>
-          <v-toolbar-items  style="margin-right:225px;" >
+          <v-toolbar-items  style="margin-right:12%;" >
 
             <!-- <v-row style="margin-right:20px;">
               <v-badge :value="hover" color="deep-purple accent-4" left offset-x="100" offset-y="20"
