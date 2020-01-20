@@ -86,6 +86,7 @@ export default {
         ],
       }
    },
+   //df
    methods:{
     blacklist(){
       alert('블랙 리스트 관리 창으로 이동  ')
