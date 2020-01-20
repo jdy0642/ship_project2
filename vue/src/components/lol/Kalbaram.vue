@@ -5,10 +5,11 @@
 
    <v-container fluid>
      
-      <v-radio-group v-model="row" :mandatory="false">
+      <!-- <v-radio-group v-model="row" :mandatory="false">
         <v-radio @click="lol()" label="개인/2인랭크" value="rank" ></v-radio>
         <v-radio @click="kalbaram()" label="칼바람나락" value="kal"></v-radio>
-      </v-radio-group>
+      </v-radio-group> -->
+   <v-btn style="float:left" @click="lol()" color="primary">2인랭크 하러 가기! </v-btn>
     </v-container>
    <v-row>
    <v-card id="d" class="mx-auto" dark>
@@ -53,11 +54,16 @@
 </div>
 </template>
 <script>
+import axios from 'axios'
+import {store} from '@/store'
 export default{
    data(){
       return{
          row: 'kal',
-         link: '/kalbaram'
+         link: '/kalbaram',
+         state: store.state,
+         userid: store.state.userid,
+         result:''
       }
    },
    methods:{
@@ -65,6 +71,25 @@ export default{
          this.$router.push({path:'/joinKal'})
       },
       createRoom(){
+         let url = `http://localhost:8080/createRoom`
+         let headers = {
+            'authorization': 'JWT fefege..',
+              'Accept' : 'application/json',
+              'Content-Type': 'application/json'
+              }
+         let data = {
+            userid : this.userid,
+            
+         }
+         axios
+         .post(url, data, headers)
+         .then(res =>{
+            this.result = res.data
+            alert(this.result)
+         })
+         .catch(e=>{
+            alert('AXIOS FAIL'+e)
+         })
          this.$router.push({path:'/createRoom'})
       },
       kalbaram(){

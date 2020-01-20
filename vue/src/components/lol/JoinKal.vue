@@ -1,7 +1,7 @@
 <template>
 <div>
   
-    <v-row>
+    <!-- <v-row>
       <v-card>
         <v-container>
           <v-row style="margin:5px;">
@@ -35,7 +35,7 @@
         </v-container>
       </v-card>
 
-    </v-row>
+    </v-row> -->
  
 </div>
 </template>

@@ -4,7 +4,7 @@
   </div>
    <v-card >
     <v-card-title style="padding-left:250px;color:black;background-color:#B0BEC5">
-    <div><h2 style="font-weight:bold;">회원 목록 관리</h2></div>
+    <div><h2 style="font-weight:bold;">예약 현황</h2></div>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -24,9 +24,6 @@
       class="elevation-1"
       @page-count="pageCount = $event"
     >
-    <template v-slot:item.male="{ item }" >
-      <v-checkbox v-model="item.male" :label="`${item.male}`"></v-checkbox>
-    </template>
     <template>
     <v-data-table item-key="name" class="elevation-1" loading loading-text="Loading... Please wait"></v-data-table>
     </template> 
@@ -48,7 +45,7 @@ import axios from 'axios'
 export default {
   created(){
     axios
-         .get(`${this.context}/customermanage`)
+         .get(`${this.context}/res/1`)
          .then(res =>{
             this.lists = res.data
          })
@@ -69,22 +66,13 @@ export default {
     search: '',
         headers: [
           {
-            text: '고유번호',
-            align: 'left',
+            text: '예약번호', align: 'left',
             filterable: false,
-            value: 'personseq',
+            value: 'resnum',
           },
           { text: '아이디', value: 'userid' },
-          { text: '비밀번호', value: 'passwd' },
-          { text: '이름', value: 'name' },
-          { text: '연락처', value: 'tel' },
-          { text: '포인트', value: 'point' },
-          { text: '나이', value: 'age' },
-          { text: '성별', value: 'male'},
-          { text: '관심사', value: 'interest' },
-          { text: '이메일', value: 'email' },
-          { text: '롤블랙', value: 'lolblack' },
-          { text: '구분', value: 'job' },
+          { text: '스타디움아이디', value: 'stadiumid' },
+          { text: '예약일자', value: 'resdate' },
           
         ],
       }
