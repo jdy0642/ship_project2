@@ -1,7 +1,7 @@
 <template>
 <div>
   <fut-head v-if="stadiumName===''" :style="`height: ${height[0]}vh`" :propImg="headImg" class="table"></fut-head>
-  <fut-map v-else :propSearchWord="stadiumName" @send="setStadium"
+  <fut-map v-else :propSearchWord="`${stadiumName} 풋살 경기장`" @send="setStadium"
     :style="`height: ${height[0]}vh; width:100%;`"></fut-map>
   <fut-search-bar :style="`height: ${height[1]}vh`" class="table" @send="setStadium"></fut-search-bar>
   <fut-reservation :style="`height: ${height[2]}vh`" class="table"  @send="setTime"></fut-reservation>

@@ -65,7 +65,7 @@ export default {
     marker(){
 		let daummaps = window.daum.maps
 		daummaps.services.Places()
-		daummaps.services.keywordSearch(`${this.searchWord} 풋살 경기장`, this.placesSearchCB,null)
+		daummaps.services.keywordSearch(`${this.searchWord}`, this.placesSearchCB,null)
 	},
 	markerDel(){
 		this.markers.map(i=>{
