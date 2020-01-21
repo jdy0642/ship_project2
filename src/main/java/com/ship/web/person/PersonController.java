@@ -8,7 +8,9 @@ import java.util.stream.Stream;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ship.web.util.Printer;
 
 @RestController
@@ -85,27 +86,59 @@ public class PersonController {
 		.delete(personRepository
 				.findByUserid(userid));
 	}
+	
+	@GetMapping("/customermanage")
+	public List<Person> memberlist(){
+		Iterable<Person> entites = personRepository.findAll();
+		p.accept("목록 컨트롤러 들어옴");
+		List<Person> list = new ArrayList<>();
+		for(Person p : entites) {
+			Person dto = modelMapper.map(p, Person.class);
+			list.add(dto);
+		}
+		return list.stream().filter(role-> role.getJob().equals("teacher")).sorted(Comparator.comparing(Person::getPersonseq).reversed()).collect(Collectors.toList());
+	}
+	@PostMapping("/createroom")
+	public HashMap<String, Object> createroom(@RequestBody Person person) {
+		p.accept("카드 생성 컨트롤러");
+		HashMap<String, Object> map = new HashMap<>();
+			
+		
+		person = personRepository.save(person);
+		
+		if(person!= null) {
+			p.accept("조인 성공");
+			map.put("result","SUCCESS");
+			map.put("person",person);
+		}else {
+			p.accept("조인 실패");
+			map.put("result","FAIL");
+			map.put("person",person);
+		}
+		return map;
+	}
+
 	@PutMapping("/update/{userid}")
 	public void update(@RequestBody Person person, @PathVariable String userid) {
 		p.accept("수정 진입");
 		person = personRepository.save(person);
 	}
-	@GetMapping("/students")
-	public List<Person> list() {
-		p.accept("가져오기 진입");
-//		Iterable<Person> entities=personRepository.findByRole("student");
-		Iterable<Person> entities = personRepository.findAll();
-		List<Person> list = new ArrayList<>();
-		for(Person p : entities) {
-			Person dto = modelMapper.map(p, Person.class);
-				list.add(dto);
-		}
-		return  list.stream()
-					.filter(role-> role.getJob().equals("student"))
-						.sorted(Comparator.comparing(Person::getPersonseq)
-							.reversed()).collect(Collectors.toList());
-		
-	}
+//	@GetMapping("/students")
+//	public List<Person> list() {
+//		p.accept("가져오기 진입");
+////		Iterable<Person> entities=personRepository.findByRole("student");
+//		Iterable<Person> entities = personRepository.findAll();
+//		List<Person> list = new ArrayList<>();
+//		for(Person p : entities) {
+//			Person dto = modelMapper.map(p, Person.class);
+//				list.add(dto);
+//		}
+//		return  list.stream()
+//					.filter(role-> role.getJob().equals("student"))
+//						.sorted(Comparator.comparing(Person::getPersonseq)
+//							.reversed()).collect(Collectors.toList());
+//		
+//	}
 	@GetMapping("/students/{searchWord}")
 	public Stream<Person> findSome(@PathVariable String searchWord) {
 		p.accept("검색어: "+searchWord);

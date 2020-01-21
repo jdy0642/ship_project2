@@ -96,4 +96,5 @@ export default {
 .table{
 	padding: 3px;
 }
+
 </style>
