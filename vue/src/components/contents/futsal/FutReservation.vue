@@ -48,7 +48,7 @@ export default {
     tableChange(index,time){
       this.selectTime = time
       this.selectIndex = index
-      this.$emit("send",time)
+      this.$emit("sendTime",time)
     },
     selected(time,selectTime){
       // 부트스트랩  return "vspButton " + (time == selectTime ? "selected" : "") bootstrap

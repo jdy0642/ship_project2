@@ -29,26 +29,36 @@
 import VueDaumMap from 'vue-daum-map'
 export default {
   components:{VueDaumMap},
-  props:['propSearchWord'],
+	props:['propSearchWord','propLocation'],
   data(){
     return {
 		mapData:{
 		appKey: '789b2dc91d9235fae744572478c25f39', // 테스트용 appkey
-		center: {lat:33.450701, lng:126.570667}, // 지도의 중심 좌표
+		center: this.propLocation == undefined ? {lat:33.450701, lng:126.570667} : this.propLocation,
 		level: 3, // 지도의 레벨(확대, 축소 정도),
 		mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
 		libraries: ['services', 'clusterer', 'drawing'], // 추가로 불러올 라이브러리
 		},
 		markers: [],
 		mapObject: null, // 지도 객체. 지도가 로드되면 할당됨.
-		searchWord: this.propSearchWord
+		searchWord: this.propSearchWord,
+		location: '',
     }
   },
 	watch: {
-		propSearchWord: function (val){
+		propSearchWord: function(val){
 			this.searchWord = val
 			this.markerDel()
 			this.marker()
+		},
+		propLocation: function(val){
+			this.location = val
+			this.markerDel()
+		}
+	},
+	computed:{
+		changePropLocation(){
+			return this.propLocation
 		}
 	},
   methods: {
@@ -60,54 +70,54 @@ export default {
 		map.addControl(new daummaps.ZoomControl()
 			, daummaps.ControlPosition.TOPRIGHT); 
 		this.mapObject = map
-		this.marker()
+		alert(`검색어:${this.propSearchWord} 현재위치:${this.propLocation.lat},${this.propLocation.lng}`)
     },
     marker(){
 		let daummaps = window.daum.maps
 		daummaps.services.Places()
 		daummaps.services.keywordSearch(`${this.searchWord}`, this.placesSearchCB,null)
-	},
-	markerDel(){
-		this.markers.map(i=>{
-			i.setMap(null);
-		})
-		this.markers = []
-	},
-	placesSearchCB(data, status){
-		let map = this.mapObject
-		let daummaps = window.daum.maps
-		if (status === daummaps.services.Status.OK) {
-			let bounds = new daummaps.LatLngBounds();
-			for (let i=0; i<data.length; i++) {
-				this.displayMarker(data[i])
-				bounds.extend(new daummaps.LatLng(data[i].y, data[i].x));
+		},
+		markerDel(){
+			this.markers.map(i=>{
+				i.setMap(null);
+			})
+			this.markers = []
+		},
+		placesSearchCB(data, status){
+			let map = this.mapObject
+			let daummaps = window.daum.maps
+			if (status === daummaps.services.Status.OK) {
+				let bounds = new daummaps.LatLngBounds();
+				for (let i=0; i<data.length; i++) {
+					this.displayMarker(data[i])
+					bounds.extend(new daummaps.LatLng(data[i].y, data[i].x));
+				}
+				// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+				map.setBounds(bounds);
 			}
-			// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-			map.setBounds(bounds);
+		},
+		displayMarker(place){
+			let map = this.mapObject
+			let daummaps = window.daum.maps
+			let infowindow = new daummaps.InfoWindow({zIndex:1});
+			let marker = new daummaps.Marker({
+				map: map,
+				position: new daummaps.LatLng(place.y, place.x) 
+			})
+			this.markers.push(marker);
+			daummaps.event.addListener(marker, 'mouseover',() =>{
+				infowindow.setContent(`<div style="padding:5px;font-size:12px;color:black;">${place.place_name}</div>`);
+				infowindow.open(map, marker);
+			})
+			daummaps.event.addListener(marker, 'mouseout',() =>{
+				infowindow.close()
+			})
+			daummaps.event.addListener(marker, 'click', () => {
+				infowindow.close()
+				this.searchWord = place.place_name
+				this.$emit("sendStadiumName",place.place_name)
+			})
 		}
-	},
-	displayMarker(place){
-		let map = this.mapObject
-		let daummaps = window.daum.maps
-		let infowindow = new daummaps.InfoWindow({zIndex:1});
-		let marker = new daummaps.Marker({
-			map: map,
-			position: new daummaps.LatLng(place.y, place.x) 
-		})
-		this.markers.push(marker);
-		daummaps.event.addListener(marker, 'mouseover',() =>{
-			infowindow.setContent(`<div style="padding:5px;font-size:12px;color:black;">${place.place_name}</div>`);
-			infowindow.open(map, marker);
-		})
-		daummaps.event.addListener(marker, 'mouseout',() =>{
-			infowindow.close()
-		})
-		daummaps.event.addListener(marker, 'click', () => {
-			infowindow.close()
-			this.searchWord = place.place_name
-			this.$emit("send",place.place_name)
-		})
-	}
   }
 }
 </script>

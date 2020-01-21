@@ -52,7 +52,8 @@ export default {
       console: '',
       searchresult: '',
       lol: '',
-      pagination: ''
+      pagination: '',
+      location: ''
     }
   },
   methods: {

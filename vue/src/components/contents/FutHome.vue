@@ -1,10 +1,15 @@
 <template>
 <div>
-  <fut-head v-if="stadiumName===''" :style="`height: ${height[0]}vh`" :propImg="headImg" class="table"></fut-head>
-  <fut-map v-else :propSearchWord="`${stadiumName} 풋살 경기장`" @send="setStadium"
-    :style="`height: ${height[0]}vh; width:100%;`"></fut-map>
-  <fut-search-bar :style="`height: ${height[1]}vh`" class="table" @send="setStadium"></fut-search-bar>
-  <fut-reservation :style="`height: ${height[2]}vh`" class="table"  @send="setTime"></fut-reservation>
+  <fut-map v-if="mapTogle" :style="`height: ${height[0]}vh; width:100%;`"
+    :propSearchWord="`${stadiumName} 풋살 경기장`"
+    :propLocation="location"
+    @sendStadiumName="setStadium"></fut-map>
+  <fut-head v-else :style="`height: ${height[0]}vh`"
+    :propImg="headImg" class="table"></fut-head>
+  <fut-search-bar :style="`height: ${height[1]}vh`" class="table"
+    @sendStadiumName="setStadium" @sendGps="setGps"></fut-search-bar>
+  <fut-reservation :style="`height: ${height[2]}vh`" class="table"
+    @sendTime="setTime"></fut-reservation>
   <fut-reservation-table ma-auto class="table"  
     :propTime="time" :propStadium="stadiumName" :propTable="matchFilter"></fut-reservation-table>
 </div>
@@ -28,6 +33,8 @@ export default {
         'http://641109.igkorea.net/data/editor/1803/7ec6014758f9af0fd497c55e30ef7fd1_1522042791_19.jpg'
       ],
       stadiumName : '',
+      location: {},
+      mapTogle: false,
       time : Date.now(),
       table : [],
       height:[40,5,7],
@@ -88,6 +95,11 @@ export default {
     },
     setStadium(stadiumName){
       this.stadiumName = stadiumName
+      this.mapTogle = stadiumName==='' ? false : true
+    },
+    setGps(location){
+      this.location = location
+      this.mapTogle = true
     }
   }
 }

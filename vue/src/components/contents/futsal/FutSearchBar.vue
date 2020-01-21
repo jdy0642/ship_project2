@@ -8,6 +8,7 @@
 					<button @click="submit" class="btn btn-default" type="button">Go!</button>
 				</span>
 				<v-btn>즐겨찾기</v-btn>
+				<v-btn @click="gps">현재위치</v-btn>
 			</div>
 			{{weather(stadiumName)}}
 		</div>
@@ -29,7 +30,15 @@ export default{
 	},
 	methods:{
 		submit(){
-			this.$emit("send",this.stadiumName)
+			this.$emit("sendStadiumName",this.stadiumName)
+		},
+		gps(){
+			let location = {}
+			navigator.geolocation.getCurrentPosition(function(pos) {
+				location.lat = pos.coords.latitude
+				location.lng = pos.coords.longitude
+			})
+			this.$emit("sendGps",location)
 		},
 		weather(stadiumName){
 			let weather = ''			
