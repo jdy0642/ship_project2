@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class FutsalController {
 	@Autowired FutsalMatchRepository futsalMatchRepository;
 	@Autowired FutsalMatchService futsalMatchService;
-	@Autowired ModelMapper footModelMapper;
-	@Bean public ModelMapper footModelMapper() {return new ModelMapper();}
+	@Autowired ModelMapper futModelMapper;
+	@Bean
+	public ModelMapper futModelMapper() {return new ModelMapper();}
 	
 	@GetMapping("/")
 	public List<FutsalMatch> findAll(){
 		Iterable<FutsalMatch> all = futsalMatchRepository.findAll();
 		List<FutsalMatch> list = new ArrayList<>();
 		for(FutsalMatch match : all) {
-			FutsalMatch dto = footModelMapper.map(match, FutsalMatch.class);
+			FutsalMatch dto = futModelMapper.map(match, FutsalMatch.class);
 			list.add(dto);
 		}
 		System.out.println("findAll");

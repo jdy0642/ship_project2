@@ -16,6 +16,12 @@ Vue.use(VSwitch)
 Vue.use(require('vue-moment'));
 Vue.use(map)
 
+import naver from 'vue-naver-maps';
+Vue.use(naver, {
+  clientID: '724s7rhlas',
+  useOpenAPI: true //OpenAPI 사용
+});
+
 new Vue({
   vuetify,
   router,

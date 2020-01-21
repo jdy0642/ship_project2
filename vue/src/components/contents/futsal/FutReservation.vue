@@ -1,5 +1,5 @@
 <template>
-<v-card class="d-flex justify-space-around pa-1 ma-1" elevation="20">
+<v-card class="d-flex justify-space-around pa-1" elevation="20">
   <v-btn v-for="(time,index) in timeArray" :key="index"
     class="d-inline" rounded max-width="120" max-height="80" min-height="50" min-width="70"  
     :color="selected(time,selectTime)" @click="tableChange(index,time)">
