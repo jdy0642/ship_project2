@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import com.ship.web.futsal.FutsalMatch;
-
 @Component("crawler")
 @Lazy
 public class CrawlProxy extends Proxy{
