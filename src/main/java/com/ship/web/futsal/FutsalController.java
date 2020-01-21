@@ -1,5 +1,4 @@
 package com.ship.web.futsal;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/futsal")
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8081")
 public class FutsalController {
 	@Autowired FutsalMatchRepository futsalMatchRepository;
 	@Autowired FutsalMatchService futsalMatchService;
@@ -44,6 +44,4 @@ public class FutsalController {
 		futsalMatchRepository.saveAll(param);
 		System.out.println("insertdummy");
 	}
-	
-
 }

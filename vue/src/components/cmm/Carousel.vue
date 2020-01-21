@@ -3,13 +3,23 @@
   <div class="panels">
     <div class="panels__container">
       <div class="panel">
+        <div class="panel__content" style="background-image: url(https://i.ibb.co/Jt9ttbQ/FIFA-19-note-joueurs.jpg);">
+          <v-text @click="FIFA()" class="panel__title">FIFA</v-text>
+        </div>
+      </div>
+      <div href="#" class="panel">
         <div class="panel__content" style="background-image: url(https://image.redbull.com/rbcom/052/2019-05-17/0e0d5093-854c-41a6-b383-56fd6dfc16e5/0012/0/0/449/717/1023/1150/1/ezreal-league-of-legends.jpg);">
-          <v-text @click="lol()" class="panel__title">league of legends</v-text>
+          <v-text @click="lol()" class="panel__title">LOL</v-text>
         </div>
       </div>
       <div href="#" class="panel">
         <div class="panel__content" style="background-image: url(https://i.pinimg.com/originals/e2/42/90/e24290842bcc0e7d9bf566492ee36923.jpg)">
           <v-text @click="futsal()" class="panel__title">FUTSAL</v-text>
+        </div>
+      </div>
+      <div href="#" class="panel">
+        <div class="panel__content" style="background-image: url(https://utsports.com/images/2019/6/21/Full_Draft_Graphic_v2.jpeg?width=1061&height=597&mode=crop);">
+          <v-text @click="Ball()" class="panel__title">Street Ball</v-text>
         </div>
       </div>
     </div>
@@ -24,6 +34,12 @@ export default {
     },
     futsal(){
       this.$router.push({path:'/futsal'})
+    },
+    Ball(){
+      alert('준비중입니다.')
+    },
+    FIFA(){
+      alert('준비중입니다.')
     }
   }
 }
@@ -124,23 +140,23 @@ export default {
   /* Active panel */
 }
 .panel .panel__content {
-  -webkit-transform: translateX(10%);
-          transform: translateX(10%);
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
   transition: -webkit-transform 1s cubic-bezier(0.6, 0, 0.2, 1);
   transition: transform 1s cubic-bezier(0.6, 0, 0.2, 1);
   transition: transform 1s cubic-bezier(0.6, 0, 0.2, 1), -webkit-transform 1s cubic-bezier(0.6, 0, 0.2, 1);
 }
 .panel:last-child .panel__content {
-  -webkit-transform: translateX(-10%);
-          transform: translateX(-10%);
+  -webkit-transform: translateX(-15%);
+          transform: translateX(-15%);
 }
 .panels:hover .panel {
-  -webkit-transform: translate3d(-10%, 0, 0);
-          transform: translate3d(-10%, 0, 0);
+  -webkit-transform: translate3d(20%, 0, 0);
+          transform: translate3d(20%, 0, 0);
 }
 .panels:hover .panel .panel__content {
-  -webkit-transform: translateX(14%);
-          transform: translateX(14%);
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
 }
 .panels:hover .panel .panel__content:before {
   opacity: 0.7;
@@ -150,8 +166,8 @@ export default {
           transform: translate3d(10%, 0, 0);
 }
 .panels .panel:hover ~ .panel .panel__content {
-  -webkit-transform: translateX(-14%);
-          transform: translateX(-14%);
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
 }
 .panels .panel:hover {
   z-index: 2;
@@ -160,8 +176,8 @@ export default {
   pointer-events: auto;
 }
 .panels .panel:hover:last-child {
-  -webkit-transform: translate3d(-10%, 0, 0);
-          transform: translate3d(-10%, 0, 0);
+  -webkit-transform: translate3d(-20%, 0, 0);
+          transform: translate3d(-20%, 0, 0);
 }
 .panels .panel:hover .panel__content {
   -webkit-transform: translateX(0%);
