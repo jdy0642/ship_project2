@@ -58,11 +58,12 @@ public class CrawlProxy extends Proxy{
 		return box.get();
 	}
 	
-	public List<Trunk<String>> crawlFutMatch(int page){
+	public List<Map<String, String>> crawlFutMatch(int page){
 		final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 		String url = "https://map.naver.com/v5/api/search?caller=pcweb&query=풋살장&type=all&page="+page+"&displayCount=100&isPlaceRecommendationReplace=true&lang=ko";
-		List<Trunk<String>> list = new ArrayList<>();
+		List<Map<String, String>> list = new ArrayList<>();
 		JSONObject json = null;
+		Map<String, String> map = null;
 		try {
 			Connection.Response html = Jsoup.connect(url)
 			.method(Connection.Method.GET)
@@ -78,12 +79,12 @@ public class CrawlProxy extends Proxy{
 				.getJSONObject("place")
 				.getJSONArray("list");
 		for(int i = 0; i < jsonArr.length()-1; i++) {
+			map = new HashMap<>();
 			JSONObject j = jsonArr.getJSONObject(i);
-			trunk.put(Arrays.asList("name","address","tel"),
-					Arrays.asList(j.get("name").toString(),
-							j.get("address").toString(),
-							j.get("tel").toString()));
-			list.add(trunk);
+			map.put("name",j.get("name").toString());
+			map.put("address",j.get("address").toString());
+			map.put("tel",j.get("tel").toString());
+			list.add(map);
 		}
 		System.out.printf("%d 페이지 완료\n",page);
 		return list;

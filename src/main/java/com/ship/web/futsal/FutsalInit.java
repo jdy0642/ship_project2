@@ -3,6 +3,7 @@ package com.ship.web.futsal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -30,14 +31,13 @@ public class FutsalInit extends Proxy implements ApplicationRunner{
 	public void run(ApplicationArguments args) throws Exception {
 		long count = futsalMatchRepository.count();
 		FutsalMatch match = null;
-		List<Trunk<String>> stadiumList = new ArrayList<Trunk<String>>();
+		List<Map<String, String>> stadiumList = new ArrayList<>();
 		List<FutsalMatch> matchList = new ArrayList<FutsalMatch>();
 		if(count < 3000) {
-			crawler.crawlFutMatch(1).forEach(i->System.out.println(i.get()));
 			for(int i = 1; i<=3; i++) {
-				//crawler.crawlFutMatch(i).forEach(j->stadiumList.add(j));
+				stadiumList.addAll(crawler.crawlFutMatch(i));
 			}
-			stadiumList.forEach((i)-> System.out.println(i.get()));
+			//stadiumList.forEach(i-> System.out.println(i));
 			for(int i = 0; i<=1000; i++) {
 				int ranIndex = random(1, stadiumList.size());
 				match = new FutsalMatch();
@@ -55,7 +55,7 @@ public class FutsalInit extends Proxy implements ApplicationRunner{
 				match.setAdminname("펭수");
 				matchList.add(match);
 			}
-			//futsalMatchRepository.saveAll(matchList);
+			futsalMatchRepository.saveAll(matchList);
 		}
 	}
 }
