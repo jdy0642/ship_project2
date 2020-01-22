@@ -22,16 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class FutsalController {
 	@Autowired FutsalMatchRepository futsalMatchRepository;
 	@Autowired FutsalMatchService futsalMatchService;
-	@Autowired ModelMapper modelMapper1;
-	@Bean public ModelMapper modelMapper1() {return new ModelMapper();}
+	@Autowired ModelMapper futModelMapper;
+	@Bean
+	public ModelMapper futModelMapper() {return new ModelMapper();}
 	
 	@GetMapping("/")
 	public List<FutsalMatch> findAll(){
 		Iterable<FutsalMatch> all = futsalMatchRepository.findAll();
 		List<FutsalMatch> list = new ArrayList<>();
 		for(FutsalMatch match : all) {
-			FutsalMatch dto1 = modelMapper1.map(match, FutsalMatch.class);
-			list.add(dto1);
+			FutsalMatch dto = futModelMapper.map(match, FutsalMatch.class);
+			list.add(dto);
 		}
 		System.out.println("findAll");
 		return list.stream().collect(Collectors.toList());
@@ -43,6 +44,4 @@ public class FutsalController {
 		futsalMatchRepository.saveAll(param);
 		System.out.println("insertdummy");
 	}
-	
-
 }
