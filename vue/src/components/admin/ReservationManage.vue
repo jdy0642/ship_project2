@@ -6,7 +6,7 @@
     <v-card-title style="padding-left:250px;color:black;background-color:#B0BEC5">
       <div><h2 style="font-weight:bold;">예약 현황</h2></div>
         <v-spacer></v-spacer>
-        <v-text-field v-model="search" append-icon="search" label="조건검색"></v-text-field>
+        <v-text-field single-line v-model="search" append-icon="search" label="조건검색"></v-text-field>
     </v-card-title>
       <v-data-table :headers="headers" :items="lists" :search="search" :page.sync="page"
         :items-per-page="5" hide-default-footer @page-count="pageCount = $event" style="margin-top:15px;text-align-last:center">
@@ -41,10 +41,11 @@ export default {
     black:false,
     search: '',
     headers: [
-          { text: '예약번호', value: 'resnum'},
-          { text: '예약일자', value: 'resdate' },
+          { text: '예약 번호', value: 'resnum'},
+          { text: '예약 일자', value: 'resdate' },
           { text: '구장명', value: 'stadiumid'},
-          { text: '유저아이디', value: 'userid' },
+          { text: '유저 아이디', value: 'userid' },
+          { text: '시퀀스 ', value:'resseq'}
         ],
       }
    },
