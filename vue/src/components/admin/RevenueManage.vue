@@ -1,5 +1,5 @@
 <template>
-<div style="padding:10px;">
+<div style="padding:0.5%;">
   <v-card style="float:left;">
   <v-card-title>수익분석 페이지 <v-btn @click="fillData()" color:blue>요일 별 남녀 구매차트</v-btn></v-card-title>
   <v-card-subtitle>담당 구장 수익 분석 페이지</v-card-subtitle>

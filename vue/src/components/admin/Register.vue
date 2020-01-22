@@ -1,9 +1,9 @@
 <template>
 <div>
-<v-row style="margin:20px;float:left;text-align:center;">
+<v-row style="margin:1%;float:left;text-align:center;">
 <v-card style="text-align:center;width:700px;">
     <v-card-title>구장 등록</v-card-title>
-    <div style="margin:20px;padding:20px">
+    <div style="margin:3%;padding:3%">
 <v-select
           :items="snames"
           label="구장을 선택해주세요."

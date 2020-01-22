@@ -1,35 +1,29 @@
 <template>
 <div>
-  <v-row>
-  <v-responsive style="width:150px height:200px">
-  <v-card style="margin-right:5px; margin-top:5px;">
-  <img style="width:177px;" :src="temp.photo" alt="" />
-   <v-card-subtitle>
-   <v-icon style="margin:20px;">mdi-crown</v-icon>
-   <v-icon v-bind:title="msg1">mdi-key</v-icon>
-            <v-card-text>소환사명 : {{temp.summonername}}</v-card-text>
-            <v-card-text center>티어 : {{temp.tier}}</v-card-text>
-            <v-card-text>승률 : {{temp.rate}}</v-card-text>
-            <v-card-text>랭킹 : {{temp.rank}}</v-card-text>
-         </v-card-subtitle>
-  </v-card>
+  <v-row >
+    <v-responsive style="width:300px;margin-left:30px;margin-top:30px">
+      <v-card style="margin-right:5px;margin-top:5px">
+      <img style="width:140px;margin-top:20px;" :src="temp.photo" alt="" />
+        <v-card-subtitle>
+        <v-icon style="margin:20px;">mdi-crown</v-icon>
+          <v-card-text>소환사명 : {{temp.summonername}}</v-card-text>
+          <v-card-text center>티어 : {{temp.tier}}</v-card-text>
+          <v-card-text>승률 : {{temp.rate}}</v-card-text>
+        </v-card-subtitle>
+      </v-card>
+    </v-responsive>
+
+  <v-responsive style="width:300px;height:500px;margin-left:30px;margin-top:30px">
+    <v-card style="margin-right:5px;margin-top:5px;width:300px;height:400px">
+      <v-btn fab dark color="indigo" style="margin-top:150px" >
+        <v-icon dark>mdi-plus</v-icon>
+      </v-btn>
+    </v-card>
   </v-responsive>
-  <v-responsive style="width:150px height:200px">
-  <v-card style="margin-right:5px; margin-top:5px">
-  <!--사용자가 가장 많이 사용하는 챔피언을 api에서 받을지 본인의 프로필사진을 넣을지 -->
-  <v-img style="width:300px" src="https://ww.namu.la/s/7d709a5fdb50121194c88d2ad039608f0651d38a84008b1ce2361a74e65ca77743c0c2e981b0256ca7d704be1602ea61f89d87525ba11f7537631ce1c458de536bef4015f17c3c1af672e4867351fec647c4348e6343c5ea6e71818951caf42c"></v-img>
-   <v-card-subtitle dark>
-   <v-icon style="margin:20px;">참가자</v-icon>
-            <v-card-text>소환사명 : 거울보면문도</v-card-text>
-               <v-card-text center>티어 : gold4</v-card-text>
-          <v-card-text>승률 : 55%</v-card-text>
-          <v-card-text>최근 10경기 전적: 4승6패</v-card-text>
-           
-         </v-card-subtitle>
-  </v-card>
-  </v-responsive>
+
   
-  <v-content >
+  <v-responsive >
+    <iframe src="http://192.168.5.46:3000" style="margin-top:30px" width="410px" height="500px" frameborder="0"></iframe>
     
         <!-- <v-flex style="margin-right:5px; margin-top:5px">
           <v-card color="grey lighten-3">
@@ -53,11 +47,7 @@
             </v-card-actions>
           </v-card>
         </v-flex> -->
-
-
-        <v-icon @click="lol()">mdi-reply</v-icon><h4 @click="lol()">뒤로가기</h4>
-        <a href=""></a>
-  </v-content>
+  </v-responsive>
   </v-row>
 </div>
 
@@ -69,24 +59,17 @@ export default {
   data(){
     return {
       state:store.state,
-      logs: [],
-      msg: null,
-      msg1: '방장위임',
-      summonername : '',
-      rate: '',
-      most: '',
-      rank: '',
-      position: '',
-      photo: '',
+      // logs: [],
+      // msg: null,
       context:'http://localhost:8080',
       temp:''
     }
   },
   methods: {
-    submit() {
-      this.logs.push(this.msg);
-      this.msg = "";
-    },
+    // submit() {
+    //   this.logs.push(this.msg);
+    //   this.msg = "";
+    // },
     lol(){
       this.$router.push({path:'/lol'})
     }
@@ -99,6 +82,10 @@ export default {
       this.temp = res.data[0]
       this.summonername = res.data[0].summonername
     })
+    let url2 = `http://192.168.5.46:3000`
+    axios
+    .get(url2)
+    
   },
   // watch: {
   //   logs() {
@@ -112,9 +99,6 @@ export default {
 <style scoped>
 #logs {
   height: 230px;
-}
-#app{
- 
 }
 
 </style>

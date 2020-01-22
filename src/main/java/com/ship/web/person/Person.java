@@ -16,6 +16,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -83,11 +86,9 @@ public class Person extends Proxy implements Serializable{
 	@Column(name="EMAIL")@NotNull
 		private String email;
 	@Column(name="SUMMONERNAME")
-	private String summonername;
+		private String summonername;
 	enum Level{HIGH, MID, LOW}
-	
-	//test hsc
-	
+
 //	@OneToMany(mappedBy = "personseq",
 //			cascade = CascadeType.ALL,
 //			orphanRemoval = true)
