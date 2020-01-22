@@ -75,7 +75,7 @@ export default {
     }
   },
   created(){
-    let url = `${this.context}/crawl/summoner/userName=${this.state.person.summonername}`
+    let url = `${this.context}/lol/summoner/userName=${this.state.person.summonername}`
     axios
     .get(url)
     .then(res=>{

@@ -9,30 +9,41 @@
         <span>새로 고침 </span>
       </v-tooltip>   
    <v-container fluid>
-     
-      <!-- <v-radio-group style = "margin-left:40px" v-model="row" :mandatory="false">
-        <v-radio label="개인/2인랭크" value="rank" ></v-radio>
-        <v-radio style="margin-top:5px" label="칼바람나락" @click="kal(link)" value="radio-2"></v-radio>
-      </v-radio-group> -->
-      <v-btn style="float:left" @click="kal" color="primary">칼바람 하러 가기! </v-btn>
+      <v-btn style="float:left" @click="kal" color="#607D8B">칼바람 GO!</v-btn>
     </v-container>
     <br /><br />
     <div style="padding:50px">
    <v-row>
-   
-      <v-card id="d" class="mx-auto" style="margin-top:10px" dark> 
-      <v-img style="width:300px;height:177px" src="https://w.namu.la/s/65e9c3777f6ccdb9e462635fd238f9bc30f2248bf4bff65178a31d8114f8f841fccdff26d0ef4b9a9f89698ab098c73fb54fb505b967ff6519dba358eabfdac15953d557f2dad09497236c50aaaf9f913b5feb26ef546432b8c3691bee906d5c6847f42160a7f7e9f4a7c3b621b88717"></v-img>
-         <v-card-subtitle>
-            <v-card-text>쌉캐리가능 정글구함
-            <v-card-text>티어 : </v-card-text>
-               <v-card-actions style="place-content:center" >
-                  <v-btn color="blue-grey darken-2" @click="joinRank()">참여하기</v-btn>
-               </v-card-actions >
-            </v-card-text>
-         </v-card-subtitle>
-      </v-card>
 
-      <v-card id="d"  class="mx-auto" style="margin-top:10px" dark> 
+      
+      <v-hover v-slot:default="{ hover }" open-delay="0" v-for="room of rooms" :key="room.cardseq">
+      <v-card :elevation="hover ? 16 : 2" id="d" class="mx-auto" style="margin-top:10px"> 
+      <v-img
+      @click="joinRank()"
+      style="width:250px;height:350px" 
+      :src="room.imgurl">
+      <div style="height:180px">
+      </div>
+      <div style="height:170px;background-image:linear-gradient(to top, rgba(0, 0, 0, 0.5) 85%, transparent 160px)">
+      <br />
+      <h4 style="color:white">{{room.title}}</h4>
+      <h6>티어: {{room.tier}}</h6>
+      <h6>참가자: 1/2</h6>
+      </div>
+      <v-expand-transition>
+          <div
+            v-if="hover"
+            class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 black--text"
+            style="height: 15%;"
+          >
+            CLICK!
+          </div>
+        </v-expand-transition>
+      </v-img>
+      </v-card>
+      </v-hover>
+
+      <!-- <v-card id="d"  class="mx-auto" style="margin-top:10px" dark> 
       <v-img style="width:300px" src="https://ww.namu.la/s/6b4b67c5190df5f22ca4d4124e40901f80efa0e6bf5b9755c1daf5a6772a4664eed813cc049159c991c8981f46e728e5a2709f0fcaf05f1ee48f029d5d24eef98dcabc26a4f169a96b5c234b89c94fcabc634e7c2d853e91590f18235966cfda7763743d216e844a976501fed23e5daf"></v-img>
          <v-card-subtitle>
             <v-card-text>쌉캐리가능 미드구함
@@ -78,21 +89,42 @@
                </v-card-actions>
             </v-card-text>
          </v-card-subtitle>
-      </v-card>
-
+      </v-card> -->
       </v-row>
       </div>
-      
-
 </div>
 </template>
 <script>
-
+import axios from 'axios'
 export default {
+   created(){
+      let url = `http://localhost:8080/lol/list`
+      let headers = {
+              'authorization': 'JWT fefege..',
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+                }
+      axios
+           .get(url, headers)
+           .then(res =>{
+              this.rooms = res.data
+              alert('리스트 가져오기 성공! ')
+           })
+           .catch(e=>{
+              alert('AXIOS FAIL'+e)
+           })
+   },
    data(){
       return{
          row: 'rank',
-         link: '/kalbaram'
+         link: '/kalbaram',
+         rooms:{
+            title:'',
+            tier:'',
+            contents:'',
+            rhost:'',
+            imgurl:''
+         }
       }
    },
    methods:{
@@ -116,6 +148,14 @@ export default {
 #d{
    height: 50%;
    
+}
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
 }
 
 </style>
