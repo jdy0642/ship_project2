@@ -1,6 +1,8 @@
 <template>
 <div>
-	<fut-head :style="`height: ${height}vh`" :propImg="stadiumImg"/>
+	<fut-head v-if="mapView" :style="`height: ${height}vh`" :propImg="stadiumImg"/>
+  <fut-map v-else :propSearchWord="selectMatch.stadiumaddr"
+    :style="`height: ${height}vh; width:100%;`"></fut-map>
   <v-card class="card">
     <v-card-title><h1>
       <router-link :to="{name: 'futsalstadium', params: {stadiumName: selectMatch.stadiumname}}">
@@ -9,7 +11,7 @@
     <v-card-subtitle>{{selectMatch.stadiumaddr}}<br/>{{timeToDate}}</v-card-subtitle>
     <v-card-action>
       <v-chip outlined @click="linkCopy">주소복사하기</v-chip>
-      <v-chip outlined>지도보기</v-chip>
+      <v-chip outlined @click="viewTogle()" :color="mapView ? '#2222cc':'#cc8888'">지도보기</v-chip>
       <v-chip outlined>가는길보기</v-chip>
     </v-card-action>
     <v-card-text>{{selectMatch.stadiumname}} {{timeToDate}} 의 경기는
@@ -112,9 +114,10 @@
 
 <script>
 import {store} from '@/store'
+import FutMap from './FutMap'
 import FutHead from './FutHead'
 export default {
-  components:{FutHead},
+  components:{FutHead,FutMap},
   data(){
     return {
       height: 30,
@@ -136,6 +139,7 @@ export default {
         '화장실은1층 화장실 이용',
         '자판기 및 흡연 구역 있음'
       ],
+      mapView: true,
       temp: ''
     }
   },
@@ -151,6 +155,9 @@ export default {
     },
   },
   methods: {
+    viewTogle(){
+      this.mapView=!this.mapView
+    },
     linkCopy(){
       alert('주소 복사 ')
       return '주소 복사'

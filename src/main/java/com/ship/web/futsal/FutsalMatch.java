@@ -23,7 +23,7 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
-@Setter(value = AccessLevel.PROTECTED)
+@Setter(value = AccessLevel.PUBLIC)
 @ToString
 @Table(name="FUTSALMATCH")
 public class FutsalMatch implements Serializable{

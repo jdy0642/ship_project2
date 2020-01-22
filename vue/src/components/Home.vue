@@ -102,13 +102,15 @@
         </v-app>
   </template>
    <!-- --------------------- 컨텐츠  ------------------------- -->
-<template #content ="c">
+   
+<template #content ="c"> 
   <div id="app" style="width:67%;"  >
     <v-app id="inspire" >
         <v-card>
+    <router-view></router-view>
         <v-navigation-drawer  width="100%" >
           <template>
-            <router-view></router-view>
+            
           </template>
         </v-navigation-drawer>
       </v-card>

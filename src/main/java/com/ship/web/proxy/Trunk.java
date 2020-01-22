@@ -22,4 +22,5 @@ public class Trunk<T> {
 	}
 	public HashMap<String, T> get() {return map;}
 	public int size() {return map.size();}
+	public void clear() {map = new HashMap<>();}
 }
