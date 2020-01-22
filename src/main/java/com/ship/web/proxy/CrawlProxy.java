@@ -43,6 +43,7 @@ public class CrawlProxy extends Proxy{
 				map.put("position", position.get(0).text());
 				map.put("photo", photo.get(0).select("img").attr("src"));
 				box.add(map);
+				
 		} catch (Exception e) {
 			
 			e.printStackTrace();
