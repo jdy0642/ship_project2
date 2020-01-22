@@ -23,15 +23,15 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
-@Setter(value = AccessLevel.PROTECTED)
+@Setter(value = AccessLevel.PUBLIC)
 @ToString
 @Table(name="FUTSALMATCH")
 public class FutsalMatch implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="FUTSALMATCHSEQ") @NotNull
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="FUTSALMATCHSEQ") 
 	private Long futsalmatchseq;
 	@Column(name="TIME") @NotNull
 	private Long time;

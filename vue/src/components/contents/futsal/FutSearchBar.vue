@@ -7,11 +7,10 @@
 				<span class="input-group-btn">
 					<button @click="submit" class="btn btn-default" type="button">Go!</button>
 				</span>
+				<v-btn>즐겨찾기</v-btn>
+				<v-btn @click="gps">현재위치</v-btn>
 			</div>
 			{{weather(stadiumName)}}
-			<v-btn @click="crawling()">
-				크롤링
-			</v-btn>
 		</div>
 	</div>
 </div>
@@ -20,10 +19,18 @@
 import axios from "axios"
 //import { store } from '@/store'
 export default{
+	created(){
+		let location={}
+		navigator.geolocation.getCurrentPosition(function(pos) {
+			location.lat = pos.coords.latitude
+			location.lng = pos.coords.longitude
+		})
+		this.location = location
+	},
 	data(){
 		return {
 			stadiumName : '',
-			getdata: ''
+			location: '',
 		}
 	},
 	computed: {
@@ -31,7 +38,10 @@ export default{
 	},
 	methods:{
 		submit(){
-			this.$emit("send",this.stadiumName)
+			this.$emit("sendStadiumName",this.stadiumName)
+		},
+		gps(){
+			this.$emit("sendLocation",this.location)
 		},
 		weather(stadiumName){
 			let weather = ''			
@@ -51,21 +61,7 @@ export default{
 			})
 			return weather
 		},
-		crawling(){
-			/* let loc = '풋살 경기장'
-			let page = 1
-			let url = `https://dapi.kakao.com/v2/local/search/keyword.json`
-			axios.post(url,{},{
-			})
-			.then(res => {
-				this.getdata = res
-			}).catch(e => {
-				alert(`axios fail ${e}`)
-				this.getdata = e
-			}) */
-			
-		}
-    }
+  }
 }
 </script>
 <style scoped>

@@ -38,8 +38,7 @@ export default{
 			const table = this.table
 			const utc = (x => (parseInt(x/3600/1000/24)*24 +
 				(new Date(x).getHours() >= 9 ? 15 : 39))*3600*1000)
-			return table
-				.filter(i => i.stadiumname === stadiumName)
+			return table.filter(i=> i.stadiumname.match(stadiumName) || i.stadiumaddr.match(stadiumName))
 				.filter(i => time <= i.time && i.time < utc(time))
 				.sort((a,b) => a.time > b.time ? 1 : (a.time < b.time ? -1 : 0))
 		}

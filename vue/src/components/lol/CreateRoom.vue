@@ -5,7 +5,7 @@
       <v-text-field
         label="카드 제목"
         v-model="title"
-        :counter="30"
+        :counter="20"
         placeholder="자신을 나타내는 강렬한 단어로 자신을 표현하세요! "
         required></v-text-field>
         </v-card-title>
@@ -17,36 +17,41 @@
         <!-- <v-radio label="칼바람나락" value="kal"></v-radio> -->
       </v-radio-group>
       <v-divider></v-divider>
-              <v-radio-group v-model="ex8" column>
+              <v-radio-group v-model="tier" column>
                 <v-radio
                   label="브론즈"
-                  color="#A1887F"
-                  value="orange"
+                  color="#6D4C41"
+                  value="bronze"
                 ></v-radio>
                 <v-radio
                   label="실버"
                   color="#CFD8DC"
-                  value="grey"
+                  value="silver"
                 ></v-radio>
                 <v-radio
                   label="골드"
-                  color="#FFC107"
-                  value="yellow"
+                  color="#FF9800"
+                  value="gold"
                 ></v-radio>
                 <v-radio
                   label="플레티넘"
-                  color="#A7FFEB"
-                  value="info"
+                  color="#00796B"
+                  value="platinum"
                 ></v-radio>
                 <v-radio
                   label="다이아"
-                  color="#80D8FF"
-                  value="tier2"
+                  color="#0288D1"
+                  value="diamond"
                 ></v-radio>
                 <v-radio
                   label="마스터"
-                  color="#8C9EFF"
-                  value="tier1"
+                  color="#4DB6AC"
+                  value="master"
+                ></v-radio>
+                <v-radio
+                  label="챌린져"
+                  color="#AFB42B"
+                  value="challenger"
                 ></v-radio>
                 
               </v-radio-group>
@@ -74,10 +79,11 @@
           auto-grow
           style="width:800px;"
           placeholder="내용을 입력해주세요"
+          :counter="50"
         ></v-textarea>
     </form>
-    <v-btn @click="createroom()">방생성</v-btn>
-    <v-btn @click="lol()">방취소</v-btn>
+    <v-btn color="primary" @click="createroom()">방 생성하기</v-btn>
+    <v-btn color="error" @click="lol()">취소(돌아가기)</v-btn>
 
 </div>
 </template>
@@ -89,11 +95,10 @@ export default{
     return{
       items: ['실버', '브론즈', '골드', '플레티넘'],
       row:'rank',
-      userid : store.state.person.userid,
       tier: '',
       title: '',
-      contents: ''
-
+      contents: '',
+      state : store.state,
     }
   },
   methods:{
@@ -101,7 +106,7 @@ export default{
       this.$router.push({path:'/lol'})
     },
     createroom(){
-      let url = `http://localhost:8080/createRoom`
+      let url = `http://localhost:8080/lol/createroom/`
            let headers = {
               'authorization': 'JWT fefege..',
                 'Accept' : 'application/json',
@@ -109,17 +114,17 @@ export default{
                 }
   
            let data = {
-              userid : this.userid,
+              rhost : this.state.person.summonername,
               tier : this.tier,
               title : this.title,
               contents : this.contents
-              
            }
            axios
            .post(url, data, headers)
            .then(res =>{
               this.result = res.data
-              alert(this.result)
+              alert('방생성 완료!')
+              this.$router.push({path:'/lol'})
            })
            .catch(e=>{
               alert('AXIOS FAIL'+e)

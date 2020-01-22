@@ -43,8 +43,8 @@ import lombok.ToString;
 public class Person extends Proxy implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="PERSONSEQ") @NotNull
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="PERSONSEQ")
 	private Long personseq;
 	@Column(name="USERID", length= 64 ) @NotNull
 		private String userid;
@@ -56,15 +56,10 @@ public class Person extends Proxy implements Serializable{
 		private String tel;
 	@Column(name="POINT") 
 		private String point;
-//	@Temporal(TemporalType.DATE)
-//	@Column(name="BIRTHDAY") @NotNull
-//		private Date birthday;
 	@Column(name="AGE")@NotNull
 		private int age;
 	@Column(name="MALE")@NotNull
 		private boolean male;
-//	@Column(name="EMAIL") @NotNull
-//		private String email;
 	@Column(name="SCORE") 
 		private int score;
 	@Column(name="MVP") 
@@ -89,7 +84,7 @@ public class Person extends Proxy implements Serializable{
 		private String summonername;
 	enum Level{HIGH, MID, LOW}
 
-//	@OneToMany(mappedBy = "personseq",
+//	@OneToMany(mappedBy = "PERSONSEQ",
 //			cascade = CascadeType.ALL,
 //			orphanRemoval = true)
 //    private List<Article> articles = new ArrayList<>();
@@ -119,4 +114,4 @@ public class Person extends Proxy implements Serializable{
 		this.email = email;
 		this.summonername = summonername;
 	}
-}//testYOHAN
+}

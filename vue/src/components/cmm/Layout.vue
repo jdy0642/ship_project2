@@ -1,6 +1,6 @@
 <template>
 <div id="wrapper">
-     <header id="header">
+     <header id="header" >
           <slot name="header" :title="header"></slot>
      </header>
      <section id="content" style="background-color:#303030;">

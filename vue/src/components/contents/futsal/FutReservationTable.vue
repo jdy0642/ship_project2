@@ -20,13 +20,14 @@
 				{{`${item.num}vs${item.num}`}} 
 			</template>
 			<template v-slot:item.gender="{item}">
-				<v-img height="30" width="30" 
+				<v-img height="30" width="30" class="pa-2" 
 				:src="require(`@/assets/img/matchRule/${item.gender}.svg`)"/>
 			</template>
 			<template v-slot:item.difficulty="{item}">
 				<v-img class="d-inline-flex"
+					width="30px" height="30px"
 					v-for="n of parseInt(item.difficulty)" 
-					:key="n" src="@/assets/img/matchRule/star.svg">
+					:key="n" src="@/assets/img/matchRule/star.png">
 				</v-img>
 			</template>
 			<template v-slot:item.remain="{item}">

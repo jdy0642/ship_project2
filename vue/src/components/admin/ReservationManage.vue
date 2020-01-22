@@ -4,40 +4,18 @@
   </div>
    <v-card >
     <v-card-title style="padding-left:250px;color:black;background-color:#B0BEC5">
-    <div><h2 style="font-weight:bold;">예약 현황</h2></div>
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-      </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="lists"
-      :search="search"
-      :page.sync="page"
-      :items-per-page="5"
-      hide-default-footer
-      class="elevation-1"
-      @page-count="pageCount = $event"
-    >
-    <template>
-    <v-data-table item-key="name" class="elevation-1" loading loading-text="Loading... Please wait"></v-data-table>
-    </template> 
-    </v-data-table>
-    <div class="text-center pt-2">
-      <v-pagination 
-      prev-icon="mdi-arrow-left"
-      next-icon="mdi-arrow-right" 
-      circle
-      color="grey"
-      v-model="page" 
-      :length="pageCount"></v-pagination>
-    </div>
-  </v-card>
+      <div><h2 style="font-weight:bold;">예약 현황</h2></div>
+        <v-spacer></v-spacer>
+        <v-text-field single-line v-model="search" append-icon="search" label="조건검색"></v-text-field>
+    </v-card-title>
+      <v-data-table :headers="headers" :items="lists" :search="search" :page.sync="page"
+        :items-per-page="5" hide-default-footer @page-count="pageCount = $event" style="margin-top:15px;text-align-last:center">
+      </v-data-table>
+      <div class="text-center pt-2">
+        <v-pagination prev-icon="mdi-arrow-left" next-icon="mdi-arrow-right" circle
+                      color="grey" v-model="page" :length="pageCount" style="margin-bottom:15px;"></v-pagination>
+      </div>
+    </v-card>
   </div>
 </template>
 <script>
@@ -56,24 +34,18 @@ export default {
    data(){
       return{
     context : 'http://localhost:8080',
-    fixedHeader: true,
     page: 1,
     pageCount: 0,
     itemsPerPage: 5,
-      value:1,
     lists: [],
     black:false,
     search: '',
-        headers: [
-          {
-            text: '예약번호', align: 'left',
-            filterable: false,
-            value: 'resnum',
-          },
-          { text: '아이디', value: 'userid' },
-          { text: '스타디움아이디', value: 'stadiumid' },
-          { text: '예약일자', value: 'resdate' },
-          
+    headers: [
+          { text: '예약 번호', value: 'resnum'},
+          { text: '예약 일자', value: 'resdate' },
+          { text: '구장명', value: 'stadiumid'},
+          { text: '유저 아이디', value: 'userid' },
+          { text: '시퀀스 ', value:'resseq'}
         ],
       }
    },
