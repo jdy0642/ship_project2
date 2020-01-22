@@ -1,6 +1,8 @@
 <template>
 <div>
-	<fut-head :style="`height: ${height}vh`" :propImg="stadiumImg"/>
+	<fut-head v-if="mapView" :style="`height: ${height}vh`" :propImg="stadiumImg"/>
+  <fut-map v-else :propSearchWord="selectMatch.stadiumaddr"
+    :style="`height: ${height}vh; width:100%;`"></fut-map>
   <v-card class="card">
     <v-card-title><h1>
       <router-link :to="{name: 'futsalstadium', params: {stadiumName: selectMatch.stadiumname}}">
@@ -9,7 +11,7 @@
     <v-card-subtitle>{{selectMatch.stadiumaddr}}<br/>{{timeToDate}}</v-card-subtitle>
     <v-card-action>
       <v-chip outlined @click="linkCopy">주소복사하기</v-chip>
-      <v-chip outlined>지도보기</v-chip>
+      <v-chip outlined @click="viewTogle()" :color="mapView ? '#2222cc':'#cc8888'">지도보기</v-chip>
       <v-chip outlined>가는길보기</v-chip>
     </v-card-action>
     <v-card-text>{{selectMatch.stadiumname}} {{timeToDate}} 의 경기는
@@ -18,14 +20,13 @@
   </v-card>
   <v-card class="card">
     <v-card-title>특이사항</v-card-title>
-    <v-card-subtitle>{{selectMatch.difficulty}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
+    <v-card-subtitle>{{difficultyMsg[selectMatch.difficulty-1]}}</v-card-subtitle>
     <v-row class="justify-center pa-1">
       <v-col
         v-for="(n) of matchRule"
         :key="n" cols="2">
         <v-card>
-          <v-img :src="require(`@/assets/img/matchRule/${
-            ['4','5','6'].includes(n) ? n+'vs'+n : n }.svg`)"/>
+          <v-img :src="require(`@/assets/img/matchRule/${n}.svg`)"/>
           <v-card-text class="text-center">{{msgSwitch(n)}}</v-card-text>
         </v-card>
       </v-col>
@@ -106,15 +107,16 @@
       <li>경기 중 부상에 대한 책임은 해당 개인에게 귀속됩니다.</li>
     </ul>
   </v-card>
-  <v-btn @click="payment()" id="floatdiv" pa-3 fab x-large block rounded>신 청 하 기</v-btn>
+    <v-btn @click="payment()" id="floatdiv" pa-3 fab x-large block rounded>신 청 하 기</v-btn>
 </div>
 </template>
 
 <script>
 import {store} from '@/store'
+import FutMap from './FutMap'
 import FutHead from './FutHead'
 export default {
-  components:{FutHead},
+  components:{FutHead,FutMap},
   data(){
     return {
       height: 30,
@@ -127,6 +129,11 @@ export default {
           store.state.selectMatch.shoes,
           'minmax'
         ],
+      difficultyMsg: [
+        '초급 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.',
+        '일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.',
+        '상급 매치는 공좀 차는분만 오세요.'
+      ],
       stadiumText: [
         `${store.state.selectMatch.num}vs${store.state.selectMatch.num}
                     구장의 최소 인원은 ${parseInt(store.state.selectMatch.num)*2 -2}명입니다.`,
@@ -136,6 +143,7 @@ export default {
         '화장실은1층 화장실 이용',
         '자판기 및 흡연 구역 있음'
       ],
+      mapView: true,
       temp: ''
     }
   },
@@ -151,20 +159,23 @@ export default {
     },
   },
   methods: {
+    viewTogle(){
+      this.mapView=!this.mapView
+    },
     linkCopy(){
       alert('주소 복사 ')
       return '주소 복사'
     },
     msgSwitch(item){
       switch(item){
-        case 1 : return '초보자 게임'
-        case 2 : return '중급자 게임'
-        case 3 : return '상급자 게임'
-        case '4' : return '4vs4'
-        case '5' : return '5vs5'
-        case '6' : return '6vs6'
-        case 'shoes0' : return '풋살화 필수'
-        case 'shoes1' : return '축구화 가능'
+        case 1 : return '초보자'
+        case 2 : return '중급자'
+        case 3 : return '상급자'
+        case 4 : return '4vs4'
+        case 5 : return '5vs5'
+        case 6 : return '6vs6'
+        case 'shoes1' : return '풋살화 필수'
+        case 'shoes0' : return '축구화 가능'
         case 'minmax' : return `${this.selectMatch.num*2 - 2} ~ ${this.selectMatch.num*2 + 4}명`
         default : return item
       }
@@ -185,8 +196,5 @@ export default {
   width: 80%;
   padding: 4px;
   text-align: left;
-}
-#floatdiv{
-
 }
 </style>
