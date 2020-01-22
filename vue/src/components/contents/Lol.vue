@@ -108,7 +108,6 @@ export default {
            .get(url, headers)
            .then(res =>{
               this.rooms = res.data
-              alert('리스트 가져오기 성공! ')
            })
            .catch(e=>{
               alert('AXIOS FAIL'+e)
@@ -119,11 +118,6 @@ export default {
          row: 'rank',
          link: '/kalbaram',
          rooms:{
-            title:'',
-            tier:'',
-            contents:'',
-            rhost:'',
-            imgurl:''
          }
       }
    },
