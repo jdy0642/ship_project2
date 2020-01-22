@@ -3,11 +3,12 @@
     <!-- :propLocation="location" -->
   <fut-map v-if="mapTogle" :style="`height: ${height[0]}vh; width:100%;`"
     :propSearchWord="`${stadiumName} 풋살 경기장`"
+    :propLocation="getLocation"
     @sendStadiumName="setStadium"></fut-map>
   <fut-head v-else :style="`height: ${height[0]}vh`"
     :propImg="headImg" class="table"></fut-head>
   <fut-search-bar :style="`height: ${height[1]}vh`" class="table"
-    @sendStadiumName="setStadium" @sendGps="setGps"></fut-search-bar>
+    @sendStadiumName="setStadium" @sendLocation="setGps"></fut-search-bar>
   <fut-reservation :style="`height: ${height[2]}vh`" class="table"
     @sendTime="setTime"></fut-reservation>
   <fut-reservation-table ma-auto class="table"  
@@ -87,7 +88,11 @@ export default {
       return (stadiumName === '' ? table : table.filter(i=> i.stadiumname.match(stadiumName) || i.stadiumaddr.match(stadiumName)))
         .filter(i => time <= i.time && i.time < utc(time))
         .sort((a,b) => a.time > b.time ? 1 : (a.time < b.time ? -1 : 0))
-    }  
+    },
+    getLocation(){
+      alert('홈 겟터 작동. 자식으로 보냄')
+      return this.location
+    }
   },
   methods: {
     setTime(time){
@@ -98,7 +103,9 @@ export default {
       this.mapTogle = stadiumName==='' ? false : true
     },
     setGps(location){
-      this.location = location
+      alert(`홈에서 받은 props ${location.lat}        ${location.lng}`)
+      this.location = {lat: location.lat,
+        lng: location.lng+Math.random()*0.00000001}
       this.mapTogle = true
     }
   }

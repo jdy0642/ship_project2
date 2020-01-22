@@ -33,27 +33,28 @@ export default {
   data(){
     return {
 		mapData:{
-		appKey: '789b2dc91d9235fae744572478c25f39', // 테스트용 appkey
-		center: (this.location == undefined || this.location == '')
-			? {lat:35.450701, lng:123.570667} : this.location,
-		level: 3, // 지도의 레벨(확대, 축소 정도),
-		mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
-		libraries: ['services', 'clusterer', 'drawing'], // 추가로 불러올 라이브러리
+			appKey: '789b2dc91d9235fae744572478c25f39', // 테스트용 appkey
+			center: (this.propLocation == undefined || this.propLocation == '')
+				? {lat:37.5605672, lng:126.94334860559148} : this.propLocation,
+			level: 3, // 지도의 레벨(확대, 축소 정도),
+			mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
+			libraries: ['services', 'clusterer', 'drawing'], // 추가로 불러올 라이브러리
 		},
 		markers: [],
 		mapObject: null, // 지도 객체. 지도가 로드되면 할당됨.
 		searchWord: this.propSearchWord,
-		location: '',
     }
   },
 	watch: {
 		propSearchWord: function(val){
+			alert(`${val}변경`)
 			this.searchWord = val
 			this.markerDel()
 			this.marker()
 		},
 		propLocation: function(val){
-			this.location = val
+			this.mapObject.setLevel(3);
+			this.mapObject.setCenter(new window.daum.maps.LatLng(val.lat, val.lng))
 			this.markerDel()
 		}
 	},
@@ -65,7 +66,6 @@ export default {
 			, daummaps.ControlPosition.TOPRIGHT); 
 		this.mapObject = map
 		/* alert(`검색어:${this.propSearchWord} 현재위치:${this.propLocation.lat},${this.propLocation.lng}`) */
-		this.marker()
     },
     marker(){
 			let daummaps = window.daum.maps
@@ -81,7 +81,6 @@ export default {
 			this.markers = []
 		},
 		placesSearchCB(data, status){
-			let map = this.mapObject
 			let daummaps = window.daum.maps
 			if (status === daummaps.services.Status.OK) {
 				let bounds = new daummaps.LatLngBounds();
@@ -90,7 +89,7 @@ export default {
 					bounds.extend(new daummaps.LatLng(data[i].y, data[i].x));
 				}
 				// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-				map.setBounds(bounds);
+				this.mapObject.setBounds(bounds);
 			}
 		},
 		displayMarker(place){
