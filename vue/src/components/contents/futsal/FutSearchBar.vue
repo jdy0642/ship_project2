@@ -36,7 +36,7 @@ export default{
 			let location = {}
 			navigator.geolocation.getCurrentPosition(function(pos) {
 				location.lat = pos.coords.latitude
-				location.lng = pos.coords.longitude
+				location.lng = pos.coords.longitude + Math.random()*0.00000001
 			})
 			this.$emit("sendGps",location)
 		},

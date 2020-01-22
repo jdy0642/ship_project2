@@ -1,8 +1,8 @@
 <template>
 <div>
+    <!-- :propLocation="location" -->
   <fut-map v-if="mapTogle" :style="`height: ${height[0]}vh; width:100%;`"
     :propSearchWord="`${stadiumName} 풋살 경기장`"
-    :propLocation="location"
     @sendStadiumName="setStadium"></fut-map>
   <fut-head v-else :style="`height: ${height[0]}vh`"
     :propImg="headImg" class="table"></fut-head>
@@ -51,7 +51,7 @@ export default {
       const ranAddr = () => '어디어디 어디 주소 어디어디 어디 길'
       const ranTel = () => `010-${[parseInt(Math.random()*9999)]}-${[parseInt(Math.random()*9999)]}`
       const ranName = () => ['신촌','부산','용산','인천','서울','영등포'][parseInt(Math.random()*6)]
-      const rannum = () => ['4','5','6'][parseInt(Math.random()*3)]
+      const rannum = () => [4,5,6][parseInt(Math.random()*3)]
       const rangender = () => ['female','male'][parseInt(Math.random()*2)]
       const ranrating = () => parseInt(Math.random()*3+1)
       const rantime = x => x + Math.random()*1000*3600*24*13
@@ -94,7 +94,7 @@ export default {
       this.time = time
     },
     setStadium(stadiumName){
-      this.stadiumName = stadiumName
+      this.stadiumName = stadiumName 
       this.mapTogle = stadiumName==='' ? false : true
     },
     setGps(location){

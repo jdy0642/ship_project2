@@ -20,14 +20,13 @@
   </v-card>
   <v-card class="card">
     <v-card-title>특이사항</v-card-title>
-    <v-card-subtitle>{{selectMatch.difficulty}} 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.</v-card-subtitle>
+    <v-card-subtitle>{{difficultyMsg[selectMatch.difficulty-1]}}</v-card-subtitle>
     <v-row class="justify-center pa-1">
       <v-col
         v-for="(n) of matchRule"
         :key="n" cols="2">
         <v-card>
-          <v-img :src="require(`@/assets/img/matchRule/${
-            ['4','5','6'].includes(n) ? n+'vs'+n : n }.svg`)"/>
+          <v-img :src="require(`@/assets/img/matchRule/${n}.svg`)"/>
           <v-card-text class="text-center">{{msgSwitch(n)}}</v-card-text>
         </v-card>
       </v-col>
@@ -130,6 +129,11 @@ export default {
           store.state.selectMatch.shoes,
           'minmax'
         ],
+      difficultyMsg: [
+        '초급 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.',
+        '일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.',
+        '상급 매치는 공좀 차는분만 오세요.'
+      ],
       stadiumText: [
         `${store.state.selectMatch.num}vs${store.state.selectMatch.num}
                     구장의 최소 인원은 ${parseInt(store.state.selectMatch.num)*2 -2}명입니다.`,
@@ -164,14 +168,14 @@ export default {
     },
     msgSwitch(item){
       switch(item){
-        case 1 : return '초보자 게임'
-        case 2 : return '중급자 게임'
-        case 3 : return '상급자 게임'
-        case '4' : return '4vs4'
-        case '5' : return '5vs5'
-        case '6' : return '6vs6'
-        case 'shoes0' : return '풋살화 필수'
-        case 'shoes1' : return '축구화 가능'
+        case 1 : return '초보자'
+        case 2 : return '중급자'
+        case 3 : return '상급자'
+        case 4 : return '4vs4'
+        case 5 : return '5vs5'
+        case 6 : return '6vs6'
+        case 'shoes1' : return '풋살화 필수'
+        case 'shoes0' : return '축구화 가능'
         case 'minmax' : return `${this.selectMatch.num*2 - 2} ~ ${this.selectMatch.num*2 + 4}명`
         default : return item
       }
