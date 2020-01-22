@@ -45,7 +45,8 @@ public class Person extends Proxy implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="PERSONSEQ") @NotNull
-	private Long personseq;
+		private Long personseq;
+	
 	@Column(name="USERID", length= 64 ) @NotNull
 		private String userid;
 	@Column(name="PASSWD") @NotNull

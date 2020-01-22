@@ -1,11 +1,12 @@
 <template>
 <div id="app">
 <layout>
-   <template #header="h" >
-    <v-app id="inspire" style="height:1010px;" >
+   <template #header="h"  >
+    <v-app id="inspire" style="height:1010px;"    >
+  <fixed-header >
   <!-- --------------------------------------- 네비 ------------------------------------------ -->
       <div >
-        <v-toolbar fixed class="sticky" color="indigo darken-1 " >
+        <v-toolbar  class="sticky" color="indigo darken-1"   >
         <!-- <v-toolbar color="#3F51B5" :src="'https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg'"> -->
           <v-toolbar-title class="white--text" style="margin-left:16%;" @click="home()" > 
             <v-icon large color="white">mdi-vuetify</v-icon>
@@ -97,7 +98,8 @@
         </template> -->
         </v-toolbar>
       </div>
-    </v-app>
+      </fixed-header>
+        </v-app>
   </template>
    <!-- --------------------- 컨텐츠  ------------------------- -->
 <template #content ="c">
@@ -125,9 +127,10 @@ import Login  from '@/components/auth/Login.vue'
 import Join  from '@/components/auth/Join.vue'
 import Layout from '@/components/cmm/Layout.vue'
 import {store} from '@/store'
+import FixedHeader from 'vue-fixed-header'
 export default {
   components:{
-    Layout, Login, Join
+    Layout, Login, Join, FixedHeader
   },
   data(){
    return{
@@ -199,7 +202,9 @@ export default {
 }
 </script>
 <style scoped>
-#app{
-  theme:black;
+.vue-fixed-header{
+  z-index:1;
+  position: fixed;
+  width: 100vw;
 }
 </style>
