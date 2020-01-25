@@ -24,8 +24,6 @@ import FutsalStadium from '@/components/contents/futsal/FutStadium.vue'
 import FutsalAdmin from '@/components/contents/futsal/FutAdmin.vue'
 import CreateRoom from '@/components/lol/CreateRoom.vue'
 import JoinRank from '@/components/lol/JoinRank.vue'
-import JoinKal from '@/components/lol/JoinKal.vue'
-import Kalbaram from '@/components/lol/Kalbaram.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -51,8 +49,6 @@ export default new Router({
           {path: '/register', name: 'register', component: Register},
           {path: '/test', name: 'test', component: Test},
           {path: '/joinrank', name: 'joinrank', component: JoinRank},
-          {path: '/joinkal', name: 'joinkal', component: JoinKal},
-          {path: '/kalbaram', name: 'kalbaram', component: Kalbaram},
           {path: '/membermanage', name: 'membermanage', component: MemberManage},
           {path: '/revenuemanage', name: 'revenuemanage', component: RevenueManage},
           {path: '/reservationmanage', name: 'reservationmanage', component: ReservationManage},

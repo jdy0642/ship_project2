@@ -35,8 +35,8 @@ import lombok.Setter;
 public class Article extends Proxy implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ARTICLEID") @NotNull
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ARTICLEID") 
 		private Long articleid;
 	@Column(name="TITLE") @NotNull
 		private String title;
@@ -53,9 +53,8 @@ public class Article extends Proxy implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="REGDATE") @NotNull
 		private Date regdate;
-	
 //	  @ManyToOne(fetch = FetchType.LAZY)
-//	  @JoinColumn(name = "personseq")
+//	  @JoinColumn(name = "PERSONSEQ")
 //	  private Person person;
 	
 	@Builder

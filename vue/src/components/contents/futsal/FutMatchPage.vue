@@ -107,7 +107,7 @@
       <li>경기 중 부상에 대한 책임은 해당 개인에게 귀속됩니다.</li>
     </ul>
   </v-card>
-  <v-btn @click="payment()" id="floatdiv" pa-3 fab x-large block rounded>신 청 하 기</v-btn>
+    <v-btn @click="payment()" id="floatdiv" pa-3 fab x-large block rounded>신 청 하 기</v-btn>
 </div>
 </template>
 
@@ -196,8 +196,5 @@ export default {
   width: 80%;
   padding: 4px;
   text-align: left;
-}
-#floatdiv{
-
 }
 </style>

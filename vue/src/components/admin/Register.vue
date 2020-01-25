@@ -28,7 +28,7 @@
           ></v-text-field>
           <v-text-field
             label="구장 담당자 연락처"
-            placeholder="Placeholder"
+            v-model="state"
             outlined
           ></v-text-field>
           <v-combobox
@@ -41,13 +41,14 @@
 <template>
   <v-card float="center">
 <label class="col-md-3 col-form-label" for="disabled-input">경기 예약  비용</label>
-<v-radio-group  row v-model="radioGroup">
+<v-radio-group  row v-model="radioGroup" :mandatory="false">
       <v-radio
         v-for="price of prices"
         :key="price"
         :label="`${price}`"
         :value="price"
         color="blue"
+        
       ></v-radio>
     </v-radio-group>
 </v-card>
@@ -226,8 +227,9 @@ export default{
         items: [
           '풋살화 대여 가능',
           '운동복 대여 가능',
-          '주차 가능',
-          '샤워장 이용 가능',
+          '남자 매치',
+          '여자 매치',
+          '상급자 매치',
         ],
       snames:[
         '서울 경기장',

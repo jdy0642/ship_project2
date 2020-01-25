@@ -83,7 +83,6 @@
     		<artifactId>jsoup</artifactId>
     		<version>1.11.3</version>
 		</dependency>
-		<!-- json 파싱 -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
