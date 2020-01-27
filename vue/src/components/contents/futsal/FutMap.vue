@@ -43,6 +43,7 @@ export default {
 		markers: [],
 		mapObject: null, // 지도 객체. 지도가 로드되면 할당됨.
 		searchWord: this.propSearchWord,
+		temp: '',
     }
   },
 	watch: {
@@ -53,9 +54,17 @@ export default {
 			this.marker()
 		},
 		propLocation: function(val){
+			alert(`현재위치로 이동 ${val.lat} ${val.lng}`)
 			this.mapObject.setLevel(3);
 			this.mapObject.setCenter(new window.daum.maps.LatLng(val.lat, val.lng))
 			this.markerDel()
+			this.searchAddrFromCoords(val.lng,val.lat,(result,status) =>{
+				if (status === window.daum.maps.services.Status.OK) {
+					this.displayMarker({y: val.lat,x: val.lng,place_name: `현재위치 : ${result[0].address_name}`})
+					this.searchWord = `${result[0].address_name} 풋살장`
+					this.marker()
+				}
+			})
 		}
 	},
   methods: {
@@ -79,6 +88,11 @@ export default {
 				i.setMap(null);
 			})
 			this.markers = []
+		},
+		searchAddrFromCoords(lng, lat, callback) {
+			let geocoder = new window.daum.maps.services.Geocoder()
+    // 좌표로 행정동 주소 정보를 요청합니다
+			geocoder.coord2RegionCode(lng, lat, callback)
 		},
 		placesSearchCB(data, status){
 			let daummaps = window.daum.maps

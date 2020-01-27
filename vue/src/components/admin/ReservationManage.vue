@@ -10,6 +10,9 @@
     </v-card-title>
       <v-data-table :headers="headers" :items="lists" :search="search" :page.sync="page"
         :items-per-page="5" hide-default-footer @page-count="pageCount = $event" style="margin-top:15px;text-align-last:center">
+        <template v-slot:item.resdate="{item}">
+          {{fnc.timeToDate(item.resdate)}}
+        </template>
       </v-data-table>
       <div class="text-center pt-2">
         <v-pagination prev-icon="mdi-arrow-left" next-icon="mdi-arrow-right" circle
@@ -20,6 +23,7 @@
 </template>
 <script>
 import axios from 'axios'
+import { store } from '@/store'
 export default {
   created(){
     axios
@@ -34,6 +38,7 @@ export default {
    data(){
       return{
     context : 'http://localhost:8080',
+    fnc: store.state,
     page: 1,
     pageCount: 0,
     itemsPerPage: 5,

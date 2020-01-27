@@ -19,9 +19,9 @@
 import axios from "axios"
 //import { store } from '@/store'
 export default{
-	created(){
+	async created(){
 		let location={}
-		navigator.geolocation.getCurrentPosition(function(pos) {
+		await navigator.geolocation.getCurrentPosition(function(pos) {
 			location.lat = pos.coords.latitude
 			location.lng = pos.coords.longitude
 		})

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class FutsalController {
 	@Autowired FutsalMatchRepository futsalMatchRepository;
 	@Autowired FutsalMatchService futsalMatchService;
 	@Autowired ModelMapper futModelMapper;
+	@Autowired FutsalMatch fut;
 	@Bean
 	public ModelMapper futModelMapper() {return new ModelMapper();}
 	
@@ -43,5 +45,10 @@ public class FutsalController {
 		System.out.println(param);
 		futsalMatchRepository.saveAll(param);
 		System.out.println("insertdummy");
+	}
+	
+	@GetMapping("/match/{matchId}")
+	public FutsalMatch selectMatch(@PathVariable Long matchId) {
+		return futsalMatchRepository.findByFutsalmatchseq(matchId);
 	}
 }

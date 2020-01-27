@@ -10,13 +10,15 @@
 </v-card>  
 </template>
 <script>
+import {store} from '@/store'
 export default {
   data () {
     return {
       now : Date.now(),
       selectIndex : '',
       selectTime : '',
-      blockSize : 8
+      blockSize : 8,
+      fnc: store.state.futsal.fnc,
     }
   },
   created(){
@@ -33,10 +35,8 @@ export default {
       const now = this.now
       const start = (selectIndex > 14-blockSize ? 14-blockSize :
         (selectIndex==0 ? selectIndex : selectIndex - 1))
-      const utc = (parseInt(now/3600/1000/24)*24 +
-        (new Date(now).getHours() >= 9 ? -9 : 15) )*3600*1000
       return Array.from({length : blockSize},
-      (_,k) => ((start == 0 && k == 0) ? now : utc + (start+k)*24*1000*3600))
+      (_,k) => ((start == 0 && k == 0) ? now : this.fnc.utc(now) + (start+k)*24*1000*3600))
     }
   },
   methods: {
