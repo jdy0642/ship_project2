@@ -61,7 +61,8 @@ public class Reservation extends Proxy implements Serializable{
 //    private List<Article> articles = new ArrayList<>();
 
 	@Builder
-	private Reservation (int resnum, String userid, String stadiumid, Date resdate) {
+	private Reservation (Long resseq, int resnum, String userid, String stadiumid, Date resdate) {
+			this.resseq = resseq;
 			this.resnum = resnum;
 			this.userid = userid;
 			this.stadiumid = stadiumid;

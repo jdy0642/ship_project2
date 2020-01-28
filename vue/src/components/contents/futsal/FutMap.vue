@@ -24,6 +24,7 @@
     @idle="onMapEvent('idle', $event)"
     @tilesloaded="onMapEvent('tilesloaded', $event)"
     @maptypeid_changed="onMapEvent('maptypeid_changed', $event)" */
+
 <script>
 import VueDaumMap from 'vue-daum-map'
 export default {
@@ -42,7 +43,9 @@ export default {
 		markers: [],
 		mapObject: null, // 지도 객체. 지도가 로드되면 할당됨.
 		searchWord: this.propSearchWord,
+
 		temp: '',
+
     }
   },
 	watch: {
@@ -53,17 +56,11 @@ export default {
 			this.marker()
 		},
 		propLocation: function(val){
-			alert(`현재위치로 이동 ${val.lat} ${val.lng}`)
+
 			this.mapObject.setLevel(3);
 			this.mapObject.setCenter(new window.daum.maps.LatLng(val.lat, val.lng))
 			this.markerDel()
-			this.searchAddrFromCoords(val.lng,val.lat,(result,status) =>{
-				if (status === window.daum.maps.services.Status.OK) {
-					this.displayMarker({y: val.lat,x: val.lng,place_name: `현재위치 : ${result[0].address_name}`})
-					this.searchWord = `${result[0].address_name} 풋살장`
-					this.marker()
-				}
-			})
+
 		}
 	},
   methods: {
@@ -71,7 +68,9 @@ export default {
     onLoad(map) {
 		let daummaps = window.daum.maps
 		map.addControl(new daummaps.ZoomControl()
-			, daummaps.ControlPosition.TOPRIGHT);
+
+			, daummaps.ControlPosition.TOPRIGHT); 
+
 		this.mapObject = map
 		/* alert(`검색어:${this.propSearchWord} 현재위치:${this.propLocation.lat},${this.propLocation.lng}`) */
     },
@@ -88,11 +87,8 @@ export default {
 			})
 			this.markers = []
 		},
-		searchAddrFromCoords(lng, lat, callback) {
-			let geocoder = new window.daum.maps.services.Geocoder()
-    // 좌표로 행정동 주소 정보를 요청합니다
-			geocoder.coord2RegionCode(lng, lat, callback)
-		},
+
+
 		placesSearchCB(data, status){
 			let daummaps = window.daum.maps
 			if (status === daummaps.services.Status.OK) {
@@ -111,7 +107,10 @@ export default {
 			let infowindow = new daummaps.InfoWindow({zIndex:1});
 			let marker = new daummaps.Marker({
 				map: map,
-				position: new daummaps.LatLng(place.y, place.x)
+
+
+				position: new daummaps.LatLng(place.y, place.x) 
+
 			})
 			this.markers.push(marker);
 			daummaps.event.addListener(marker, 'mouseover',() =>{
@@ -124,7 +123,9 @@ export default {
 			daummaps.event.addListener(marker, 'click', () => {
 				infowindow.close()
 				this.searchWord = place.place_name
-				this.$emit("sendStadiumName",place)
+
+				this.$emit("sendStadiumName",place.place_name)
+
 			})
 		}
   }
