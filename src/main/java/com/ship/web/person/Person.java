@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ship.web.article.Article;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.reservation.Reservation;
@@ -90,9 +91,9 @@ public class Person extends Proxy implements Serializable{
 	 * @OneToMany(mappedBy = "PERSONSEQ", cascade = CascadeType.ALL, orphanRemoval =
 	 * true) private List<Article> articles = new ArrayList<>();
 	 */
-	
-	 @OneToMany(mappedBy = "personseq", cascade = CascadeType.ALL, orphanRemoval=true)
-	 private List<Reservation> reservations = new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "personseq", cascade = CascadeType.ALL, orphanRemoval=true)
+	private List<Reservation> reservations = new ArrayList<>();
 	 
 
 	@Builder

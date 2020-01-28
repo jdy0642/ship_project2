@@ -48,8 +48,8 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 				person.setPersonseq((long) random(1, personCount));
 				res.setFutsalmatchseq(fut);
 				res.setPersonseq(person);
-				res.setKm(random(1,20));
-				res.setScore(random(1,4));
+				res.setKm(random(5,20));
+				res.setScore(random(0,4));
 				res.setWin(Arrays.asList("win","lose","win").get(random(0,2)));
 				resList.add(res);
 			}

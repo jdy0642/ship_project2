@@ -27,6 +27,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ship.web.article.Article;
 import com.ship.web.futsal.FutsalMatch;
 import com.ship.web.person.Person;
@@ -37,6 +40,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 
 @Component
 @Entity
@@ -61,15 +65,18 @@ public class Reservation extends Proxy implements Serializable {
 	@Column(name = "SCORE")
 	private int score;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "personseq")
+	private Person personseq;
 	
-	@JoinColumn(name = "personseq") private Person personseq;
-	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "futsalmatchseq")
+	private FutsalMatch futsalmatchseq;
 	
-	@JoinColumn(name = "futsalmatchseq") private FutsalMatch futsalmatchseq;
-	
-
 	public Reservation(@NotNull Long resseq, @NotNull Long resdate, String win, int km,
 			int score) {
 		this.resseq = resseq;

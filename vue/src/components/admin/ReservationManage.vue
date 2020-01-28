@@ -13,6 +13,9 @@
         <template v-slot:item.resdate="{item}">
           {{fnc.timeToDate(item.resdate)}}
         </template>
+        <template v-slot:item.personseq.userid="{item}">
+          <v-btn @click="setMatchResult(item.futsalmatchseq.futsalmatchseq)">{{item.personseq.userid}}</v-btn>
+        </template>
       </v-data-table>
       <div class="text-center pt-2">
         <v-pagination prev-icon="mdi-arrow-left" next-icon="mdi-arrow-right" circle
@@ -29,7 +32,8 @@ export default {
     axios
          .get(`${this.context}/res/1`)
          .then(res =>{
-            this.lists = res.data
+            this.lists = res.data.sort((a,b) =>
+              a.resdate > b.resdate ? 1 : (a.resdate < b.resdate ? -1 : 0))
          })
          .catch(e=>{
             alert('AXIOS FAIL'+e)
@@ -38,19 +42,18 @@ export default {
    data(){
       return{
     context : 'http://localhost:8080',
-    fnc: store.state,
+    fnc: store.state.futsal.fnc,
     page: 1,
     pageCount: 0,
-    itemsPerPage: 5,
+    itemsPerPage: 20,
     lists: [],
     black:false,
     search: '',
     headers: [
-          { text: '예약 번호', value: 'resnum'},
+          { text: '예약 번호', value: 'resseq'},
           { text: '예약 일자', value: 'resdate' },
-          { text: '구장명', value: 'stadiumid'},
-          { text: '유저 아이디', value: 'userid' },
-          { text: '시퀀스 ', value:'resseq'}
+          { text: '구장명', value: 'futsalmatchseq.stadiumname'},
+          { text: '유저 아이디', value: 'personseq.userid' },
         ],
       }
    },
@@ -63,8 +66,11 @@ export default {
     },
     goto(){
       alert('search')
+    },
+    setMatchResult(personseq){
+      alert(personseq)
+      //this.search = event.currentTarget.firstChild.nodeValue
     }
-
    }
   }
 </script>

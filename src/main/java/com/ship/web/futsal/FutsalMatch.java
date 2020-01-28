@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ship.web.reservation.Reservation;
 
 import lombok.AccessLevel;
@@ -77,7 +78,7 @@ public class FutsalMatch implements Serializable {
 	private String adminname;
 
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "futsalmatchseq", cascade = CascadeType.ALL, orphanRemoval =true)
 	private List<Reservation> reservations = new ArrayList<>();
 	
