@@ -1,15 +1,14 @@
 <template>
 <div>
 <v-row style="margin:1%;float:left;text-align:center;">
-<v-card style="text-align:center;width:700px;">
-    <v-card-title>구장 등록</v-card-title>
+<v-card style="text-align:center;width:850px;">
+<h2>구장 등록 페이지</h2>
     <div style="margin:3%;padding:3%">
-<v-select
-          :items="snames"
-          label="구장을 선택해주세요."
-          dense
-          solo
-        ></v-select>
+    <fut-map :style="`height: 500px; width:100%;`"
+      :propSearchWord="`${searchWord} 풋살 경기장`"
+      :propLocation="location"
+      @sendStadiumName="setStadium"></fut-map>
+    <v-text-field :value="stadiumName" @keyup.enter="submit"></v-text-field>
 
           <v-text-field
             label="관리자 이름"
@@ -27,8 +26,13 @@
             outlined
           ></v-text-field>
           <v-text-field
-            label="구장 담당자 연락처"
-            v-model="state"
+            label="구장 주소"
+            v-model="searchResult.address_name"
+            outlined
+          ></v-text-field>
+          <v-text-field
+            label="구장 연락처"
+            v-model="searchResult.phone"
             outlined
           ></v-text-field>
           <v-combobox
@@ -41,15 +45,12 @@
 <template>
   <v-card float="center">
 <label class="col-md-3 col-form-label" for="disabled-input">경기 예약  비용</label>
-<v-radio-group  row v-model="radioGroup" :mandatory="false">
-      <v-radio
-        v-for="price of prices"
-        :key="price"
-        :label="`${price}`"
-        :value="price"
-        color="blue"
-        
-      ></v-radio>
+<v-radio-group v-model="row" row :mandatory="true">
+      <v-radio label="10000원" value="10000원"></v-radio>
+      <v-radio label="12000원" ></v-radio>
+      <v-radio label="15000원" ></v-radio>
+      <v-radio label="18000원" ></v-radio>
+      <v-radio label="20000원" ></v-radio>
     </v-radio-group>
 </v-card>
 </template>
@@ -74,7 +75,6 @@
           outlined
           name="input-7-4"
           label="구장 특이사항"
-          value="우천 시 경기 취소.. & 풋살화 공급 제한 & 최소 경기 인원 & 기타 등등..."
         ></v-textarea>
 </div>
 </v-card>
@@ -186,24 +186,24 @@
 <script>
 import {store} from '@/store'
 import axios from 'axios'
+import FutMap from '@/components/contents/futsal/FutMap.vue'
 export default{
+  components:{
+    FutMap
+  },
+  computed:{
+    searchWord(){
+      return this.stadiumName
+    }
+  },
   created(){
-      let url = `http://api.openweathermap.org/data/2.5/forecast?id=1835848&APPID=cd9a51369c3fc19f9fb85b2f2508b5d5`
-      axios
-      .get(url)
-      .then(res=>{
-        this.adata = res.data
-        this.city = this.adata.city.name
-        this.adds()
-      })
-      .catch(e=>{
-        alert('axios fail'+e)
-        
-      })
+      
 // -----------------------------------데이터-------------------------------------------
       },
    data(){
       return{
+      stadiumName: '신촌',
+      searchResult: {},
       // date: new Date((this.days[0].dt+32400)*1000).toISOString().substr(0, 10),
       picker: this.$moment(new Date()).format('YYYY-MM-DD'),
       labels: [],
@@ -244,17 +244,34 @@ export default{
           '5 vs 5',
           '6 vs 6',
         ],
-      prices:[
-        '10000원',
-        '12000원',
-        '15000원',
-        '18000원',
-        '20000원',
-      ]
+        price:''
       }
   },
 // -----------------------------------메소드-------------------------------------------
    methods:{
+    bringWeather(){
+      let url = `http://api.openweathermap.org/data/2.5/forecast?lat=${this.searchResult.y}&lon=${this.searchResult.x}&APPID=cd9a51369c3fc19f9fb85b2f2508b5d5`
+      axios
+      .get(url)
+      .then(res=>{
+        this.adata = res.data
+        this.city = this.adata.city.name
+        this.adds()
+      })
+      .catch(e=>{
+        alert('axios fail'+e)
+        
+      })
+    },
+    setStadium(stadiumName){
+      this.searchResult = stadiumName
+      this.stadiumName = stadiumName.place_name
+      this.mapTogle = stadiumName==='' ? false : true
+      this.bringWeather()
+    },
+    submit(event){
+      this.stadiumName = event.target.value
+    },
     allowedDates: val => parseInt(val.split('-')[2], 10) >= parseInt(new Date().toISOString().substr(0,10).split('-')[2], 10),
     show(x){
       this.temp=this.timebar[x].main.temp
@@ -275,7 +292,7 @@ export default{
       this.imgUrl = `http://openweathermap.org/img/wn/${this.img}@2x.png`
     },
       register(){
-         alert('등록 버튼 ')
+         alert('등록한 경기 시간:  '+this.picker+' '+this.labels[this.time])
     },
       cancel(){
          alert('취소 버튼 ')
@@ -329,9 +346,6 @@ export default{
     }
     
   },
-  computed:{
-    
-  }
 }
 </script>
 <style scoped>

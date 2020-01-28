@@ -48,7 +48,7 @@ export default new Router({
           {path: '/createroom', name: 'createroom', component: CreateRoom},
           {path: '/register', name: 'register', component: Register},
           {path: '/test', name: 'test', component: Test},
-          {path: '/joinrank', name: 'joinrank', component: JoinRank},
+          {path: '/joinrank/:game', name: 'joinrank', component: JoinRank},
           {path: '/membermanage', name: 'membermanage', component: MemberManage},
           {path: '/revenuemanage', name: 'revenuemanage', component: RevenueManage},
           {path: '/reservationmanage', name: 'reservationmanage', component: ReservationManage},
