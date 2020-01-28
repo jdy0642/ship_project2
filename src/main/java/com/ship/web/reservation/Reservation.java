@@ -62,15 +62,15 @@ public class Reservation extends Proxy implements Serializable {
 	private int km;
 	@Column(name = "SCORE")
 	private int score;
-	/*
-	 * @ManyToOne(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinColumn(name = "userid") private Person userid;
-	 * 
-	 * @ManyToOne(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinColumn(name = "futsalmatchseq") private FutsalMatch futsalmatchseq;
-	 */
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@JoinColumn(name = "personseq") private Person personseq;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@JoinColumn(name = "futsalmatchseq") private FutsalMatch futsalmatchseq;
+	
 
 	public Reservation(@NotNull Long resseq, @NotNull Long resdate, int win, int point, int km,
 			int score) {

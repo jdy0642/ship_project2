@@ -77,11 +77,10 @@ public class FutsalMatch implements Serializable {
 	private String adminname;
 
 	
-	/*
-	 * @OneToMany(mappedBy = "futsalmatchseq", cascade = CascadeType.ALL,
-	 * orphanRemoval =true) private List<Reservation> reservations = new
-	 * ArrayList<>();
-	 */
+	
+	@OneToMany(mappedBy = "futsalmatchseq", cascade = CascadeType.ALL, orphanRemoval =true)
+	private List<Reservation> reservations = new ArrayList<>();
+	
 	
 	@Builder
 	private FutsalMatch(@NotNull Long futsalmatchseq, @NotNull Long time, @NotNull String stadiumname,

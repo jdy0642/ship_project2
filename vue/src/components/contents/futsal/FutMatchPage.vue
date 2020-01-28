@@ -138,15 +138,6 @@ export default {
         '일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.',
         '상급 매치는 공좀 차는분만 오세요.'
       ],
-      stadiumText: [
-        `${store.state.futsal.selectMatch.num}vs${store.state.futsal.selectMatch.num}
-                    구장의 최소 인원은 ${parseInt(store.state.futsal.selectMatch.num)*2 -2}명입니다.`,
-        `모든 ${store.state.futsal.selectMatch.num}구장은 정원 모집 시 삼파전으로 진행합니다.`,
-        '주차 : 평일 2시간 무료 / 주말 무료',
-        '(평일 이용시 주차 차량 번호 기입 필수, 2시간 이상 주차시 추가 비용 발생)',
-        '화장실은1층 화장실 이용',
-        '자판기 및 흡연 구역 있음'
-      ],
       mapView: true,
     }
   },
@@ -167,7 +158,18 @@ export default {
     stadiumFacility(){
       return this.selectMatch.stadiumfacility ? this.selectMatch.stadiumfacility.split(',')
        : ['park0','park0','park0','park0','park0']
-    }
+    },
+    stadiumText(){
+      let selectMatch = this.selectMatch
+      return [
+        `${selectMatch.num}vs${selectMatch.num}
+                    구장의 최소 인원은 ${parseInt(selectMatch.num)*2 -2}명입니다.`,
+        `모든 ${selectMatch.num}구장은 정원 모집 시 삼파전으로 진행합니다.`,
+        '주차 : 평일 2시간 무료 / 주말 무료',
+        '(평일 이용시 주차 차량 번호 기입 필수, 2시간 이상 주차시 추가 비용 발생)',
+        '화장실은1층 화장실 이용',
+        '자판기 및 흡연 구역 있음'
+      ]}
   },
   methods: {
     viewTogle(){

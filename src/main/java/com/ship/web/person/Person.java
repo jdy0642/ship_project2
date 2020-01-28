@@ -90,10 +90,10 @@ public class Person extends Proxy implements Serializable{
 	 * @OneToMany(mappedBy = "PERSONSEQ", cascade = CascadeType.ALL, orphanRemoval =
 	 * true) private List<Article> articles = new ArrayList<>();
 	 */
-	/*
-	 * @OneToMany(mappedBy = "userid", cascade = CascadeType.ALL, orphanRemoval
-	 * =true) private List<Reservation> reservations = new ArrayList<>();
-	 */
+	
+	 @OneToMany(mappedBy = "personseq", cascade = CascadeType.ALL, orphanRemoval=true)
+	 private List<Reservation> reservations = new ArrayList<>();
+	 
 
 	@Builder
 	private Person(String userid, String name, String passwd, String tel,

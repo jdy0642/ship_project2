@@ -14,7 +14,10 @@
   <v-btn @click="test2()">롤2</v-btn>
   <v-btn @click="test3()">롤3</v-btn>
   <v-btn @click="test()">롤</v-btn>
-  <fut-map></fut-map>
+   <div>
+    <span>{{ $socket.connected ? 'Connected' : 'Disconnected' }}</span>
+  </div>
+  <v-btn @click="clickButton('하이')">socket</v-btn>
 </div>
 </template>
     /* @center_changed="onMapEvent('center_changed', $event)"
@@ -36,9 +39,25 @@
 import axios from 'axios'
 import {store} from '@/store'
 import VueDaumMap from 'vue-daum-map'
-import FutMap from './FutMap'
 export default {
-  components:{VueDaumMap,FutMap},
+  components:{VueDaumMap},
+  created(){
+    this.$socket.$subscribe('SEND', payload => {
+      alert(payload)
+    })
+    this.$socket.$subscribe('user', payload => {
+      this.console = payload
+    })
+    this.console = this.$socket
+  },
+  sockets: {
+    connect() {
+      alert('socket connected')
+    },
+    customEmit(val) {
+      alert(`this method was fired by the socket server. eg: io.emit("customEmit", data)${val}`)
+    }
+  },
   data(){
     return {
       mapData:{
@@ -57,6 +76,10 @@ export default {
     }
   },
   methods: {
+    clickButton(val) {
+      // this.$socket.client is `socket.io-client` instance
+      this.$socket.client.emit('SEND', val);
+    },
     // 지도가 로드 완료되면 load 이벤트 발생
     onLoad (map) {
       // 지도의 현재 영역을 얻어옵니다
