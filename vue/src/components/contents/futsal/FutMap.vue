@@ -125,7 +125,7 @@ export default {
 			daummaps.event.addListener(marker, 'click', () => {
 				infowindow.close()
 				this.searchWord = place.place_name
-				this.$emit("sendStadiumName",place.place_name)
+				this.$emit("sendStadiumName",place)
 			})
 		}
   }

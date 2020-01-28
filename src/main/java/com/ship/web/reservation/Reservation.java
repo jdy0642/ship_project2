@@ -55,9 +55,7 @@ public class Reservation extends Proxy implements Serializable {
 	@NotNull
 	private Long resdate;
 	@Column(name = "WIN")
-	private int win;
-	@Column(name = "POINT")
-	private int point;
+	private String win;
 	@Column(name = "KM")
 	private int km;
 	@Column(name = "SCORE")
@@ -72,12 +70,11 @@ public class Reservation extends Proxy implements Serializable {
 	@JoinColumn(name = "futsalmatchseq") private FutsalMatch futsalmatchseq;
 	
 
-	public Reservation(@NotNull Long resseq, @NotNull Long resdate, int win, int point, int km,
+	public Reservation(@NotNull Long resseq, @NotNull Long resdate, String win, int km,
 			int score) {
 		this.resseq = resseq;
 		this.resdate = resdate;
 		this.win = win;
-		this.point = point;
 		this.km = km;
 		this.score = score;
 	}

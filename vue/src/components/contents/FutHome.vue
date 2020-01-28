@@ -86,7 +86,7 @@ export default {
       this.time = time
     },
     setStadium(stadiumName){
-      this.stadiumName = stadiumName 
+      this.stadiumName = stadiumName.place_name
       this.mapTogle = stadiumName==='' ? false : true
     },
     setGps(location){
