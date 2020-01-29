@@ -35,7 +35,7 @@ export default {
         'http://641109.igkorea.net/data/editor/1803/7ec6014758f9af0fd497c55e30ef7fd1_1522042791_19.jpg'
       ],
       stadiumName : '',
-      location: {},
+      location: '',
       mapTogle: false,
       time : Date.now(),
       table : [],
@@ -86,8 +86,8 @@ export default {
       this.time = time
     },
     setStadium(stadiumName){
-      this.stadiumName = stadiumName.place_name
-      this.mapTogle = stadiumName==='' ? false : true
+      this.stadiumName = stadiumName.place_name ? stadiumName.place_name : stadiumName
+      this.mapTogle = this.stadiumName==='' ? false : true
     },
     setGps(location){
       this.location = {lat: location.lat,lng: location.lng}

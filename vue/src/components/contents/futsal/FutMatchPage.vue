@@ -1,7 +1,7 @@
 <template>
 <div>
 	<fut-head v-if="mapView" :style="`height: ${height}vh`" :propImg="stadiumImg"/>
-  <fut-map v-else :propSearchWord="selectMatch.stadiumaddr"
+  <fut-map v-else :propSearchWord="`${selectMatch.stadiumname}`"
     :style="`height: ${height}vh; width:100%;`"></fut-map>
   <v-card class="card">
     <v-card-title><h1>
@@ -117,7 +117,7 @@ import {store} from '@/store'
 import FutMap from './FutMap'
 import FutHead from './FutHead'
 export default {
-  async created(){
+  created : async function (){
     if(store.state.futsal.selectMatch.futsalmatchseq==undefined){
       await axios.get(`${store.state.futsal.context}/futsal/match/${this.$route.params.matchId}`)
       .then(res =>{

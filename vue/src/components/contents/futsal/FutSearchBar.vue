@@ -19,13 +19,7 @@
 import axios from "axios"
 //import { store } from '@/store'
 export default{
-	async created(){
-		let location={}
-		await navigator.geolocation.getCurrentPosition(function(pos) {
-			location.lat = pos.coords.latitude
-			location.lng = pos.coords.longitude
-		})
-		this.location = location
+	created(){
 	},
 	data(){
 		return {
@@ -41,7 +35,14 @@ export default{
 			this.$emit("sendStadiumName",this.stadiumName)
 		},
 		gps(){
-			this.$emit("sendLocation",this.location)
+			let location={}
+			let send = (location) => {this.$emit("sendLocation",location)}
+			navigator.geolocation.getCurrentPosition(async function(pos) {
+				location.lat = pos.coords.latitude
+				location.lng = pos.coords.longitude
+				await send(location)
+			})
+			this.location = location
 		},
 		weather(stadiumName){
 			let weather = ''			
