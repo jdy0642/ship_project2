@@ -53,9 +53,11 @@ public class Article extends Proxy implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="REGDATE") @NotNull
 		private Date regdate;
-//	  @ManyToOne(fetch = FetchType.LAZY)
-//	  @JoinColumn(name = "PERSONSEQ")
-//	  private Person person;
+	/*
+	 * @ManyToOne(fetch = FetchType.LAZY)
+	 * 
+	 * @JoinColumn(name = "PERSONSEQ") private Person person;
+	 */
 	
 	@Builder
 	private Article(String title, String content,

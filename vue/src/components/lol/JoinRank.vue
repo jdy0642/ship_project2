@@ -69,7 +69,7 @@ export default {
       // logs: [],
       // msg: null,
       context:'http://localhost:8080',
-      temp:''
+      temp:'',
     }
   },
   methods: {

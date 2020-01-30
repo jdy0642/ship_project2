@@ -33,46 +33,56 @@ export default {
     return {
 		mapData:{
 			appKey: '789b2dc91d9235fae744572478c25f39', // 테스트용 appkey
-			center: (this.propLocation == undefined || this.propLocation == '')
-				? {lat:37.5605672, lng:126.94334860559148} : this.propLocation,
+			center: {lat:37.5605672, lng:126.94334860559148},
 			level: 3, // 지도의 레벨(확대, 축소 정도),
 			mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
 			libraries: ['services', 'clusterer', 'drawing'], // 추가로 불러올 라이브러리
 		},
 		markers: [],
 		mapObject: null, // 지도 객체. 지도가 로드되면 할당됨.
-		searchWord: this.propSearchWord,
+		searchWord: '',
 		temp: '',
     }
   },
 	watch: {
-		propSearchWord: function(val){
-			alert(`${val}변경`)
-			this.searchWord = val
+		propSearchWord: function(param){
+			this.searchChanged(param)
+		},
+		propLocation: function(param){
+			this.locationChanged(param)
+		}
+	},
+  methods: {
+		searchChanged(param){
+			//alert(`${param}변경`)
+			this.searchWord = param
 			this.markerDel()
 			this.marker()
 		},
-		propLocation: function(val){
-			alert(`현재위치로 이동 ${val.lat} ${val.lng}`)
+		locationChanged(param){
+			//alert(`현재위치로 이동 ${param.lat} ${param.lng}`)
 			this.mapObject.setLevel(3);
-			this.mapObject.setCenter(new window.daum.maps.LatLng(val.lat, val.lng))
+			this.mapObject.setCenter(new window.daum.maps.LatLng(param.lat, param.lng))
 			this.markerDel()
-			this.searchAddrFromCoords(val.lng,val.lat,(result,status) =>{
+			this.searchAddrFromCoords(param.lng,param.lat,(result,status) =>{
 				if (status === window.daum.maps.services.Status.OK) {
-					this.displayMarker({y: val.lat,x: val.lng,place_name: `현재위치 : ${result[0].address_name}`})
+					this.displayMarker({y: param.lat,x: param.lng,place_name: `현재위치 : ${result[0].address_name}`})
 					this.searchWord = `${result[0].address_name} 풋살장`
 					this.marker()
 				}
 			})
-		}
-	},
-  methods: {
+		},
     // 지도가 로드 완료되면 load 이벤트 발생
     onLoad(map) {
 		let daummaps = window.daum.maps
 		map.addControl(new daummaps.ZoomControl()
 			, daummaps.ControlPosition.TOPRIGHT);
 		this.mapObject = map
+		if(!this.propLocation){
+			this.searchChanged(this.propSearchWord)
+		} else{
+			this.locationChanged(this.propLocation)
+		}
 		/* alert(`검색어:${this.propSearchWord} 현재위치:${this.propLocation.lat},${this.propLocation.lng}`) */
     },
     marker(){

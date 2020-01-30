@@ -3,7 +3,7 @@
     <!-- :propLocation="location" -->
   <fut-map v-if="mapTogle" :style="`height: ${height[0]}vh; width:100%;`"
     :propSearchWord="`${stadiumName} 풋살 경기장`"
-    :propLocation="getLocation"
+    :propLocation="location"
     @sendStadiumName="setStadium"></fut-map>
   <fut-head v-else :style="`height: ${height[0]}vh`"
     :propImg="headImg" class="table"></fut-head>
@@ -12,7 +12,7 @@
   <fut-reservation :style="`height: ${height[2]}vh`" class="table"
     @sendTime="setTime"></fut-reservation>
   <fut-reservation-table ma-auto class="table"  
-    :propTime="time" :propStadium="stadiumName" :propTable="matchFilter"></fut-reservation-table>
+    :propTime="time" :propStadium="stadiumName" :propTable="fnc.matchFilter(time,stadiumName,table)"></fut-reservation-table>
 </div>
 </template>
 
@@ -28,13 +28,14 @@ export default {
   components:{FutHead,FutSearchBar,FutReservation,FutReservationTable,FutMap},
   data(){
     return{
+      fnc: store.state.futsal.fnc,
       headImg: [
         'https://blog.hmgjournal.com/images/contents/article/20161214-Reissue-night-football-03.jpg',
         'http://641109.igkorea.net/data/editor/1803/7ec6014758f9af0fd497c55e30ef7fd1_1522042126_13.jpg',
         'http://641109.igkorea.net/data/editor/1803/7ec6014758f9af0fd497c55e30ef7fd1_1522042791_19.jpg'
       ],
       stadiumName : '',
-      location: {},
+      location: '',
       mapTogle: false,
       time : Date.now(),
       table : [],
@@ -43,7 +44,7 @@ export default {
   },
   created(){
     let table = []
-    axios.get(`${store.state.context}/futsal/`)
+    axios.get(`${store.state.futsal.context}/futsal/`)
       .then(res => {
         table = res.data
         
@@ -75,37 +76,21 @@ export default {
         x.stadiumDressRental = x.stadiumfacility.split(',')[4]
       })
       this.table = table
-      store.state.matchList = table	
+      store.state.futsal.matchList = table	
     })
 	},
   computed: {
-    matchFilter(){
-      const time = this.time
-      const stadiumName = this.stadiumName
-      const table = this.table
-      const utc = (x => (parseInt(x/3600/1000/24)*24 +
-        (new Date(x).getHours() >= 9 ? 15 : 39))*3600*1000)
-      return (stadiumName === '' ? table : table.filter(i=> i.stadiumname.match(stadiumName) || i.stadiumaddr.match(stadiumName)))
-        .filter(i => time <= i.time && i.time < utc(time))
-        .sort((a,b) => a.time > b.time ? 1 : (a.time < b.time ? -1 : 0))
-    },
-    getLocation(){
-      alert('홈 겟터 작동. 자식으로 보냄')
-      return this.location
-    }
   },
   methods: {
     setTime(time){
       this.time = time
     },
     setStadium(stadiumName){
-      this.stadiumName = stadiumName 
-      this.mapTogle = stadiumName==='' ? false : true
+      this.stadiumName = stadiumName.place_name ? stadiumName.place_name : stadiumName
+      this.mapTogle = this.stadiumName==='' ? false : true
     },
     setGps(location){
-      alert(`홈에서 받은 props ${location.lat}        ${location.lng}`)
-      this.location = {lat: location.lat,
-        lng: location.lng+Math.random()*0.00000001}
+      this.location = {lat: location.lat,lng: location.lng}
       this.mapTogle = true
     }
   }

@@ -102,6 +102,7 @@ export default {
                alert('마지막 페이지입니다.')
                window.onscroll = null
             }
+              this.rooms = res.data
            })
            .catch(e=>{
               alert('AXIOS FAIL'+e)

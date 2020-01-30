@@ -11,10 +11,13 @@
     style="width:100%;height:400px;">
   </vue-daum-map>
   <v-btn @click="test()">롤</v-btn>
-  <v-btn @click="test2()">검색 테스트</v-btn>
+  <v-btn @click="test2()">롤2</v-btn>
+  <v-btn @click="test3()">롤3</v-btn>
   <v-btn @click="test()">롤</v-btn>
-  <v-btn @click="test()">롤</v-btn>
-  <fut-map></fut-map>
+   <div>
+    <span>{{ $socket.connected ? 'Connected' : 'Disconnected' }}</span>
+  </div>
+  <v-btn @click="clickButton('하이')">socket</v-btn>
 </div>
 </template>
     /* @center_changed="onMapEvent('center_changed', $event)"
@@ -36,9 +39,25 @@
 import axios from 'axios'
 import {store} from '@/store'
 import VueDaumMap from 'vue-daum-map'
-import FutMap from './FutMap'
 export default {
-  components:{VueDaumMap,FutMap},
+  components:{VueDaumMap},
+  created(){
+    this.$socket.$subscribe('SEND', payload => {
+      alert(payload)
+    })
+    this.$socket.$subscribe('user', payload => {
+      this.console = payload
+    })
+    this.console = this.$socket
+  },
+  sockets: {
+    connect() {
+      alert('socket connected')
+    },
+    customEmit(val) {
+      alert(`this method was fired by the socket server. eg: io.emit("customEmit", data)${val}`)
+    }
+  },
   data(){
     return {
       mapData:{
@@ -57,6 +76,10 @@ export default {
     }
   },
   methods: {
+    clickButton(val) {
+      // this.$socket.client is `socket.io-client` instance
+      this.$socket.client.emit('SEND', val);
+    },
     // 지도가 로드 완료되면 load 이벤트 발생
     onLoad (map) {
       // 지도의 현재 영역을 얻어옵니다
@@ -81,42 +104,24 @@ export default {
       this.mapObject = map;
     },
     test2(){
-      let map = this.mapObject
-      let daummaps = window.daum.maps
-      daummaps.services.Places()
-      this.searchresult = daummaps
-      let infowindow = new daummaps.InfoWindow({zIndex:1});
-      daummaps.services.keywordSearch("풋살 경기장", placesSearchCB,null)
-      function placesSearchCB (data, status) {
-        if (status === daummaps.services.Status.OK) {
-            let bounds = new daummaps.LatLngBounds();
-            for (let i=0; i<data.length; i++) {
-                displayMarker(data[i])
-                bounds.extend(new daummaps.LatLng(data[i].y, data[i].x));
-            }
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-            map.setBounds(bounds);
+      var req = new XMLHttpRequest();
+      req.open('GET',`http://localhost:3000`, true);
+      req.onreadystatechange = function () {
+        if (req.readyState == 4) {
+          alert(req)
         }
+        alert(req)
       }
-      function displayMarker(place) {
-        let marker = new daummaps.Marker({
-          map: map,
-          position: new daummaps.LatLng(place.y, place.x) 
-        });
-        daummaps.event.addListener(marker, 'click', function() {
-          //마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-          infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-          infowindow.open(map, marker);
-        });
-      }
+      req.send();
     },
-    get(url){
+    test3(){
       // Return a new promise.
       return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
-        req.open('GET', url);
-
+        req.open('GET', '/lol/summoner/v4/summoners/by-name/yamine?api_key=RGAPI-5bfa2b4b-0bbf-4861-a97a-dfd697046e26');
+        /* req.setRequestHeader("Access-Control-Allow-Origin", "*")
+        req.setRequestHeader("Authorization", "Bearer XXXXX") */
         req.onload = function() {
           // This is called even on 404 etc
           // so check the status
@@ -141,24 +146,7 @@ export default {
       });
     },
     test(){
-      axios.defaults.baseURL = 'https://kr.api.riotgames.com';
-      axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
-      axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-			axios({
-        url:`/lol/summoner/v4/summoners/by-name/yamine`,
-        headers: {
-          'authorization': 'JWT fefege..',
-          'Accept' : 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Max-Age': '3600',
-          //"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36",
-          'Access-Control-Allow-Origin': '*'  
-          },
-        methods: 'Get',
-        params:{
-          api_key: 'RGAPI-5bfa2b4b-0bbf-4861-a97a-dfd697046e26'
-        }
-        })
+			axios.get(`http://localhost:3000`)
 			.then(res=>{
 				this.lol = res.data
 			})
@@ -197,7 +185,7 @@ export default {
 					stadiumimg: '1,2,3', remain: remain(), adminname: '펭수'
 					}))
 				this.table = table
-				axios.post(`${store.state.context}/futsal/insertdummy`,table,store.state.header)
+				axios.post(`${store.state.futsal.context}/futsal/insertdummy`,table,store.state.futsal.header)
 				.catch(e => {
 					alert(e)
 				})
