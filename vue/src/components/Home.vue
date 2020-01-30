@@ -108,11 +108,6 @@
     <v-app id="inspire" >
         <v-card>
     <router-view></router-view>
-        <v-navigation-drawer  width="100%" >
-          <template>
-            
-          </template>
-        </v-navigation-drawer>
       </v-card>
     </v-app>
   </div>

@@ -34,37 +34,56 @@ export default {
     return {
 		mapData:{
 			appKey: '789b2dc91d9235fae744572478c25f39', // 테스트용 appkey
-			center: (this.propLocation == undefined || this.propLocation == '')
-				? {lat:37.5605672, lng:126.94334860559148} : this.propLocation,
+			center: {lat:37.5605672, lng:126.94334860559148},
 			level: 3, // 지도의 레벨(확대, 축소 정도),
 			mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
 			libraries: ['services', 'clusterer', 'drawing'], // 추가로 불러올 라이브러리
 		},
 		markers: [],
 		mapObject: null, // 지도 객체. 지도가 로드되면 할당됨.
-		searchWord: this.propSearchWord,
+		searchWord: '',
+		temp: '',
     }
   },
 	watch: {
-		propSearchWord: function(val){
-			alert(`${val}변경`)
-			this.searchWord = val
-			this.markerDel()
-			this.marker()
+		propSearchWord: function(param){
+			this.searchChanged(param)
 		},
-		propLocation: function(val){
-			this.mapObject.setLevel(3);
-			this.mapObject.setCenter(new window.daum.maps.LatLng(val.lat, val.lng))
-			this.markerDel()
+		propLocation: function(param){
+			this.locationChanged(param)
 		}
 	},
   methods: {
+		searchChanged(param){
+			//alert(`${param}변경`)
+			this.searchWord = param
+			this.markerDel()
+			this.marker()
+		},
+		locationChanged(param){
+			//alert(`현재위치로 이동 ${param.lat} ${param.lng}`)
+			this.mapObject.setLevel(3);
+			this.mapObject.setCenter(new window.daum.maps.LatLng(param.lat, param.lng))
+			this.markerDel()
+			this.searchAddrFromCoords(param.lng,param.lat,(result,status) =>{
+				if (status === window.daum.maps.services.Status.OK) {
+					this.displayMarker({y: param.lat,x: param.lng,place_name: `현재위치 : ${result[0].address_name}`})
+					this.searchWord = `${result[0].address_name} 풋살장`
+					this.marker()
+				}
+			})
+		},
     // 지도가 로드 완료되면 load 이벤트 발생
     onLoad(map) {
 		let daummaps = window.daum.maps
 		map.addControl(new daummaps.ZoomControl()
 			, daummaps.ControlPosition.TOPRIGHT); 
 		this.mapObject = map
+		if(!this.propLocation){
+			this.searchChanged(this.propSearchWord)
+		} else{
+			this.locationChanged(this.propLocation)
+		}
 		/* alert(`검색어:${this.propSearchWord} 현재위치:${this.propLocation.lat},${this.propLocation.lng}`) */
     },
     marker(){
@@ -79,6 +98,11 @@ export default {
 				i.setMap(null);
 			})
 			this.markers = []
+		},
+		searchAddrFromCoords(lng, lat, callback) {
+			let geocoder = new window.daum.maps.services.Geocoder()
+    // 좌표로 행정동 주소 정보를 요청합니다
+			geocoder.coord2RegionCode(lng, lat, callback)
 		},
 		placesSearchCB(data, status){
 			let daummaps = window.daum.maps
@@ -111,7 +135,7 @@ export default {
 			daummaps.event.addListener(marker, 'click', () => {
 				infowindow.close()
 				this.searchWord = place.place_name
-				this.$emit("sendStadiumName",place.place_name)
+				this.$emit("sendStadiumName",place)
 			})
 		}
   }
