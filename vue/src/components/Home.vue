@@ -200,7 +200,7 @@ export default {
 </script>
 <style scoped>
 .vue-fixed-header{
-  z-index:1;
+  z-index:1000;
   position: fixed;
   width: 100vw;
 }

@@ -23,11 +23,11 @@ public class CrawlProxy extends Proxy{
 	@Autowired Box<HashMap<String, String>> box;
 	@Autowired Trunk<String> trunk;
 	
-	public ArrayList<HashMap<String, String>> opggCrawling(String lolname){
+	public ArrayList<HashMap<String, String>> opggCrawling(String summonername){
 		box.clear();
 		try {
 			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
-			String url = "http://www.op.gg/summoner/userName="+lolname;
+			String url = "http://www.op.gg/summoner/userName="+summonername;
 			Connection.Response page =
 					Jsoup.connect(url)
 					.method(Connection.Method.GET)
@@ -35,14 +35,12 @@ public class CrawlProxy extends Proxy{
 					.execute();
 			Document temp = page.parse();
 			Elements photo = temp.select("img.ChampionImage");
-			Elements summonername = temp.select("span.Name");
 			Elements tier = temp.select("div.TierRank");
 			Elements rate = temp.select("div.TierInfo");
 			Elements most = temp.select("div.MostChampionContent");
 			Elements position = temp.select("td.PositionStats");
 			HashMap<String, String> map = null;
 				map = new HashMap<>();
-				map.put("summonername", summonername.get(0).text());
 				map.put("tier", tier.get(0).text());
 				map.put("rate", rate.get(0).text());
 				map.put("most", most.get(0).text());
@@ -55,6 +53,65 @@ public class CrawlProxy extends Proxy{
 		}
 		return box.get();
 	}
+	
+	public ArrayList<HashMap<String, String>> loltitleCrawling(int page){
+		box.clear();
+		try {
+			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+			String url = "https://talk.op.gg/s/lol/lfg?page="+page;
+			Connection.Response pagetemp =
+					Jsoup.connect(url)
+					.method(Connection.Method.GET)
+					.userAgent(USER_AGENT)
+					.execute();
+			Document temp = pagetemp.parse();
+			Elements title = temp.select("section[class=\"article-list article-list--compact\"] div[class=\"article-list-item__title\"] span");
+//			Elements contents = temp.select("div[class=\"article-content\"] p");
+			HashMap<String, String> map = null;
+			for(int i=0; i<40;i++) {
+				map = new HashMap<>();
+				map.put("title", title.get(i).text());
+//				map.put("contents", contents.get(0).text());
+				box.add(map);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("loltitle 크롤링("+box.size()+")\n"+page+"/5");
+		return box.get();
+	}
+	public ArrayList<HashMap<String, String>> lolidCrawling(int page){
+		box.clear();
+		try {
+			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+			String url = "https://www.op.gg/ranking/level/page="+page;
+			Connection.Response pagetemp =
+					Jsoup.connect(url)
+					.method(Connection.Method.GET)
+					.userAgent(USER_AGENT)
+					.execute();
+			Document temp = pagetemp.parse();
+			Elements rhost = temp.select("td[class=\"ranking-table__cell ranking-table__cell--summoner\"] a span");
+			Elements crawltier = temp.select("td[class=\"ranking-table__cell ranking-table__cell--tier\"]");
+			Elements crawlrate = temp.select("td[class=\"ranking-table__cell ranking-table__cell--winratio\"] div span");
+			
+			HashMap<String, String> map = null;
+			for(int i=0;i<40;i++) {
+				map = new HashMap<>();
+					map.put("rhost", rhost.get(i).text());
+					map.put("crawltier", crawltier.get(i).text());
+					map.put("crawlrate", crawlrate.get(i).text());
+//					System.out.println(i+"번쨰 id"+rhost.get(i).text());
+//					System.out.println(i+"번쨰 crawltier"+crawltier.get(i).text());
+//					System.out.println(i+"번쨰 crawlrate \n"+crawlrate.get(i).text());
+					box.add(map);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return box.get();
+	}
+	
 	
 	public List<Map<String, String>> crawlFutMatch(int page){
 		final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";

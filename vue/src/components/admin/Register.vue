@@ -1,15 +1,14 @@
 <template>
 <div>
 <v-row style="margin:1%;float:left;text-align:center;">
-<v-card style="text-align:center;width:700px;">
-    <v-card-title>구장 등록</v-card-title>
+<v-card style="text-align:center;width:650px;">
+<h2>구장 등록 페이지</h2>
     <div style="margin:3%;padding:3%">
-<v-select
-          :items="snames"
-          label="구장을 선택해주세요."
-          dense
-          solo
-        ></v-select>
+    <fut-map :style="`height: 500px; width:100%;`"
+      :propSearchWord="`${searchWord} 풋살 경기장`"
+      :propLocation="location"
+      @sendStadiumName="setStadium"></fut-map>
+    <v-text-field :value="stadiumName" @keyup.enter="submit"></v-text-field>
 
           <v-text-field
             label="관리자 이름"
@@ -27,29 +26,37 @@
             outlined
           ></v-text-field>
           <v-text-field
-            label="구장 담당자 연락처"
-            v-model="state"
+            label="구장 주소"
+            v-model="searchResult.address_name"
             outlined
           ></v-text-field>
+          <v-text-field
+            label="구장 연락처"
+            v-model="searchResult.phone"
+            outlined
+          ></v-text-field>
+          <v-container fluid>
           <v-combobox
+          blur
           v-model="select"
           :items="items"
-          label="경기장 옵션 선택"
+          label="경기 옵션 선택"
+          small-chips
+          dense
           multiple
-          chips
+          hide-selected
+          open-on-clear
         ></v-combobox>
+        </v-container>
 <template>
   <v-card float="center">
 <label class="col-md-3 col-form-label" for="disabled-input">경기 예약  비용</label>
-<v-radio-group  row v-model="radioGroup" :mandatory="false">
-      <v-radio
-        v-for="price of prices"
-        :key="price"
-        :label="`${price}`"
-        :value="price"
-        color="blue"
-        
-      ></v-radio>
+<v-radio-group v-model="price" row :mandatory="true">
+      <v-radio label="10000원" value="10000원"></v-radio>
+      <v-radio label="12000원" ></v-radio>
+      <v-radio label="15000원" ></v-radio>
+      <v-radio label="18000원" ></v-radio>
+      <v-radio label="20000원" ></v-radio>
     </v-radio-group>
 </v-card>
 </template>
@@ -59,7 +66,7 @@
 <label class="col-md-3 col-form-label" for="select1">경기 인원 선택</label>
 <v-card-text>
       <v-slider
-        v-model="fruits"
+        v-model="num"
         :tick-labels="ticksLabels"
         :max="2"
         step="1"
@@ -71,10 +78,10 @@
 </template>
 <br />
 <v-textarea
+          v-model="textbox"
           outlined
           name="input-7-4"
           label="구장 특이사항"
-          value="우천 시 경기 취소.. & 풋살화 공급 제한 & 최소 경기 인원 & 기타 등등..."
         ></v-textarea>
 </div>
 </v-card>
@@ -89,9 +96,10 @@
   width="300"
   :allowed-dates="allowedDates"
   color = "blue"
+  locale="ko"
   
   >
-  <v-btn text outlined color="primary" @click="adds()" bold>---------해당 날짜 날씨 연동---------</v-btn>
+  <v-btn text outlined color="primary" @click="changedate()" bold>---------해당 날짜 날씨 연동---------</v-btn>
   </v-date-picker>
   <template>
 
@@ -105,7 +113,7 @@
     <v-list-item two-line>
       <v-list-item-content>
         <v-list-item-title class="headline">{{picker}} {{city}}</v-list-item-title>
-        <v-list-item-subtitle >5 day / 3 hour forecast</v-list-item-subtitle>
+        <v-list-item-subtitle >5 day / 3 hour forecast!</v-list-item-subtitle>
       </v-list-item-content>
       <v-icon
         right
@@ -152,7 +160,7 @@
 <!-- -----------------------------------시간대 선택 ------------------------------------------- -->    
     <v-slider
       v-model="time"
-      :max="7"
+      :max="leng"
       :tick-labels="labels"
       class="mx-4"
       ticks
@@ -186,27 +194,27 @@
 <script>
 import {store} from '@/store'
 import axios from 'axios'
+import FutMap from '@/components/contents/futsal/FutMap.vue'
 export default{
+  components:{
+    FutMap
+  },
+  computed:{
+    searchWord(){
+      return this.stadiumName
+    },
+  },
   created(){
-      let url = `http://api.openweathermap.org/data/2.5/forecast?id=1835848&APPID=cd9a51369c3fc19f9fb85b2f2508b5d5`
-      axios
-      .get(url)
-      .then(res=>{
-        this.adata = res.data
-        this.city = this.adata.city.name
-        this.adds()
-      })
-      .catch(e=>{
-        alert('axios fail'+e)
-        
-      })
+     
 // -----------------------------------데이터-------------------------------------------
-      },
+  },
    data(){
       return{
+      stadiumName: '신촌',
+      searchResult: '',
       // date: new Date((this.days[0].dt+32400)*1000).toISOString().substr(0, 10),
       picker: this.$moment(new Date()).format('YYYY-MM-DD'),
-      labels: [],
+      labels : [],
       // time:'',
       temp:'',
       mintemp:'',
@@ -215,15 +223,17 @@ export default{
       img:'',
       imgUrl:'',
       adata:[], 
+      bdata:[],
       wind:'',
       humidity:'',
       today:'',
       time:'',
+      temptime:'',
       timebar:[],
       cloud:'',
       state:store.state,
-      radioGroup: 1,
       select: [],
+      textbox:'',
         items: [
           '풋살화 대여 가능',
           '운동복 대여 가능',
@@ -238,36 +248,56 @@ export default{
         '강원 경기장 '
       ],
       value: 0,
-        fruits: 0,
+        num: 0,
         ticksLabels: [
           '4 vs 4',
           '5 vs 5',
           '6 vs 6',
         ],
-      prices:[
-        '10000원',
-        '12000원',
-        '15000원',
-        '18000원',
-        '20000원',
-      ]
+        leng:'',
+        price:'',
       }
   },
 // -----------------------------------메소드-------------------------------------------
    methods:{
+    
+    bringWeather(){
+      let url = `http://api.openweathermap.org/data/2.5/forecast?lat=${this.searchResult.y}&lon=${this.searchResult.x}&APPID=cd9a51369c3fc19f9fb85b2f2508b5d5`
+      axios
+      .get(url)
+      .then(res=>{
+        this.adata = res.data
+        this.city = this.adata.city.name
+        this.adds()
+      })
+      .catch(e=>{
+        alert('openweather api fail'+e)
+        
+      })
+    },
+    setStadium(stadiumName){
+      this.timebar = []
+      this.searchResult = stadiumName
+      this.stadiumName = stadiumName.place_name
+      this.mapTogle = stadiumName==='' ? false : true
+      this.bringWeather()
+    },
+    submit(event){
+      this.stadiumName = event.target.value
+    },
     allowedDates: val => parseInt(val.split('-')[2], 10) >= parseInt(new Date().toISOString().substr(0,10).split('-')[2], 10),
-    show(x){
-      this.temp=this.timebar[x].main.temp
-      this.humidity = this.timebar[x].main.humidity
-      this.maxtemp=this.timebar[x].main.temp_max
-      this.mintemp=this.timebar[x].main.temp_min
-      this.img = this.timebar[x].weather[0].icon
-      this.wind = this.timebar[x].wind.speed
-      if(parseInt(this.timebar[x].clouds.all)<25) {
+    show(x,y){
+      this.temp=this.timebar[x][y].main.temp
+      this.humidity = this.timebar[x][y].main.humidity
+      this.maxtemp=this.timebar[x][y].main.temp_max
+      this.mintemp=this.timebar[x][y].main.temp_min
+      this.img = this.timebar[x][y].weather[0].icon
+      this.wind = this.timebar[x][y].wind.speed
+      if(parseInt(this.timebar[x][y].clouds.all)<25) {
         this.cloud = '맑음'
-      }else if(parseInt(this.timebar[x].clouds.all)<45){
+      }else if(parseInt(this.timebar[x][y].clouds.all)<45){
         this.cloud = '구름 조금'
-      }else if(parseInt(this.timebar[x].clouds.all)<65){
+      }else if(parseInt(this.timebar[x][y].clouds.all)<65){
         this.cloud = '흐림'
       }else{
         this.cloud = '매우 흐림'
@@ -275,7 +305,13 @@ export default{
       this.imgUrl = `http://openweathermap.org/img/wn/${this.img}@2x.png`
     },
       register(){
-         alert('등록 버튼 ')
+         alert('등록한 경기:  '+this.stadiumName
+         +'\n등록한 시간: '+this.timebar[this.temptime][this.time].dt*1000
+         +'\n등록한 관리자: '+this.state.person.name
+         +'\n경기 비용: '+this.price
+         +'\n경기 인원: '+parseInt(this.num)+4
+         +'\n구장 특이사항: '+this.textbox
+         )
     },
       cancel(){
          alert('취소 버튼 ')
@@ -284,54 +320,35 @@ export default{
          alert('초기화  버튼 ')
     },
     timebars(){
-      this.show(this.time)
+      this.show(this.temptime,this.time)
     },
     adds(){
-      this.timebar = []
-      // alert(`add메소드로 들어와서 계산된 값: ${parseInt(this.$moment(this.picker).format('D'))-parseInt(this.$moment(new Date()).format('D'))}`)
-      switch (parseInt(this.$moment(this.picker).format('D'))-parseInt(this.$moment(new Date()).format('D'))) {
-        case 0:
-          for(let i=0; i<8;i++){
-            this.labels.push(`${this.$moment(this.adata.list[i].dt*1000).format('H')}`)
-            this.timebar.push(this.adata.list[i])
-          }          
-            this.show(0)
-          break;
-        case 1:
-          for(let i=8; i<16;i++){
-            this.labels.push(`${this.$moment(this.adata.list[i].dt*1000).format('H')}`)
-            this.timebar.push(this.adata.list[i])
-          }
-            this.show(0)
-          break;
-        case 2:
-          for(let i=16; i<24;i++){
-            this.labels.push(`${this.$moment(this.adata.list[i].dt*1000).format('H')}`)
-            this.timebar.push(this.adata.list[i])
-          }
-            this.show(0)
-          break;
-        case 3:
-          for(let i=24; i<32;i++){
-            this.labels.push(`${this.$moment(this.adata.list[i].dt*1000).format('H')}`)
-            this.timebar.push(this.adata.list[i])
-          }
-            this.show(0)
-          break;
-        case 4:
-          for(let i=32; i<40;i++){
-          this.labels.push(`${this.$moment(this.adata.list[i].dt*1000).format('H')}`)
-          this.timebar.push(this.adata.list[i])
-          }
-          this.show(0)
-          break;
+      for(let i=0;i<40;i++){
+        if(parseInt(this.$moment(this.adata.list[i].dt*1000).format('H'))===0){
+          this.bdata.push(i)
+        }
       }
-    }
+      this.timebar.push(this.adata.list.slice(0,this.bdata[0]))
+      this.timebar.push(this.adata.list.slice(this.bdata[0],this.bdata[1]))
+      this.timebar.push(this.adata.list.slice(this.bdata[1],this.bdata[2]))
+      this.timebar.push(this.adata.list.slice(this.bdata[2],this.bdata[3]))
+      this.timebar.push(this.adata.list.slice(this.bdata[3],this.bdata[4]))
+      this.timebar.push(this.adata.list.slice(this.bdata[4],40))
+      this.changedate()
+    },
+    changedate(){
+      this.temptime = parseInt(this.$moment(this.picker).format('D'))-parseInt(this.$moment(new Date()).format('D'))
+      this.time=0
+      this.leng = this.timebar[this.temptime].length-1
+      this.show(this.temptime,this.time)
+      this.timebar[this.temptime,this.time]; 
+        this.labels = []
+        for(let i=0;i<parseInt(this.bdata[this.temptime]) ;i++){
+        this.labels.push(this.$moment(this.timebar[this.temptime][i].dt*1000).format('H'))
+        }
+    },
     
   },
-  computed:{
-    
-  }
 }
 </script>
 <style scoped>

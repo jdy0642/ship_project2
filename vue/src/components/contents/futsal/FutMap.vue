@@ -24,7 +24,6 @@
     @idle="onMapEvent('idle', $event)"
     @tilesloaded="onMapEvent('tilesloaded', $event)"
     @maptypeid_changed="onMapEvent('maptypeid_changed', $event)" */
-
 <script>
 import VueDaumMap from 'vue-daum-map'
 export default {
@@ -77,7 +76,7 @@ export default {
     onLoad(map) {
 		let daummaps = window.daum.maps
 		map.addControl(new daummaps.ZoomControl()
-			, daummaps.ControlPosition.TOPRIGHT); 
+			, daummaps.ControlPosition.TOPRIGHT);
 		this.mapObject = map
 		if(!this.propLocation){
 			this.searchChanged(this.propSearchWord)
@@ -122,7 +121,7 @@ export default {
 			let infowindow = new daummaps.InfoWindow({zIndex:1});
 			let marker = new daummaps.Marker({
 				map: map,
-				position: new daummaps.LatLng(place.y, place.x) 
+				position: new daummaps.LatLng(place.y, place.x)
 			})
 			this.markers.push(marker);
 			daummaps.event.addListener(marker, 'mouseover',() =>{
