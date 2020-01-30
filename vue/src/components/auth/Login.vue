@@ -38,7 +38,7 @@ export default {
       return {
         checkbox: false,
         dialog: false,
-        context : 'http://localhost:8080',
+        context : 'http://15.165.26.82',
         result : '',
         userid : '',
         passwd : '',
