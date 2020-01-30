@@ -19,7 +19,7 @@
       <v-img
       @click="joinRank(room)"
       style="width:250px;height:350px" 
-      :src="room.imgurl">
+      :src="require(`${room.imgurl}`)">
       <div style="height:150px">
       </div>
       <div style="height:200px;background-image:linear-gradient(to top, rgba(0, 0, 0, 0.6) 85%, transparent 190px)">
@@ -30,15 +30,6 @@
       <h6>{{timechange(room.wtime)}}{{btime}}</h6>
       <v-img style="width:30px;" src="https://www.mobachampion.com/static/imgs/mid_icon.59083eeab24c.png"></v-img>
       </div>
-      <v-expand-transition>
-          <div
-            v-if="hover"
-            class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 black--text"
-            style="height: 15%;"
-          >
-            CLICK!
-          </div>
-        </v-expand-transition>
       </v-img>
       </v-card>
       </v-hover>
