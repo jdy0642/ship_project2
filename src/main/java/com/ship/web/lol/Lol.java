@@ -1,6 +1,7 @@
 package com.ship.web.lol;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,17 +47,28 @@ public class Lol extends Proxy implements Serializable{
 	private String lolblack;
 	@Column(name="TITLE") @NotNull
 	private String title;
-	@Column(name="CONTENTS") @NotNull
+	@Column(name="CONTENTS")
 	private String contents;
-	@Column(name="TIER") @NotNull
+	@Column(name="TIER")
 	private String tier;
-	@Column(name="IMGURL") 
+	@Column(name="IMGURL") @NotNull
 	private String imgurl;
+	@Column(name="IMG")
+	private String img;
+	@Column(name="CRAWLTIER") 
+	private String crawltier;
+	@Column(name="CRAWLRATE") 
+	private String crawlrate;
+	@Column(name="WTIME") 
+	private Date wtime;
+	
 	
 	
 	@Builder
 	private Lol(String rhost,String rguest, String lolblack,
-			String title, String contents, String tier, String imgurl) {
+			String title, String contents, String tier,
+			String imgurl, String img, Date wtime,
+			String crawltier, String crawlrate) {
 		this.rhost = rhost;
 		this.rguest = rguest;
 		this.lolblack = lolblack;
@@ -64,5 +76,9 @@ public class Lol extends Proxy implements Serializable{
 		this.contents = contents;
 		this.tier = tier;
 		this.imgurl = imgurl;
+		this.img = img;
+		this.crawltier = crawltier;
+		this.crawlrate = crawlrate;
+		this.wtime = wtime;
 	}
 }

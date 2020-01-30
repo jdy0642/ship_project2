@@ -5,6 +5,7 @@
       <div class="panel">
         <div class="panel__content" style="background-image: url(https://i.ibb.co/Jt9ttbQ/FIFA-19-note-joueurs.jpg);">
           <v-text @click="FIFA()" class="panel__title">FIFA</v-text>
+          <!-- <input @click="FIFA()" type="button" value="FIFA" class="panel__title"/> -->
         </div>
       </div>
       <div href="#" class="panel">
