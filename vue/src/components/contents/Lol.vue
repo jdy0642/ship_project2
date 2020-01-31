@@ -75,7 +75,7 @@ export default {
          this.$router.push({name : 'joinrank', params:{ game: param.cardseq}})
       },
       bringlist(){
-      let url = `http://localhost:8080/lol/listpage=${this.page}`
+      let url = `/lol/listpage=${this.page}`
       let data = {
          page: this.page
       }
