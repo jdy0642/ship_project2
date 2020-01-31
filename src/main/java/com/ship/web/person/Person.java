@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ship.web.article.Article;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.reservation.Reservation;
 

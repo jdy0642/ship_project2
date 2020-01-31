@@ -30,7 +30,6 @@ import org.springframework.util.Assert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ship.web.article.Article;
 import com.ship.web.futsal.FutsalMatch;
 import com.ship.web.person.Person;
 import com.ship.web.proxy.Proxy;
