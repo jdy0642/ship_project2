@@ -51,7 +51,6 @@ public class LolController {
 		Iterable<Lol> entites = lolRepository.findAll();
 		List<Lol> list = new ArrayList<>();
 		Date date = new Date();
-		
 		for(Lol l : entites) {
 			Lol dto = modelMapper.map(l,Lol.class);
 			list.add(dto);

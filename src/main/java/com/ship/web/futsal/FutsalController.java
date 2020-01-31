@@ -58,5 +58,11 @@ public class FutsalController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("msg", "asdfasdf");
 		return map;
-	}	
+	}
+	
+	@PostMapping("/register")
+	public String insertMath(@RequestBody FutsalMatch match) {
+		System.out.println(match);
+		return "Success";
+	}
 }
