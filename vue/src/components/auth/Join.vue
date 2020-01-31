@@ -103,7 +103,6 @@ export default {
     name: 'join',
     data () {
       return {
-        context : 'http://localhost:8080',
         dialog:false,
         show1: false,
         checkbox:false,
@@ -138,7 +137,7 @@ export default {
       join(){
         alert('조인 진입')
         alert(this.interest)
-        let url = `${this.context}/join`
+        let url = `/join`
         let data =  {
           userid : this.userid,
           passwd : this.passwd,

@@ -48,7 +48,7 @@ import axios from 'axios'
 export default {
   created(){
     axios
-         .get(`${this.context}/customermanage`)
+         .get(`/customermanage`)
          .then(res =>{
             this.lists = res.data
          })

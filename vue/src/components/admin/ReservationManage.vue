@@ -30,7 +30,7 @@ import { store } from '@/store'
 export default {
   created(){
     axios
-         .get(`${this.context}/res/1`)
+         .get(`/res/1`)
          .then(res =>{
             this.lists = res.data.sort((a,b) =>
               a.resdate > b.resdate ? 1 : (a.resdate < b.resdate ? -1 : 0))
@@ -41,7 +41,6 @@ export default {
   },
    data(){
       return{
-    context : 'http://localhost:8080',
     fnc: store.state.futsal.fnc,
     page: 1,
     pageCount: 0,

@@ -53,6 +53,5 @@ export default new Router({
           {path: '/revenuemanage', name: 'revenuemanage', component: RevenueManage},
           {path: '/reservationmanage', name: 'reservationmanage', component: ReservationManage},
           {path: '/', name: 'carousel', component: Carousel}
-          
      ]    
 })

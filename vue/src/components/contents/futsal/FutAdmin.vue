@@ -13,12 +13,27 @@
   <v-btn @click="test()">롤</v-btn>
   <v-btn @click="test2()">롤2</v-btn>
   <v-btn @click="test3()">롤3</v-btn>
-  <div>
+   <div>
     <!-- <span>{{ $socket.connected ? 'Connected' : 'Disconnected' }}</span> -->
   </div>
   <v-btn @click="clickButton('하이')">socket</v-btn>
 </div>
 </template>
+    /* @center_changed="onMapEvent('center_changed', $event)"
+    @zoom_start="onMapEvent('zoom_start', $event)"
+    @zoom_changed="onMapEvent('zoom_changed', $event)"
+    @bounds_changed="onMapEvent('bounds_changed', $event)"
+    @click="onMapEvent('click', $event)"
+    @dblclick="onMapEvent('dblclick', $event)"
+    @rightclick="onMapEvent('rightclick', $event)"
+    @mousemove="onMapEvent('mousemove', $event)"
+    @dragstart="onMapEvent('dragstart', $event)"
+    @drag="onMapEvent('drag', $event)"
+    @dragend="onMapEvent('dragend', $event)"
+    @idle="onMapEvent('idle', $event)"
+    @tilesloaded="onMapEvent('tilesloaded', $event)"
+    @maptypeid_changed="onMapEvent('maptypeid_changed', $event)" */
+
 <script>
 import axios from 'axios'
 import {store} from '@/store'
@@ -87,18 +102,9 @@ export default {
       });
       this.mapObject = map;
     },
-    test(){
-			axios.get(`/futsal/match/33`)
-			.then(res=>{
-				this.lol = res.data
-			})
-			.catch(e=>{
-        alert(e)
-      })
-		},
     test2(){
       var req = new XMLHttpRequest();
-      req.open('GET',`/futsal/match/33`, true);
+      req.open('GET',`/futsal/test`, true);
       req.onreadystatechange = function () {
         if (req.readyState == 4) {
           alert(req)
@@ -112,7 +118,7 @@ export default {
       return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
-        req.open('GET', `${store.state.futsal.context}/futsal/match/33`);
+        req.open('GET', '/futsal/test');
         /* req.setRequestHeader("Access-Control-Allow-Origin", "*")
         req.setRequestHeader("Authorization", "Bearer XXXXX") */
         req.onload = function() {
@@ -138,7 +144,54 @@ export default {
         req.send();
       });
     },
+    test(){
+			axios.get(`/futsal/test`)
+			.then(res=>{
+				this.lol = res.data
+			})
+			.catch(e=>{
+        alert(e)
+      })
+		},
 		//https://developers.kakao.com/docs/restapi/local#%ED%82%A4%EC%9B%8C%EB%93%9C-%EA%B2%80%EC%83%89
+		crawl(){
+			axios({url: 'http://dapi.kakao.com/v2/local/search/keyword.json',
+				headers:{
+					Authorization: 'KakaoAK 28d9076d78b899a3f85bb1c12320b0c3'
+				},
+				method: 'GET',
+				params: {
+					query: '풋살장',
+					page: this.page
+				}
+			}).then(res=>{
+				this.getStadiumData = res.data.documents
+				alert(`${this.page}페이지  ${res.data.documents.length}개`)
+				const stadiumAddr = i => this.getStadiumData[i].address_name
+				const stadiumTel = i => this.getStadiumData[i].phone
+				const stadiumName = i => this.getStadiumData[i].place_name
+				const rannum = () => ['4','5','6'][parseInt(Math.random()*3)]
+				const rangender = () => ['female','male'][parseInt(Math.random()*2)]
+				const ranrating = () => parseInt(Math.random()*3+1)
+				const rantime = x => x + Math.random()*1000*3600*24*13
+				const ranfacility = () => 'size0,shower0,park0,shoes0,wear0'
+				const remain = () => parseInt(Math.random()*12)
+				let table = Array.from({length : 15},(_,i) => ({
+					time: rantime(Date.now()), stadiumname: stadiumName(i),
+					stadiumaddr: stadiumAddr(i), stadiumtel: stadiumTel(i),
+					num : rannum(), gender: rangender(),difficulty: ranrating(),
+					shoes: 'shoes0', stadiumfacility: ranfacility(),
+					stadiumimg: '1,2,3', remain: remain(), adminname: '펭수'
+					}))
+				this.table = table
+				axios.post(`${store.state.futsal.context}/futsal/insertdummy`,table,store.state.futsal.header)
+				.catch(e => {
+					alert(e)
+				})
+			}).catch(e=>{
+				this.getStadiumData = e
+			})
+		}
   }
 }
 </script>

@@ -104,7 +104,6 @@ public class PersonController {
 		p.accept("카드 생성 컨트롤러");
 		HashMap<String, Object> map = new HashMap<>();
 			
-		
 		person = personRepository.save(person);
 		
 		if(person!= null) {

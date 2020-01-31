@@ -125,7 +125,7 @@ export default{
       this.$router.push({path:'/lol'})
     },
     crawling(){
-    let url = `http://localhost:8080/lol/summoner/userName=${this.state.person.summonername}`
+    let url = `/lol/summoner/userName=${this.state.person.summonername}`
     axios
     .get(url)
     .then(res=>{
@@ -141,7 +141,7 @@ export default{
     },
     createroom(){
       // this.crawling()
-      let url = `http://localhost:8080/lol/createroom`
+      let url = `/lol/createroom`
            let headers = {
               'authorization': 'JWT fefege..',
                 'Accept' : 'application/json',

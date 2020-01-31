@@ -67,7 +67,7 @@ export default {
 			this.searchAddrFromCoords(param.lng,param.lat,(result,status) =>{
 				if (status === window.daum.maps.services.Status.OK) {
 					this.displayMarker({y: param.lat,x: param.lng,place_name: `현재위치 : ${result[0].address_name}`})
-					this.searchWord = `${result[0].address_name} 풋살장`
+					this.searchWord = `${result[0].address_name} 풋살`
 					this.marker()
 				}
 			})
