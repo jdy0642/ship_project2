@@ -22,8 +22,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import com.ship.web.article.Article;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ship.web.proxy.Proxy;
+import com.ship.web.reservation.Reservation;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +36,7 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
-@Setter(AccessLevel.PROTECTED)
+@Setter(AccessLevel.PUBLIC)
 @ToString
 @Table(name="PERSON", 
 	uniqueConstraints = 
@@ -84,10 +86,14 @@ public class Person extends Proxy implements Serializable{
 		private String summonername;
 	enum Level{HIGH, MID, LOW}
 
-//	@OneToMany(mappedBy = "PERSONSEQ",
-//			cascade = CascadeType.ALL,
-//			orphanRemoval = true)
-//    private List<Article> articles = new ArrayList<>();
+	/*
+	 * @OneToMany(mappedBy = "PERSONSEQ", cascade = CascadeType.ALL, orphanRemoval =
+	 * true) private List<Article> articles = new ArrayList<>();
+	 */
+	@JsonIgnore
+	@OneToMany(mappedBy = "personseq", cascade = CascadeType.ALL, orphanRemoval=true)
+	private List<Reservation> reservations = new ArrayList<>();
+	 
 
 	@Builder
 	private Person(String userid, String name, String passwd, String tel,
