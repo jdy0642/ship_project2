@@ -4,23 +4,23 @@
     <div class="panels__container">
       <div class="panel">
         <div class="panel__content" style="background-image: url(https://i.ibb.co/Jt9ttbQ/FIFA-19-note-joueurs.jpg);">
-          <v-text @click="FIFA()" class="panel__title">FIFA</v-text>
+          <h3 @click="FIFA()" class="panel__title">FIFA</h3>
           <!-- <input @click="FIFA()" type="button" value="FIFA" class="panel__title"/> -->
         </div>
       </div>
       <div href="#" class="panel">
         <div class="panel__content" style="background-image: url(https://image.redbull.com/rbcom/052/2019-05-17/0e0d5093-854c-41a6-b383-56fd6dfc16e5/0012/0/0/449/717/1023/1150/1/ezreal-league-of-legends.jpg);">
-          <v-text @click="lol()" class="panel__title">LOL</v-text>
+          <h3 @click="lol()" class="panel__title">LOL</h3>
         </div>
       </div>
       <div href="#" class="panel">
         <div class="panel__content" style="background-image: url(https://i.pinimg.com/originals/e2/42/90/e24290842bcc0e7d9bf566492ee36923.jpg)">
-          <v-text @click="futsal()" class="panel__title">FUTSAL</v-text>
+          <h3 @click="futsal()" class="panel__title">FUTSAL</h3>
         </div>
       </div>
       <div href="#" class="panel">
         <div class="panel__content" style="background-image: url(https://utsports.com/images/2019/6/21/Full_Draft_Graphic_v2.jpeg?width=1061&height=597&mode=crop);">
-          <v-text @click="Ball()" class="panel__title">Street Ball</v-text>
+          <h3 @click="Ball()" class="panel__title">Street Ball</h3>
         </div>
       </div>
     </div>

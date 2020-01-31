@@ -40,21 +40,21 @@ public class LolInit extends Proxy implements ApplicationRunner{
 		Lol lol = null;
 		if(count == 0) {
 			String[] img = {
-					"@/assets/img/lol/ahri.jpg",
-					"@/assets/img/lol/Ashe.jpg",
-					"@/assets/img/lol/garen.jpg",
-					"@/assets/img/lol/jarvaniv.jpg",
-					"@/assets/img/lol/Jinx.jpg",
-					"@/assets/img/locl/Leona.jpg",
-					"@/assets/img/lol/Lux.jpg",
-					"@/assets/img/lol/missfortune.jpg",
-					"@/assets/img/lol/neeko.jpg",
-					"@/assets/img/lol/sona.jpg",
-					"@/assets/img/lol/Teemo.jpg",
-					"@/assets/img/lol/xayah.jpg",
-					"@/assets/img/lol/xinzhao.jpg",
-					"@/assets/img/lol/Yasuo.jpg",
-					"@/assets/img/lol/zoe.jpg",
+					"ahri",
+					"Ashe",
+					"garen",
+					"jarvaniv",
+					"Jinx",
+					"Leona",
+					"Lux",
+					"missfortune",
+					"neeko",
+					"sona",
+					"Teemo",
+					"xayah",
+					"xinzhao",
+					"Yasuo",
+					"zoe",
 			};
 			
 			List<Map<String,String>> lolList = new ArrayList<>();
