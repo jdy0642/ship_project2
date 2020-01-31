@@ -37,7 +37,7 @@ public class LolController {
 	@Autowired Proxy pxy;
 	@Autowired Printer p;
 	@Autowired ModelMapper modelMapper;
-	@Autowired LolRepository lolRepository;
+	@Autowired LolRepository lolRepository; // test commit
 	
 	@GetMapping("/summoner/userName={summonername}")
 	public ArrayList<HashMap<String, String>> opgg(@PathVariable String summonername){
