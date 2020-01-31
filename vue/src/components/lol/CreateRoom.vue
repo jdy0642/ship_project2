@@ -1,7 +1,7 @@
 <template>
 <div id="app" style="height:100%">
     <form class="ma-4">
-    <v-card-title style="width:800px">
+    <v-card-title style="width:600px">
       <v-text-field
         label="카드 제목"
         v-model="title"
@@ -14,10 +14,18 @@
             <v-col center sm="1" md="6">
              <v-radio-group v-model="row" row>
         <v-radio label="개인/2인랭크게임" value="rank" ></v-radio>
+        <v-radio label="칼바람(준비중 )" ></v-radio>
+        <v-radio label="URF(준비중 )" ></v-radio>
+        <v-radio label="롤토체스(준비중 )" ></v-radio>
         <!-- <v-radio label="칼바람나락" value="kal"></v-radio> -->
       </v-radio-group>
       <v-divider></v-divider>
               <v-radio-group v-model="tier" column>
+              <v-radio
+                  label="아이언"
+                  color="#6D4C41"
+                  value="iron"
+                ></v-radio>
                 <v-radio
                   label="브론즈"
                   color="#6D4C41"
@@ -49,6 +57,11 @@
                   value="master"
                 ></v-radio>
                 <v-radio
+                  label="그랜드 마스터"
+                  color="#4DB6AC"
+                  value="grande master"
+                ></v-radio>
+                <v-radio
                   label="챌린져"
                   color="#AFB42B"
                   value="challenger"
@@ -77,14 +90,15 @@
           label="내용"
           row-height="30"
           auto-grow
-          style="width:800px;"
+          style="width:600px;"
           placeholder="내용을 입력해주세요"
           :counter="50"
         ></v-textarea>
     </form>
-    <v-btn color="primary" @click="createroom()">방 생성하기</v-btn>
-    <v-btn color="error" @click="lol()">취소(돌아가기)</v-btn>
-
+    <div style="padding:10px">
+    <v-btn style="width:150px" color="success" @click="crawling()">방 생성하기</v-btn>
+    <v-btn style="width:150px" color="error" @click="lol()">취소하고 돌아가기</v-btn>
+    </div>
 </div>
 </template>
 <script>
@@ -93,20 +107,41 @@ import {store} from '@/store'
 export default{
   data(){
     return{
-      items: ['실버', '브론즈', '골드', '플레티넘'],
       row:'rank',
       tier: '',
       title: '',
       contents: '',
       state : store.state,
+      temp : '',
+      result : {},
+      crawltier:'',
+      crawlrate:'',
+      img:'',
+      wtime: this.$moment(new Date())
     }
   },
   methods:{
     lol(){
       this.$router.push({path:'/lol'})
     },
+    crawling(){
+    let url = `http://localhost:8080/lol/summoner/userName=${this.state.person.summonername}`
+    axios
+    .get(url)
+    .then(res=>{
+      this.temp = res.data[0]
+      this.crawltier = this.temp.tier
+      this.crawlrate = this.temp.rate
+      this.img = this.temp.photo
+      this.createroom()
+    })
+    .catch(e=>{
+      alert('axios fail'+e)
+    })
+    },
     createroom(){
-      let url = `http://localhost:8080/lol/createroom/`
+      // this.crawling()
+      let url = `http://localhost:8080/lol/createroom`
            let headers = {
               'authorization': 'JWT fefege..',
                 'Accept' : 'application/json',
@@ -117,14 +152,18 @@ export default{
               rhost : this.state.person.summonername,
               tier : this.tier,
               title : this.title,
-              contents : this.contents
+              contents : this.contents,
+              crawltier : this.crawltier,
+              crawlrate : this.crawlrate,
+              img : this.img,
+              wtime : this.wtime
            }
            axios
            .post(url, data, headers)
            .then(res =>{
               this.result = res.data
-              alert('방생성 완료!')
-              this.$router.push({path:'/lol'})
+              // alert('방생성 완료!')
+              this.$router.push({path:`/lol`})
            })
            .catch(e=>{
               alert('AXIOS FAIL'+e)

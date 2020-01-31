@@ -2,12 +2,19 @@ package com.ship.web.reservation;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import com.ship.web.futsal.FutsalMatch;
+import com.ship.web.futsal.FutsalMatchRepository;
+import com.ship.web.person.Person;
+import com.ship.web.person.PersonRepository;
 import com.ship.web.proxy.Proxy;
 
 @Component
@@ -20,23 +27,33 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 	public ReservationInit(ReservationRepository reservationrepository) {
 		this.reservationrepository = reservationrepository;
 	}
+	@Autowired private PersonRepository personRepository;
+	@Autowired private FutsalMatchRepository futsalMatchRepository;
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		long count = reservationrepository.count();
-		if(count ==0) {
+		if(count < 100) {
+			FutsalMatch fut = null;
+			Person person = null;
 			Reservation res = null;
-			String[][] mtx = {
-					{"hong", "1", "2019-2-3", "3"},
-					{"hong1", "11", "2019-2-31", "31"},
-			};
-			for(String[] arr : mtx) {
+			int personCount = (int) personRepository.count();
+			int futsalCount = (int) futsalMatchRepository.count();
+			List<Reservation> resList = new ArrayList<Reservation>();
+			for(int i=0; i< 1000; i++) {
 				res = new Reservation();
-				res.setUserid(arr[0]);
-				res.setStadiumid(arr[1]);
-				res.setResdate(df.parse(arr[2]));
-				res.setResnum(integer(arr[3]));
-				reservationrepository.save(res);
+				fut = new FutsalMatch();
+				person = new Person();
+				res.setResdate(System.currentTimeMillis()+random(-7, 14*3600*1000*24));
+				fut.setFutsalmatchseq((long) random(1,futsalCount));
+				person.setPersonseq((long) random(1, personCount));
+				res.setFutsalmatchseq(fut);
+				res.setPersonseq(person);
+				res.setKm(random(5,20));
+				res.setScore(random(0,4));
+				res.setWin(Arrays.asList("win","lose","win").get(random(0,2)));
+				resList.add(res);
 			}
+			reservationrepository.saveAll(resList);
 		}
 	}
 }

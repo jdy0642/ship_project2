@@ -108,11 +108,6 @@
     <v-app id="inspire" >
         <v-card>
     <router-view></router-view>
-        <v-navigation-drawer  width="100%" >
-          <template>
-            
-          </template>
-        </v-navigation-drawer>
       </v-card>
     </v-app>
   </div>
@@ -205,7 +200,7 @@ export default {
 </script>
 <style scoped>
 .vue-fixed-header{
-  z-index:1;
+  z-index:1000;
   position: fixed;
   width: 100vw;
 }

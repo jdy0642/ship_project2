@@ -26,7 +26,7 @@ public class PersonInit extends Proxy implements ApplicationRunner  {
 		if(count ==0) {
 			Person person = null;
 			String[][] mtx = {
-					{"hong", "1", "홍성철", "010-6202-4102", "0", "admin", "30","1","1","1","0","false","1","false","false","false","hongsc1991@naver.com", "안녕친구드라"},
+					{"hong", "1", "홍성철", "010-6202-4102", "0", "admin", "30","1","1","1","0","false","1","false","false","false","hongsc1991@naver.com", "Destiny"},
 					{"hong1", "11", "홍길동1", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","dfhd2f@naver.com", "거울보면문도"},
 			};
 			for(String[] arr : mtx) {

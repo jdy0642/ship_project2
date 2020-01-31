@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 156 120" style="enable-background:new 0 0 156 120;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#2D2D2D;}
+	.st1{fill:#545454;}
+	.st2{fill:#FF5441;}
+	.st3{clip-path:url(#SVGID_2_);fill:#ED3C2F;}
+	.st4{clip-path:url(#SVGID_2_);fill:#D33529;}
+	.st5{fill:#562622;}
+	.st6{fill:#1E1915;}
+	.st7{fill:none;stroke:#FFB339;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<title>Group 13 Copy</title>
+	<desc>Created with Sketch.</desc>
+	<path class="st0" d="M55,55.7l11.4,8.8l12-12.5L51.6,0.2H3.2c0,0,3.7,8.6,23.4,20.9C38.8,28.8,55,55.7,55,55.7z"/>
+	<polygon class="st1" points="51.3,0.2 41.8,0.2 76,54.9 78.4,52 	"/>
+	<path class="st2" d="M52.6,53.1c0,0,9.2,10.3,25.8-1.1c0,0,30.8,9.9,55.4,7.4c24.6-2.5,28.5,7.7-2.5,16
+		C60.9,94.2,56.7,88.7,56.7,88.7S35.7,70.7,52.6,53.1z"/>
+	<g>
+		<defs>
+			<path id="SVGID_1_" d="M52.6,53.1c0,0,8.7,8.3,25.8-1.1c0,0,30.8,9.9,55.4,7.4c24.6-2.5,28.5,7.7-2.5,16
+				C60.9,94.2,56.7,88.7,56.7,88.7S35.7,70.7,52.6,53.1z"/>
+		</defs>
+		<clipPath id="SVGID_2_">
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		</clipPath>
+		<path class="st3" d="M37.3,69.6c0,0,20.6-4.2,22.1-2.1s0,12.5,21.6,20.8l-11.5,6l-20.4-2.3L37.3,69.6z"/>
+		<path class="st4" d="M73.3,52.8c0,0-2,3,5,4.6c7,1.6,49.6,7.8,48.7,0.9l-26.8-14.1l-25.3,3.6L73.3,52.8z"/>
+	</g>
+	<path class="st5" d="M54,86.7c0,0,0.4-3.8,12.1-5.7c7.7-1.3,28.5-0.9,35.4-2.2c17.5-3.2,49.7-10.8,51.7-16.1c0,0,2.7,2.4,0.2,5.2
+		c-2.5,2.8-60.6,21.1-94.9,24.2c0,0-2.1,0-2.7-3.1C55.6,87.8,54.8,87.7,54,86.7z"/>
+	<path class="st6" d="M152.7,61.8c0,0-15.4,6.8-19.1,7.4c0,0-3.6,1.8-1.3,6.7C132.3,75.9,160.8,70,152.7,61.8z"/>
+	<path class="st7" d="M79.6,65.6c0,0,7.6,9.9,19.5,1.9"/>
+</g>
+</svg>

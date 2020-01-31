@@ -1,20 +1,20 @@
 <template>
 <div>
 	<fut-head v-if="mapView" :style="`height: ${height}vh`" :propImg="stadiumImg"/>
-  <fut-map v-else :propSearchWord="selectMatch.stadiumaddr"
+  <fut-map v-else :propSearchWord="`${selectMatch.stadiumname}`"
     :style="`height: ${height}vh; width:100%;`"></fut-map>
   <v-card class="card">
     <v-card-title><h1>
       <router-link :to="{name: 'futsalstadium', params: {stadiumName: selectMatch.stadiumname}}">
         {{selectMatch.stadiumname}}</router-link>
     </h1></v-card-title>
-    <v-card-subtitle>{{selectMatch.stadiumaddr}}<br/>{{timeToDate}}</v-card-subtitle>
+    <v-card-subtitle>{{selectMatch.stadiumaddr}}<br/>{{fnc.timeToDateWeek(selectMatch.time)}}</v-card-subtitle>
     <v-card-action>
-      <v-chip outlined @click="linkCopy">주소복사하기</v-chip>
+      <v-chip outlined @click="fnc.linkCopy($route.fullPath)">주소복사하기</v-chip>
       <v-chip outlined @click="viewTogle()" :color="mapView ? '#2222cc':'#cc8888'">지도보기</v-chip>
       <v-chip outlined>가는길보기</v-chip>
     </v-card-action>
-    <v-card-text>{{selectMatch.stadiumname}} {{timeToDate}} 의 경기는
+    <v-card-text>{{selectMatch.stadiumname}} {{fnc.timeToDate(selectMatch.time)}} 의 경기는
         <code>{{success}}%</code> 확률로 정상 진행되고 있습니다.
     </v-card-text>
   </v-card>
@@ -37,7 +37,7 @@
     <h3>구장 시설</h3>
     <v-row class="justify-center pa-1">
       <v-col
-        v-for="n of selectMatch.stadiumfacility.split('\,')"
+        v-for="n of stadiumFacility"
         :key="n" cols="2">
         <v-card>
           <v-img :src="require(`@/assets/img/stadium/${n}.svg`)"/>
@@ -112,59 +112,68 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {store} from '@/store'
 import FutMap from './FutMap'
 import FutHead from './FutHead'
 export default {
+  created : async function (){
+    if(store.state.futsal.selectMatch.futsalmatchseq==undefined){
+      await axios.get(`${store.state.futsal.context}/futsal/match/${this.$route.params.matchId}`)
+      .then(res =>{
+        store.state.futsal.selectMatch = res.data
+        this.selectMatch = res.data
+      })
+    }
+  },
   components:{FutHead,FutMap},
   data(){
     return {
       height: 30,
       success: 100,
-      selectMatch: store.state.selectMatch,
-      matchRule: [
-          store.state.selectMatch.num,
-          store.state.selectMatch.gender,
-          store.state.selectMatch.difficulty,
-          store.state.selectMatch.shoes,
-          'minmax'
-        ],
+      selectMatch: store.state.futsal.selectMatch,
+      fnc: store.state.futsal.fnc,
       difficultyMsg: [
         '초급 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.',
         '일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.',
         '상급 매치는 공좀 차는분만 오세요.'
       ],
-      stadiumText: [
-        `${store.state.selectMatch.num}vs${store.state.selectMatch.num}
-                    구장의 최소 인원은 ${parseInt(store.state.selectMatch.num)*2 -2}명입니다.`,
-        `모든 ${store.state.selectMatch.num}구장은 정원 모집 시 삼파전으로 진행합니다.`,
-        '주차 : 평일 2시간 무료 / 주말 무료',
-        '(평일 이용시 주차 차량 번호 기입 필수, 2시간 이상 주차시 추가 비용 발생)',
-        '화장실은1층 화장실 이용',
-        '자판기 및 흡연 구역 있음'
-      ],
       mapView: true,
-      temp: ''
     }
   },
   computed: {
     stadiumImg(){
-    return this.selectMatch.stadiumimg.split(',')
-      .map(i => require(`@/assets/img/stadium/${i}.jpg`))
+    return this.selectMatch.stadiumimg ? this.selectMatch.stadiumimg.split(',')
+      .map(i => require(`@/assets/img/stadium/${i}.jpg`)) 
+      : Array.from({length:3},(_,i) => require(`@/assets/img/stadium/${i+1}.jpg`))
     },
-    timeToDate(){
-      const time = new Date(this.selectMatch.time)
-      return `${time.getFullYear()}년 ${time.getMonth()+1}월 ${time.getDate()}일 
-      ${["일","월","화","수","목","금","토"][time.getDay()]}요일 ${time.getHours()}:00`
+    matchRule(){
+      let selectMatch = this.selectMatch
+      return [selectMatch.num,
+          selectMatch.gender,
+          selectMatch.difficulty,
+          selectMatch.shoes,
+          'minmax']
     },
+    stadiumFacility(){
+      return this.selectMatch.stadiumfacility ? this.selectMatch.stadiumfacility.split(',')
+       : ['park0','park0','park0','park0','park0']
+    },
+    stadiumText(){
+      let selectMatch = this.selectMatch
+      return [
+        `${selectMatch.num}vs${selectMatch.num}
+                    구장의 최소 인원은 ${parseInt(selectMatch.num)*2 -2}명입니다.`,
+        `모든 ${selectMatch.num}구장은 정원 모집 시 삼파전으로 진행합니다.`,
+        '주차 : 평일 2시간 무료 / 주말 무료',
+        '(평일 이용시 주차 차량 번호 기입 필수, 2시간 이상 주차시 추가 비용 발생)',
+        '화장실은1층 화장실 이용',
+        '자판기 및 흡연 구역 있음'
+      ]}
   },
   methods: {
     viewTogle(){
       this.mapView=!this.mapView
-    },
-    linkCopy(){
-      alert('주소 복사 ')
-      return '주소 복사'
     },
     msgSwitch(item){
       switch(item){
@@ -181,7 +190,7 @@ export default {
       }
     },
     payment(){
-      if(store.state.user.name == undefined){
+      if(store.state.futsal.user.name == undefined){
         alert('로그인 하세요')
       }else{
         alert('결제완료')

@@ -7,13 +7,13 @@
 			{{key!='time' ? item : timeToDate(item)}}
 		</div>
 	</div> -->
-	<h3>{{timeToDate(propTime)}}  {{propStadium}}</h3>
+	<h3>{{fnc.timeToDate(propTime)}}  {{propStadium}}</h3>
 	<v-card raised class="ma-auto">
 		<v-data-table
 		:headers="headers" :items="table"
 		class="elevation-1 ma-2" hide-default-footer>
 			<template v-slot:item.time="{item}">
-				{{timeToDate(item.time)}}
+				{{fnc.timeToDate(item.time)}}
 				<!-- <v-btn @click="click(item)">{{timeToDate(item.time)}}</v-btn> -->
 			</template>
 			<template v-slot:item.num="{item}">
@@ -58,6 +58,7 @@ export default{
 				{ text: '난이도', value: 'difficulty' },
 				{ text: '예약가능 인원', align: 'center',sortable: false,value: 'remain'}
 			],
+			fnc: store.state.futsal.fnc,
 		}
 	},
 	computed: {
@@ -66,13 +67,9 @@ export default{
 		}
 	},
 	methods:{
-		timeToDate(time){
-			const temp = new Date(time)
-			return `${(temp.getMonth()+1)}월 ${temp.getDate()}일 ${temp.getHours()}시`
-		},
 		selectMatch(param){
 			if(param.remain != 0){
-				store.state.selectMatch = param
+				store.state.futsal.selectMatch = param
 				this.$router.push({ name: 'futsalmatch', params: { matchId: param.futsalmatchseq }})
 			}
 		}
