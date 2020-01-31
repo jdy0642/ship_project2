@@ -24,9 +24,17 @@
       class="elevation-1"
       @page-count="pageCount = $event"
     >
-    <template v-slot:item.male="{ item }" >
-      <v-checkbox v-model="item.male" :label="`${item.male}`"></v-checkbox>
-    </template>
+    <template v-slot:item.male="{item}">
+				<p>
+					{{String(item.male) == 'true' ? '남성' : '여성'}}
+				</p>
+			</template>
+      <template v-slot:item.lolblack="{item}">
+				<v-switch
+      v-model="black"
+      :label="`${item.lolblack}`"
+    ></v-switch>
+			</template>
     <template>
     <v-data-table item-key="name" class="elevation-1" loading loading-text="Loading... Please wait"></v-data-table>
     </template> 
@@ -48,9 +56,13 @@ import axios from 'axios'
 export default {
   created(){
     axios
-         .get(`${this.context}/customermanage`)
+         .get(`/customermanage`)
          .then(res =>{
             this.lists = res.data
+            for(let i=0; i<this.lists.length;i++){
+              this.gender.push(this.lists[i].male)
+            }
+
          })
          .catch(e=>{
             alert('AXIOS FAIL'+e)
@@ -58,6 +70,7 @@ export default {
   },
    data(){
       return{
+        gender:[],
     context : 'http://localhost:8080',
     fixedHeader: true,
     page: 1,

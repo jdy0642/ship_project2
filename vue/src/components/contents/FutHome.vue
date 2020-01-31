@@ -44,7 +44,7 @@ export default {
   },
   created(){
     let table = []
-    axios.get(`${store.state.futsal.context}/futsal/`)
+    axios.get(`/futsal/`)
       .then(res => {
         table = res.data
         

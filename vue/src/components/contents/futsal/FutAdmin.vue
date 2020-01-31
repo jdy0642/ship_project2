@@ -13,9 +13,8 @@
   <v-btn @click="test()">롤</v-btn>
   <v-btn @click="test2()">롤2</v-btn>
   <v-btn @click="test3()">롤3</v-btn>
-  <v-btn @click="test()">롤</v-btn>
    <div>
-    <span>{{ $socket.connected ? 'Connected' : 'Disconnected' }}</span>
+    <!-- <span>{{ $socket.connected ? 'Connected' : 'Disconnected' }}</span> -->
   </div>
   <v-btn @click="clickButton('하이')">socket</v-btn>
 </div>
@@ -105,7 +104,7 @@ export default {
     },
     test2(){
       var req = new XMLHttpRequest();
-      req.open('GET',`http://localhost:3000`, true);
+      req.open('GET',`/futsal/test`, true);
       req.onreadystatechange = function () {
         if (req.readyState == 4) {
           alert(req)
@@ -119,7 +118,7 @@ export default {
       return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
-        req.open('GET', '/lol/summoner/v4/summoners/by-name/yamine?api_key=RGAPI-5bfa2b4b-0bbf-4861-a97a-dfd697046e26');
+        req.open('GET', '/futsal/test');
         /* req.setRequestHeader("Access-Control-Allow-Origin", "*")
         req.setRequestHeader("Authorization", "Bearer XXXXX") */
         req.onload = function() {
@@ -146,7 +145,7 @@ export default {
       });
     },
     test(){
-			axios.get(`http://localhost:3000`)
+			axios.get(`/futsal/test`)
 			.then(res=>{
 				this.lol = res.data
 			})

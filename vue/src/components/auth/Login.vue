@@ -38,7 +38,6 @@ export default {
       return {
         checkbox: false,
         dialog: false,
-        context : 'http://localhost:8080',
         result : '',
         userid : '',
         passwd : '',
@@ -53,18 +52,18 @@ export default {
     },
    methods:{
       login(){
-        let url = `${this.context}/login`
+        let url = `/login`
         let data =  {
          userid : this.userid,
          passwd : this.passwd
         }
         let headers= {
-              'authorization': 'JWT fefege..',
-              'Accept' : 'application/json',
-              'Content-Type': 'application/json'
+               'authorization': 'JWT fefege..',
+               'Accept' : 'application/json',
+               'Content-Type': 'application/json'
         }
       axios
-      .post(url, data, headers)
+      .post(url, data,headers)
       .then(res=>{
             if(res.data.result === "SUCCESS"){
                 store.state.person = res.data.person
