@@ -1,5 +1,6 @@
 package com.ship.web.futsal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,4 +52,11 @@ public class FutsalController {
 	public FutsalMatch selectMatch(@PathVariable Long matchId) {
 		return futsalMatchRepository.findByFutsalmatchseq(matchId);
 	}
+	
+	@GetMapping("/test")
+	public Map<?, ?> test() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("msg", "asdfasdf");
+		return map;
+	}	
 }

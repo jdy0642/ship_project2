@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     futsal: {
-      context: 'http://localhost:8080',
+      context: 'http://15.165.26.82',
       header: {
         'authorization': 'JWT fefege..',
         'Accept' : 'application/json',

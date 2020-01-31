@@ -29,7 +29,6 @@ import {store} from '../../store'
 export default {
   data(){
     return{
-      context:'http://localhost:8080',
       id: store.state.person.id,
       userid: store.state.person.userid,
       passwd: store.state.person.passwd,
@@ -53,7 +52,7 @@ export default {
     withdrawal(){
       alert('회원탈퇴')
       axios
-      .delete(`${this.context}/withdrawal/${store.state.person.userid}`)
+      .delete(`/withdrawal/${store.state.person.userid}`)
       .then(
         alert('회탈 성공2')
       )
