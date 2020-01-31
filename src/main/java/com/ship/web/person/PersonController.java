@@ -97,7 +97,7 @@ public class PersonController {
 			Person dto = modelMapper.map(p, Person.class);
 			list.add(dto);
 		}
-		return list.stream().filter(role-> role.getJob().equals("teacher")).sorted(Comparator.comparing(Person::getPersonseq).reversed()).collect(Collectors.toList());
+		return list.stream().sorted(Comparator.comparing(Person::getPersonseq).reversed()).collect(Collectors.toList());
 	}
 	@PostMapping("/createroom")
 	public HashMap<String, Object> createroom(@RequestBody Person person) {
