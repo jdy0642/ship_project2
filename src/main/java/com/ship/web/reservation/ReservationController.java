@@ -48,7 +48,7 @@ public class ReservationController {
 		reservation.setPersonseq(person);
 		reservation.setFutsalmatchseq(futsalMatchRepository.findById(matchId).get());
 		reservation.setResdate(System.currentTimeMillis());
-		reservationRepository.save(reservation); 
+		reservationRepository.save(reservation);
 		return reservationRepository.findByResdate(reservation.getResdate()) != null;
 	}
 	
@@ -58,7 +58,7 @@ public class ReservationController {
 		res.setKm(reservation.getKm());
 		res.setWin(reservation.getWin());
 		res.setScore(reservation.getScore());
-		reservationRepository.save(res); 
+		reservationRepository.save(res);
 		return reservationRepository
 				.findByResdate(res.getResdate()).getKm() == reservation.getKm();
 	}

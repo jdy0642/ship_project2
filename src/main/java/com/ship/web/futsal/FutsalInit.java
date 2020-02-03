@@ -33,8 +33,10 @@ public class FutsalInit extends Proxy implements ApplicationRunner{
 		FutsalMatch match = null;
 		List<Map<String, String>> stadiumList = new ArrayList<>();
 		List<FutsalMatch> matchList = new ArrayList<FutsalMatch>();
+		System.out.println("1");
 		if(count < 3000) {
 			for(int i = 1; i<=3; i++) {
+				System.out.println("2");
 				stadiumList.addAll(crawler.crawlFutMatch(i));
 			}
 			//stadiumList.forEach(i-> System.out.println(i));
