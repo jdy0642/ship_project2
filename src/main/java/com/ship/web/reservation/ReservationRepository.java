@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReservationRepository extends CrudRepository<Reservation, Long> {
+
+	public Reservation findByResdate(Long resdate);
 	
 }

@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 public interface LolRepository extends CrudRepository<Lol, Long>{
 //	public Lol insertRoom(String title, String contents, String tier);
 	public Lol findByCardseq(Long cardseq);
-	
 }
