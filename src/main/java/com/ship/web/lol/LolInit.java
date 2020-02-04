@@ -89,13 +89,13 @@ public class LolInit extends Proxy implements ApplicationRunner{
             lol.setContents("");
             lol.setRhost(lolList1.get(i).get("rhost"));
             lol.setRguest("");
-            lol.setTier(tiers[pxy.random(0, 9)]);
+            lol.setTier(tiers[pxy.random(0, 8)]);
             lol.setCrawltier(lolList1.get(i).get("crawltier"));
             lol.setCrawlrate(lolList1.get(i).get("crawlrate"));
             lol.setLolblack("");
-            lol.setImgurl(img[pxy.random(0, 15)]);
+            lol.setImgurl(img[pxy.random(0, 14)]);
             lol.setWtime(new Date());
-            lol.setPosition(positions[pxy.random(0, 5)]);
+            lol.setPosition(positions[pxy.random(0, 4)]);
             lolRepository.save(lol);
          }
          
