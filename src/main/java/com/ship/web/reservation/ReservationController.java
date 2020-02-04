@@ -42,6 +42,18 @@ public class ReservationController {
 		}
 		return list1.stream().collect(Collectors.toList());
 	}
+
+	 @GetMapping("/2")
+	   public List<Reservation> filterList(){
+	      Iterable<Reservation> res = reservationrepository.findAll();
+	      List<Reservation> list2 = new ArrayList<>();
+	      for(Reservation r : res) {
+	         Reservation dto1 = modelMapper.map(r, Reservation.class);
+	         list2.add(dto1);
+	      }
+	      return list2.stream().collect(Collectors.toList());
+	   }
+
 	
 	@PostMapping("/{matchId}")
 	public boolean createReservation(@PathVariable Long matchId, @RequestBody Person person) {
@@ -62,4 +74,5 @@ public class ReservationController {
 		return reservationRepository
 				.findByResdate(res.getResdate()).getKm() == reservation.getKm();
 	}
+
 }

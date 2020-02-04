@@ -14,9 +14,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +47,19 @@ public class LolController {
 		return crawler.opggCrawling(summonername);
 	}
 	
+	@DeleteMapping("/delete/{cardseq}")
+	public void withdrawal(@PathVariable Long cardseq) {
+		p.accept("방탈 진입");
+		lolRepository
+		.delete(lolRepository
+				.findByCardseq(cardseq));
+	}
+	@PutMapping("/update/{cardseq}")
+	public void modify(@RequestBody Lol lol, @PathVariable Long cardseq) {
+		p.accept("수정 진입");
+		lol = lolRepository.save(lolRepository.findByCardseq(cardseq));
+	}
+	
 	@GetMapping("/listpage={page}")
 	public List<Lol> roomlist(@PathVariable int page){
 		System.out.println(page);
@@ -62,6 +77,62 @@ public class LolController {
 				.collect(Collectors.toList()); 
 	}
 	
+	@GetMapping("/filterpositionlist/position={position}/page={page}")
+	   public List<Lol> filterpositionlist(@PathVariable int page, @PathVariable String position){
+	      System.out.println(page);
+	      Iterable<Lol> entites = lolRepository.findAll();
+	      List<Lol> list = new ArrayList<>();
+	      Date date = new Date();
+	      
+	      for(Lol l : entites) {
+	         Lol dto = modelMapper.map(l,Lol.class);
+	         list.add(dto);
+	      }
+	      return list.stream()
+	            .sorted(Comparator.comparing(Lol::getCardseq)
+	            .reversed())
+	            .filter(role->role.getPosition().equals(position))
+	            .limit(page*9) 
+	            .collect(Collectors.toList()); 
+	   }
+	@GetMapping("/filtertierlist/tier={tier}/page={page}")
+	   public List<Lol> filtertierlist(@PathVariable int page, @PathVariable String tier){
+	      System.out.println(page);
+	      Iterable<Lol> entites = lolRepository.findAll();
+	      List<Lol> list = new ArrayList<>();
+	      Date date = new Date();
+	      
+	      for(Lol l : entites) {
+	         Lol dto = modelMapper.map(l,Lol.class);
+	         list.add(dto);
+	      }
+	      return list.stream()
+	            .sorted(Comparator.comparing(Lol::getCardseq)
+	            .reversed())
+	            .filter(role->role.getTier().equals(tier))
+	            .limit(page*9) 
+	            .collect(Collectors.toList()); 
+	   }
+	   
+	   @GetMapping("/filtertplist/tier={tier}/position={position}/page={page}")
+	   public List<Lol> filtertplist(@PathVariable int page, @PathVariable String tier, @PathVariable String position){
+	      System.out.println(page);
+	      Iterable<Lol> entites = lolRepository.findAll();
+	      List<Lol> list = new ArrayList<>();
+	      Date date = new Date();
+	      
+	      for(Lol l : entites) {
+	         Lol dto = modelMapper.map(l,Lol.class);
+	         list.add(dto);
+	      }
+	      return list.stream()
+	            .filter(role->role.getTier().equals(tier))
+	            .filter(role->role.getPosition().equals(position))
+	            .sorted(Comparator.comparing(Lol::getCardseq)
+	            .reversed())
+	            .limit(page*9) 
+	            .collect(Collectors.toList()); 
+	   }
 	@PostMapping("/createroom")
 	public HashMap<String, Object> createroom(@RequestBody Lol lol){
 		p.accept("방 생성 컨트롤러 진입"+lol);
