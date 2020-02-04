@@ -56,6 +56,24 @@ public class LolInit extends Proxy implements ApplicationRunner{
 					"Yasuo",
 					"zoe",
 			};
+			String[] tiers= {
+					"iron",
+					"bronze",
+					"silver",
+					"gold",
+					"platinum",
+					"diamond",
+					"master",
+					"grandemaster",
+					"challenger"
+			};
+			String[] positions = {
+					"top",
+					"sungle",
+					"mid",
+					"bot",
+					"supporter"
+			};
 			
 			List<Map<String,String>> lolList = new ArrayList<>();
 			List<Map<String,String>> lolList1 = new ArrayList<>();
@@ -71,12 +89,13 @@ public class LolInit extends Proxy implements ApplicationRunner{
 				lol.setContents("");
 				lol.setRhost(lolList1.get(i).get("rhost"));
 				lol.setRguest("");
-				lol.setTier("GOLD");
+				lol.setTier(tiers[pxy.random(0, 9)]);
 				lol.setCrawltier(lolList1.get(i).get("crawltier"));
 				lol.setCrawlrate(lolList1.get(i).get("crawlrate"));
 				lol.setLolblack("");
 				lol.setImgurl(img[pxy.random(0, 15)]);
 				lol.setWtime(new Date());
+				lol.setPosition(positions[pxy.random(0, 5)]);
 				lolRepository.save(lol);
 			}
 			

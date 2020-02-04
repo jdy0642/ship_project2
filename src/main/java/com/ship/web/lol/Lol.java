@@ -61,13 +61,14 @@ public class Lol extends Proxy implements Serializable{
 	private String crawlrate;
 	@Column(name="WTIME") 
 	private Date wtime;
-	
+	@Column(name="POSITION") 
+	private String position;
 	
 	
 	@Builder
 	private Lol(String rhost,String rguest, String lolblack,
 			String title, String contents, String tier,
-			String imgurl, String img, Date wtime,
+			String imgurl, String img, Date wtime, String position,
 			String crawltier, String crawlrate) {
 		this.rhost = rhost;
 		this.rguest = rguest;
@@ -80,5 +81,6 @@ public class Lol extends Proxy implements Serializable{
 		this.crawltier = crawltier;
 		this.crawlrate = crawlrate;
 		this.wtime = wtime;
+		this.position = position;
 	}
 }
