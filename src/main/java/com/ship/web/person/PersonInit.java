@@ -27,7 +27,14 @@ public class PersonInit extends Proxy implements ApplicationRunner  {
 			Person person = null;
 			String[][] mtx = {
 					{"hong", "1", "홍성철", "010-6202-4102", "0", "admin", "30","1","1","1","0","false","1","false","false","false","hongsc1991@naver.com", "Destiny"},
-					{"hong1", "11", "홍길동1", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","dfhd2f@naver.com", "거울보면문도"},
+					{"hong1", "1", "파이리", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","dfhd2f@naver.com", "거울보면문도"},
+					{"aaaa", "1", "라이츄", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","asdvw@naver.com", "yamine"},
+					{"bbb", "1", "피카츄", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","pica@naver.com", "faker"},
+					{"a", "1", "지우", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","jiu@naver.com", "arondite"},
+					{"b", "1", "다간", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","brave@naver.com", "excalliver"},
+					{"c", "1", "우뢰매", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","thunder@naver.com", "balmung"},
+					{"d", "1", "마징가", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","breastfire@naver.com", "barisada"},
+					{"e", "1", "메칸더", "31", "41", "teacher1", "61","71","8","9","10","false","2","false","false","false","shild@naver.com", "hellfire"},
 			};
 			for(String[] arr : mtx) {
 				person = new Person();

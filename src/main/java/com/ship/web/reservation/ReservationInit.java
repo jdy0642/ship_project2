@@ -44,13 +44,13 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 				fut = new FutsalMatch();
 				person = new Person();
 				res.setResdate(System.currentTimeMillis()+random(-7, 14*3600*1000*24));
-				fut.setFutsalmatchseq((long) random(1,futsalCount));
-				person.setPersonseq((long) random(1, personCount));
+				fut.setFutsalmatchseq((long) random(1,futsalCount-1));
+				person.setPersonseq((long) random(1, personCount-1));
 				res.setFutsalmatchseq(fut);
 				res.setPersonseq(person);
 				res.setKm(random(5,20));
 				res.setScore(random(0,4));
-				res.setWin(Arrays.asList("win","lose","win").get(random(0,2)));
+				res.setWin(Arrays.asList("win","lose").get(random(0,1)));
 				resList.add(res);
 			}
 			reservationrepository.saveAll(resList);
