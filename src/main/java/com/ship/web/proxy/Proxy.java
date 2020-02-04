@@ -23,7 +23,7 @@ public class Proxy {
 		return b.test(p1, p2);
 	}
 	public int random(int a, int b) {
-		BiFunction<Integer, Integer, Integer> f =(t,u)->(int)(Math.random()*(u-t))+t;
+		BiFunction<Integer, Integer, Integer> f =(t,u)->(int)Math.round(Math.random()*(u-t))+t;
 		return f.apply(a, b);
 		
 	}
