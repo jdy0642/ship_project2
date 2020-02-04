@@ -54,12 +54,10 @@ public class LolController {
 		.delete(lolRepository
 				.findByCardseq(cardseq));
 	}
-	@PutMapping("/modify/{cardseq}")
-	public void modify(@PathVariable Long cardseq) {
-		p.accept("방탈 진입");
-		lolRepository
-		.delete(lolRepository
-				.findByCardseq(cardseq));
+	@PutMapping("/update/{cardseq}")
+	public void modify(@RequestBody Lol lol, @PathVariable Long cardseq) {
+		p.accept("수정 진입");
+		lol = lolRepository.save(lolRepository.findByCardseq(cardseq));
 	}
 	
 	@GetMapping("/listpage={page}")
