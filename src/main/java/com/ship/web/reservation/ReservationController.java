@@ -26,21 +26,22 @@ import com.ship.web.futsal.FutsalMatchRepository;
 import com.ship.web.lol.Lol;
 import com.ship.web.person.Person;
 import com.ship.web.person.PersonRepository;
+import com.ship.web.proxy.Proxy;
 import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/res")
 @CrossOrigin(origins = Constants.LOCAL)
+//@CrossOrigin(origins = Constants.J_S3)
 public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
-	@Autowired private PersonRepository personRepository;
 	@Autowired private Reservation reservation;
 	@Autowired private FutsalMatchRepository futsalMatchRepository;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private Printer p;
+	@Autowired private Proxy pxy;
 	@GetMapping("/1")
 	public List<Reservation> reslist(){
-		p.accept("res 컨트롤러 들어옴");
 		Iterable<Reservation> res = reservationRepository.findAll();
 		List<Reservation> list1 = new ArrayList<>();
 		for(Reservation r : res) {
@@ -51,22 +52,39 @@ public class ReservationController {
 	}
 	
 
-	 @GetMapping("/todaylist")
-	   public List<Reservation> filterList(){
+	 @GetMapping("/onedaylist/{day}")
+	   public List<Reservation> onedaylist(@PathVariable String day){
+		 System.out.println("들어온 day : >>>>  "+day);
+		 System.out.println("비교할 day : >>>>  "+day.substring(8,10));
 	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
 	      List<Reservation> list2 = new ArrayList<>();
 	      for(Reservation r : res) {
 	         Reservation dto1 = modelMapper.map(r, Reservation.class);
 	         list2.add(dto1);
 	      }
-	      SimpleDateFormat sdf = new SimpleDateFormat("d");
-          System.out.println("오늘날짜 ====>>>>>"+sdf.format(new Date())); // test commit!2
-
 	      return list2.stream()
 	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-	    		  .filter(t-> sdf.format(new Date(t.getResdate())).equals(sdf.format(new Date())) ) //&& t.getResdate() < new Date().getTime()
+	    		  .filter(t-> new SimpleDateFormat("yyyy-MM-dd").format(new Date(t.getResdate()))
+	    				  .equals(day) ) //&& t.getResdate() < new Date().getTime()
 	    		  .collect(Collectors.toList());
 	   }
+	 
+	 @GetMapping("/weeklist")
+	   public List<Reservation> weekList(){
+	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
+	      List<Reservation> list2 = new ArrayList<>();
+	      for(Reservation r : res) {
+	         Reservation dto1 = modelMapper.map(r, Reservation.class);
+	         list2.add(dto1);
+	      }
+	      int week = 604800000;
+	      return list2.stream()
+	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+	    		  .filter(t-> new Date(t.getResdate()).getTime() >= (new Date().getTime()-week*1000) 
+	    				  && new Date(t.getResdate()).getTime() <= (new Date().getTime()*1000))
+	    		  .collect(Collectors.toList());
+	   }
+
 
 	
 	@PostMapping("/{matchId}")

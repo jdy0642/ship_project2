@@ -1,12 +1,10 @@
 package com.ship.web.proxy;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Connection;
@@ -16,13 +14,11 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
 @Component("crawler")
 @Lazy
 public class CrawlProxy extends Proxy{
 	@Autowired Box<HashMap<String, String>> box;
 	@Autowired Trunk<String> trunk;
-	
 	public ArrayList<HashMap<String, String>> opggCrawling(String summonername){
 		box.clear();
 		try {
@@ -48,12 +44,10 @@ public class CrawlProxy extends Proxy{
 				map.put("photo", photo.get(0).select("img").attr("src"));
 				box.add(map);
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 		}
 		return box.get();
 	}
-	
 	public ArrayList<HashMap<String, String>> loltitleCrawling(int page){
 		box.clear();
 		try {
@@ -94,7 +88,6 @@ public class CrawlProxy extends Proxy{
 			Elements rhost = temp.select("td[class=\"ranking-table__cell ranking-table__cell--summoner\"] a span");
 			Elements crawltier = temp.select("td[class=\"ranking-table__cell ranking-table__cell--tier\"]");
 			Elements crawlrate = temp.select("td[class=\"ranking-table__cell ranking-table__cell--winratio\"] div span");
-			
 			HashMap<String, String> map = null;
 			for(int i=0;i<40;i++) {
 				map = new HashMap<>();
@@ -111,8 +104,6 @@ public class CrawlProxy extends Proxy{
 		}
 		return box.get();
 	}
-	
-	
 	public List<Map<String, String>> crawlFutMatch(int page){
 		final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 		String url = "https://map.naver.com/v5/api/search?caller=pcweb&query=풋살장&type=all&page="+page+"&displayCount=100&isPlaceRecommendationReplace=true&lang=ko";
@@ -145,7 +136,6 @@ public class CrawlProxy extends Proxy{
 		System.out.printf("%d 페이지 완료\n",page);
 		return list;
 	}
-	
 	public List<Map<String, String>> kakaoCrawlFutMatch(String search, int page){
 		final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 		final String kakaoKey = "KakaoAK 28d9076d78b899a3f85bb1c12320b0c3";
