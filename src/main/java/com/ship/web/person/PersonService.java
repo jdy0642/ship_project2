@@ -16,7 +16,7 @@ public class PersonService {
 	
 	// 자바의 정석 847 collect()
 	public List<String> namesOfStudents() {
-		// 1. 학생의 이름
+		// 1. 학생의 이름 리스트화
 		return personRepository.findByJob("student").stream()
 				.map(Person::getName)
 				.collect(Collectors.toList());
@@ -68,7 +68,7 @@ public class PersonService {
 							.partitioningBy(Person::isMale))
 				.get(gender);
 	}
-	public Long partioningCountPerGender(boolean gender) {
+	public Long partionDingCountPerGender(boolean gender) {
 		// 2.단순분할 (성별 학생수)
 		return personRepository.findByJob("student").stream()
 				.collect(
