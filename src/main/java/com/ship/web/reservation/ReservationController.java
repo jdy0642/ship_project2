@@ -59,7 +59,7 @@ public class ReservationController {
 	         list2.add(dto1);
 	      }
 	      SimpleDateFormat sdf = new SimpleDateFormat("d");
-          System.out.println("오늘날짜 ====>>>>>"+sdf.format(new Date()));
+          System.out.println("오늘날짜 ====>>>>>"+sdf.format(new Date())); // test commit!
 
 	      return list2.stream()
 	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
