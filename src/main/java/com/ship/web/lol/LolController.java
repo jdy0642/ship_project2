@@ -31,7 +31,7 @@ import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/lol")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://shpteamdb7.s3-website.ap-northeast-2.amazonaws.com")
 public class LolController {
 	@Autowired CrawlProxy crawler;
 	@Autowired Trunk<Object> trunk;

@@ -23,7 +23,7 @@ import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/res")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://shpteamdb7.s3-website.ap-northeast-2.amazonaws.com")
 public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
 	@Autowired private PersonRepository personRepository;
