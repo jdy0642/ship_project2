@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.hibernate.type.BigIntegerType;
@@ -48,9 +49,9 @@ public class ReservationController {
 			Reservation dto1 = modelMapper.map(r, Reservation.class);
 			list1.add(dto1);
 		}
+		System.out.println(list1.stream().map(Reservation::getResseq));
 		return list1.stream().collect(Collectors.toList());
 	}
-	
 
 	 @GetMapping("/onedaylist/{day}")
 	   public List<Reservation> onedaylist(@PathVariable String day){
@@ -105,6 +106,18 @@ public class ReservationController {
 		reservationRepository.save(res);
 		return reservationRepository
 				.findByResdate(res.getResdate()).getKm() == reservation.getKm();
+	}
+	
+	@GetMapping("/2")
+	public List<Object> testlist(){
+		Iterable<Reservation> res = reservationRepository.findAll();
+		List<Reservation> list1 = new ArrayList<>();
+		for(Reservation r : res) {
+			Reservation dto1 = modelMapper.map(r, Reservation.class);
+			list1.add(dto1);
+		}
+		System.out.println(list1.stream().map(Reservation::getResseq));
+		return list1.stream().map(Reservation::getResseq).collect(Collectors.toList());
 	}
 
 }
