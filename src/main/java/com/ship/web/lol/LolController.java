@@ -27,11 +27,12 @@ import com.ship.web.proxy.Box;
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.proxy.Trunk;
+import com.ship.web.util.Constants;
 import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/lol")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = Constants.LOCAL)
 public class LolController {
 	@Autowired CrawlProxy crawler;
 	@Autowired Trunk<Object> trunk;
