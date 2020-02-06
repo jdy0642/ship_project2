@@ -5,12 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import com.mysql.cj.ParseInfo;
 import com.ship.web.futsal.FutsalMatch;
 import com.ship.web.futsal.FutsalMatchRepository;
 import com.ship.web.person.Person;
@@ -32,7 +35,7 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		long count = reservationrepository.count();
-		int initdummy = 1000;
+		int initdummy = 9999;
 		if(count < 100) {
 			dummyres(initdummy);
 		}
@@ -44,11 +47,12 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 		int personCount = (int) personRepository.count();
 		int futsalCount = (int) futsalMatchRepository.count();
 		List<Reservation> resList = new ArrayList<Reservation>();
+		BiFunction<Integer, Integer, Double> f = (p,t) -> Math.random()*p - t;
 		for(int i=0; i< dummycount; i++) {
 			res = new Reservation();
 			fut = new FutsalMatch();
 			person = new Person();
-			res.setResdate(System.currentTimeMillis()+random(-7, 14*3600*1000*24));
+			res.setResdate(System.currentTimeMillis()+ (long)(f.apply(30,10)*1000*3600*24));
 			fut.setFutsalmatchseq((long) random(1,futsalCount-1));
 			person.setPersonseq((long) random(1, personCount-1));
 			res.setFutsalmatchseq(fut);
