@@ -63,6 +63,24 @@ public class PersonController {
 		return map;
 	}
 	
+	@PostMapping("/idcheck")
+	   public HashMap<String, Object> idcheck(@RequestBody Person person) {
+	      p.accept("아이디 체크 진입");
+	      p.accept(person.getUserid());
+	      HashMap<String, Object> map= new HashMap<>();
+	      person = personRepository.findByUserid(person.getUserid());
+	      if(person!= null) {
+	         p.accept("아이디 있음");
+	         map.put("result","SUCCESS");
+	         map.put("person",person);
+	      }else {
+	         p.accept("아이디  없음");
+	         map.put("result","FAIL");
+	         map.put("person",person);
+	      }
+	      return map;
+	   }
+	
 	@PostMapping("/join")
 	public HashMap<String, Object> join(@RequestBody Person person) {
 		HashMap<String, Object> map = new HashMap<>();
