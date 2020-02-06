@@ -1,6 +1,7 @@
 package com.ship.web.lol;
 
 import java.util.ArrayList;
+import com.ship.web.util.Constants;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
@@ -27,7 +28,6 @@ import com.ship.web.proxy.Box;
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.proxy.Trunk;
-import com.ship.web.util.Constants;
 import com.ship.web.util.Printer;
 
 @RestController
@@ -67,7 +67,6 @@ public class LolController {
 		Iterable<Lol> entites = lolRepository.findAll();
 		List<Lol> list = new ArrayList<>();
 		Date date = new Date();
-		
 		for(Lol l : entites) {
 			Lol dto = modelMapper.map(l,Lol.class);
 			list.add(dto);
@@ -79,6 +78,62 @@ public class LolController {
 				.collect(Collectors.toList()); 
 	}
 	
+	@GetMapping("/filterpositionlist/position={position}/page={page}")
+	   public List<Lol> filterpositionlist(@PathVariable int page, @PathVariable String position){
+	      System.out.println(page);
+	      Iterable<Lol> entites = lolRepository.findAll();
+	      List<Lol> list = new ArrayList<>();
+	      Date date = new Date();
+	      
+	      for(Lol l : entites) {
+	         Lol dto = modelMapper.map(l,Lol.class);
+	         list.add(dto);
+	      }
+	      return list.stream()
+	            .sorted(Comparator.comparing(Lol::getCardseq)
+	            .reversed())
+	            .filter(role->role.getPosition().equals(position))
+	            .limit(page*9) 
+	            .collect(Collectors.toList()); 
+	   }
+	@GetMapping("/filtertierlist/tier={tier}/page={page}")
+	   public List<Lol> filtertierlist(@PathVariable int page, @PathVariable String tier){
+	      System.out.println(page);
+	      Iterable<Lol> entites = lolRepository.findAll();
+	      List<Lol> list = new ArrayList<>();
+	      Date date = new Date();
+	      
+	      for(Lol l : entites) {
+	         Lol dto = modelMapper.map(l,Lol.class);
+	         list.add(dto);
+	      }
+	      return list.stream()
+	            .sorted(Comparator.comparing(Lol::getCardseq)
+	            .reversed())
+	            .filter(role->role.getTier().equals(tier))
+	            .limit(page*9) 
+	            .collect(Collectors.toList()); 
+	   }
+	   
+	   @GetMapping("/filtertplist/tier={tier}/position={position}/page={page}")
+	   public List<Lol> filtertplist(@PathVariable int page, @PathVariable String tier, @PathVariable String position){
+	      System.out.println(page);
+	      Iterable<Lol> entites = lolRepository.findAll();
+	      List<Lol> list = new ArrayList<>();
+	      Date date = new Date();
+	      
+	      for(Lol l : entites) {
+	         Lol dto = modelMapper.map(l,Lol.class);
+	         list.add(dto);
+	      }
+	      return list.stream()
+	            .filter(role->role.getTier().equals(tier))
+	            .filter(role->role.getPosition().equals(position))
+	            .sorted(Comparator.comparing(Lol::getCardseq)
+	            .reversed())
+	            .limit(page*9) 
+	            .collect(Collectors.toList()); 
+	   }
 	@PostMapping("/createroom")
 	public HashMap<String, Object> createroom(@RequestBody Lol lol){
 		p.accept("방 생성 컨트롤러 진입"+lol);
@@ -101,7 +156,7 @@ public class LolController {
 				"zoe",
 		};
 		
-		lol.setImgurl(img[pxy.random(0, 15)]);
+		lol.setImgurl(img[pxy.random(0, 14)]);
 		lol = lolRepository.save(lol);
 		if(lol != null) {
 			map.put("result","SUCCESS");
