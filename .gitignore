@@ -6,7 +6,7 @@ bin/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-
+bin/
 ### STS ###
 .apt_generated
 .classpath
@@ -32,3 +32,6 @@ out/
 
 ### VS Code ###
 .vscode/
+bin/main/com/ship/web/futsal/FutsalController.class
+bin/main/com/ship/web/lol/LolController.class
+bin/main/com/ship/web/reservation/ReservationController.class

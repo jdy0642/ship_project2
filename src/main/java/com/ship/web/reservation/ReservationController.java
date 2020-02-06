@@ -46,7 +46,7 @@ public class ReservationController {
 
 	 @GetMapping("/2")
 	   public List<Reservation> filterList(){
-	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
+	      Iterable<Reservation> res = reservationRepository.findAll();
 	      List<Reservation> list2 = new ArrayList<>();
 	      for(Reservation r : res) {
 	         Reservation dto1 = modelMapper.map(r, Reservation.class);
