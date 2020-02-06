@@ -77,16 +77,18 @@ public class LolInit extends Proxy implements ApplicationRunner{
          
          List<Map<String,String>> lolList = new ArrayList<>();
          List<Map<String,String>> lolList1 = new ArrayList<>();
-            for(int i =1;i<=2;i++) {
-               lolList.addAll(crawler.loltitleCrawling(i)); // title 40*2개 삽입
+//         	for(int i =1;i<=2;i++) {
+//         		
+//         	}
+            for(int i =1;i<=3;i++) {
+            lolList.addAll(crawler.loltitleCrawling(i));  // title 40*2개 삽입
                lolList1.addAll(crawler.lolidCrawling(i)); // rhost, crawltier, crawlrate 40 * 2개  삽입
             }
-         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             
-         for(int i = 0; i < 80 ; i++) {
+         for(int i = 0; i < 120 ; i++) {
             lol = new Lol();
             lol.setTitle(lolList.get(i).get("title"));
-            lol.setContents("");
+            lol.setContents("안녕");
             lol.setRhost(lolList1.get(i).get("rhost"));
             lol.setRguest("");
             lol.setTier(tiers[pxy.random(0, 8)]);
