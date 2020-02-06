@@ -66,6 +66,7 @@ public class PersonController {
 	@PostMapping("/idcheck")
 	   public HashMap<String, Object> idcheck(@RequestBody Person person) {
 	      p.accept("아이디 체크 진입");
+	      p.accept(person.getUserid());
 	      HashMap<String, Object> map= new HashMap<>();
 	      person = personRepository.findByUserid(person.getUserid());
 	      if(person!= null) {

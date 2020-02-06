@@ -58,11 +58,6 @@ public class LolController {
 	}
 	@PutMapping("/update/{cardseq}")
 	   public void modify(@RequestBody Lol lol, @PathVariable Long cardseq) {
-	      p.accept("수정 진입");
-	      p.accept(pxy.string(lol.getCardseq()));
-	      p.accept(lol.getTitle());
-	      p.accept(lol.getContents());
-	      
 	      Lol lol1 = lolRepository.findByCardseq(cardseq);
 	      lol1.setContents(lol.getContents());
 	      lol1.setTitle(lol.getTitle());
