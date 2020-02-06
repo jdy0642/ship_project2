@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FutsalMatchRepository extends CrudRepository<FutsalMatch, Long>{
 
+	FutsalMatch findByFutsalmatchseq(Long matchId);
 }

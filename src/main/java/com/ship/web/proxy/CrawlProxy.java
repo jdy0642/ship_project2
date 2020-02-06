@@ -125,8 +125,7 @@ public class CrawlProxy extends Proxy{
 			.userAgent(USER_AGENT)
 			.ignoreContentType(true)
 			.execute();
-			System.out.println(html.toString());
-			System.out.println("------------------------------------------------------------------------------------------");
+			//System.out.println(html.toString());
 			json = new JSONObject(html.parse().select("body").text());
 		} catch (IOException e) {
 			e.printStackTrace();
