@@ -33,14 +33,14 @@ public class FutsalInit extends Proxy implements ApplicationRunner{
 		FutsalMatch match = null;
 		List<Map<String, String>> stadiumList = new ArrayList<>();
 		List<FutsalMatch> matchList = new ArrayList<FutsalMatch>();
-		System.out.println("1");
-		if(count < 3000) {
-			for(int i = 1; i<=3; i++) {
-				System.out.println("2");
-				stadiumList.addAll(crawler.crawlFutMatch(i));
+		String[] locate = {"서울","경기","인천","강원","세종","충청","대전","대구","전라","경상","부산","광주","울산"};
+		if(count < 50) {
+			for(int i = 0; i<=12; i++) {
+				for(int j = 1; j<=3; j++) {
+					stadiumList.addAll(crawler.kakaoCrawlFutMatch(locate[i]+" 풋살",j));
+				}
 			}
-			//stadiumList.forEach(i-> System.out.println(i));
-			for(int i = 0; i<=1000; i++) {
+			for(int i = 0; i<=5000; i++) {
 				int ranIndex = random(1, stadiumList.size()-1);
 				match = new FutsalMatch();
 				match.setTime(System.currentTimeMillis()-(random(1,480)-240)*1000*3600);
