@@ -33,6 +33,7 @@ import com.ship.web.util.Printer;
 @RestController
 @RequestMapping("/lol")
 @CrossOrigin(origins = Constants.LOCAL)
+//@CrossOrigin(origins = Constants.J_S3)
 public class LolController {
 	@Autowired CrawlProxy crawler;
 	@Autowired Trunk<Object> trunk;
@@ -56,10 +57,12 @@ public class LolController {
 				.findByCardseq(cardseq));
 	}
 	@PutMapping("/update/{cardseq}")
-	public void modify(@RequestBody Lol lol, @PathVariable Long cardseq) {
-		p.accept("수정 진입");
-		lol = lolRepository.save(lolRepository.findByCardseq(cardseq));
-	}
+	   public void modify(@RequestBody Lol lol, @PathVariable Long cardseq) {
+	      Lol lol1 = lolRepository.findByCardseq(cardseq);
+	      lol1.setContents(lol.getContents());
+	      lol1.setTitle(lol.getTitle());
+	      lolRepository.save(lol1);
+	   }
 	
 	@GetMapping("/listpage={page}")
 	public List<Lol> roomlist(@PathVariable int page){
