@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,13 +31,15 @@ import com.ship.web.util.Printer;
 @RequestMapping("/res")
 @CrossOrigin(origins = Constants.LOCAL)
 public class ReservationController {
-	@Autowired private ReservationRepository reservationrepository;
+	@Autowired private ReservationRepository reservationRepository;
+	@Autowired private FutsalMatchRepository futsalMatchRepository;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private Printer p;
+	@Autowired Reservation reservation;
 	@GetMapping("/1")
 	public List<Reservation> reslist(){
 		p.accept("res 컨트롤러 들어옴");
-		Iterable<Reservation> res = reservationrepository.findAll();
+		Iterable<Reservation> res = reservationRepository.findAll();
 		List<Reservation> list1 = new ArrayList<>();
 		for(Reservation r : res) {
 			Reservation dto1 = modelMapper.map(r, Reservation.class);
