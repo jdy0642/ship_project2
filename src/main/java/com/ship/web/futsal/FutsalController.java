@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ship.web.proxy.CrawlProxy;
+import com.ship.web.proxy.Proxy;
 import com.ship.web.util.Constants;
 
 @RestController
@@ -68,9 +71,11 @@ public class FutsalController {
 	}
 	
 	@GetMapping("/test")
-	public Map<?, ?> test() {
+	public Map<?, ?> test(){
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("msg", "asdfasdf");
+		map.put("msg", String.valueOf(System.currentTimeMillis()));
+		CrawlProxy cPxy = new CrawlProxy();
+		cPxy.kakaoCrawlFutMatch("서울 풋살장",1);
 		return map;
 	}
 }

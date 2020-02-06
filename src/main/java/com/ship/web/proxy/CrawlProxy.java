@@ -145,4 +145,35 @@ public class CrawlProxy extends Proxy{
 		System.out.printf("%d 페이지 완료\n",page);
 		return list;
 	}
+	
+	public List<Map<String, String>> kakaoCrawlFutMatch(String search, int page){
+		final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+		final String kakaoKey = "KakaoAK 28d9076d78b899a3f85bb1c12320b0c3";
+		String url = "http://dapi.kakao.com/v2/local/search/keyword.json?query="+search+"&page="+page;
+		List<Map<String, String>> list = new ArrayList<>();
+		JSONObject json = null;
+		Map<String, String> map = null;
+		try {
+			Connection.Response html = Jsoup.connect(url)
+			.method(Connection.Method.GET)
+			.userAgent(USER_AGENT)
+			.header("Authorization", kakaoKey)
+			.ignoreContentType(true)
+			.execute();
+			json = new JSONObject(html.parse().select("body").text());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JSONArray jsonArr = json.getJSONArray("documents");
+		for(int i = 0; i < jsonArr.length()-1; i++) {
+			map = new HashMap<>();
+			JSONObject j = jsonArr.getJSONObject(i);
+			map.put("name",j.get("place_name").toString());
+			map.put("address",j.get("address_name").toString());
+			map.put("tel",j.get("phone").toString());
+			list.add(map);
+		}
+		System.out.printf("%s %d페이지 완료\n%s\n",search,page,jsonArr.length());
+		return list;
+	}
 }
