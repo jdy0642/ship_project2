@@ -31,6 +31,7 @@ import com.ship.web.util.Printer;
 @RestController
 @RequestMapping("/res")
 @CrossOrigin(origins = Constants.LOCAL)
+//@CrossOrigin(origins = Constants.J_S3)
 public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
 	@Autowired private PersonRepository personRepository;

@@ -26,6 +26,7 @@ import com.ship.web.util.Printer;
 
 @RestController
 @CrossOrigin(origins = Constants.LOCAL)
+//@CrossOrigin(origins = Constants.J_S3)
 
 public class PersonController {
 	@Autowired private PersonRepository personRepository;
