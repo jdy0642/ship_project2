@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ship.web.util.Constants;
 
 @RestController
@@ -45,14 +45,26 @@ public class FutsalController {
 	
 	@PostMapping("/insertdummy")
 	public void insertDummy(@RequestBody List<FutsalMatch> param) {
-		System.out.println(param);
 		futsalMatchRepository.saveAll(param);
 		System.out.println("insertdummy");
 	}
 	
 	@GetMapping("/match/{matchId}")
 	public FutsalMatch selectMatch(@PathVariable Long matchId) {
-		return futsalMatchRepository.findByFutsalmatchseq(matchId);
+		return futsalMatchRepository.findById(matchId).get();
+	}
+	
+	@PutMapping("/match/{matchId}")
+	public void updateMatch(@PathVariable Long matchId){
+		fut = futsalMatchRepository.findById(matchId).get();
+		fut.setRemain(fut.getRemain()-1);
+		futsalMatchRepository.save(fut);
+	}
+	
+	@PostMapping("/register")
+	public boolean createMath(@RequestBody FutsalMatch match) {
+		futsalMatchRepository.save(match);
+		return true;
 	}
 	
 	@GetMapping("/test")
@@ -60,5 +72,5 @@ public class FutsalController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("msg", "asdfasdf");
 		return map;
-	}	
+	}
 }
