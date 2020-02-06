@@ -1,6 +1,7 @@
 package com.ship.web.lol;
 
 import java.util.ArrayList;
+import com.ship.web.util.Constants;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
@@ -31,7 +32,8 @@ import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/lol")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = Constants.LOCAL)
+//@CrossOrigin(origins = Constants.J_S3)
 public class LolController {
 	@Autowired CrawlProxy crawler;
 	@Autowired Trunk<Object> trunk;
@@ -155,7 +157,7 @@ public class LolController {
 				"zoe",
 		};
 		
-		lol.setImgurl(img[pxy.random(0, 15)]);
+		lol.setImgurl(img[pxy.random(0, 14)]);
 		lol = lolRepository.save(lol);
 		if(lol != null) {
 			map.put("result","SUCCESS");

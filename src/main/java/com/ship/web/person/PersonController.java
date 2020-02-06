@@ -1,5 +1,6 @@
 package com.ship.web.person;
 import java.util.ArrayList;
+import com.ship.web.util.Constants;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ship.web.util.Printer;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = Constants.LOCAL)
+//@CrossOrigin(origins = Constants.J_S3)
 
 public class PersonController {
 	@Autowired private PersonRepository personRepository;

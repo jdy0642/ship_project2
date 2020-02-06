@@ -1,8 +1,14 @@
 package com.ship.web.reservation;
+import java.math.BigInteger;
+import com.ship.web.util.Constants;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.type.BigIntegerType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,13 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ship.web.futsal.FutsalMatch;
 import com.ship.web.futsal.FutsalMatchRepository;
+import com.ship.web.lol.Lol;
 import com.ship.web.person.Person;
 import com.ship.web.person.PersonRepository;
 import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/res")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = Constants.LOCAL)
+//@CrossOrigin(origins = Constants.J_S3)
 public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
 	@Autowired private PersonRepository personRepository;
@@ -42,16 +50,23 @@ public class ReservationController {
 		}
 		return list1.stream().collect(Collectors.toList());
 	}
+	
 
-	 @GetMapping("/2")
+	 @GetMapping("/todaylist")
 	   public List<Reservation> filterList(){
-	      Iterable<Reservation> res = reservationRepository.findAll();
+	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
 	      List<Reservation> list2 = new ArrayList<>();
 	      for(Reservation r : res) {
 	         Reservation dto1 = modelMapper.map(r, Reservation.class);
 	         list2.add(dto1);
 	      }
-	      return list2.stream().collect(Collectors.toList());
+	      SimpleDateFormat sdf = new SimpleDateFormat("d");
+          System.out.println("오늘날짜 ====>>>>>"+sdf.format(new Date())); // test commit!2
+
+	      return list2.stream()
+	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+	    		  .filter(t-> sdf.format(new Date(t.getResdate())).equals(sdf.format(new Date())) ) //&& t.getResdate() < new Date().getTime()
+	    		  .collect(Collectors.toList());
 	   }
 
 	
