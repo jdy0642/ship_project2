@@ -84,7 +84,21 @@ public class ReservationController {
 	    				  && new Date(t.getResdate()).getTime() <= (new Date().getTime()*1000))
 	    		  .collect(Collectors.toList());
 	   }
-
+	 @GetMapping("/mymatch/{personseq}")
+	 public List<Reservation> myMatch(@PathVariable Long personseq) {
+		 p.accept("마이매치");
+		 Person person = new Person();
+		 person.setPersonseq(personseq);
+		 Iterable<Reservation> res =  reservationRepository.findByPersonseq(person);
+		 List<Reservation> list3 = new ArrayList<>();
+		 for(Reservation r : res) {
+	         Reservation dto1 = modelMapper.map(r, Reservation.class);
+	         list3.add(dto1);
+	      }
+		 return list3.stream()
+				 .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+				 .limit(5).collect(Collectors.toList());
+	 }
 
 	
 	@PostMapping("/{matchId}")
