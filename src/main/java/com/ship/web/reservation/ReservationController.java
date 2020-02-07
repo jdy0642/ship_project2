@@ -3,8 +3,10 @@ import java.math.BigInteger;
 import com.ship.web.util.Constants;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,6 +30,7 @@ import com.ship.web.lol.Lol;
 import com.ship.web.person.Person;
 import com.ship.web.person.PersonRepository;
 import com.ship.web.proxy.Proxy;
+import com.ship.web.proxy.Trunk;
 import com.ship.web.util.Printer;
 
 @RestController
@@ -37,20 +40,15 @@ import com.ship.web.util.Printer;
 public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
 	@Autowired private Reservation reservation;
+	@Autowired private ReservationService reservationService;
 	@Autowired private FutsalMatchRepository futsalMatchRepository;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private Printer p;
 	@Autowired private Proxy pxy;
+	@Autowired private Trunk<Object> tr;
 	@GetMapping("/1")
-	public List<Reservation> reslist(){
-		Iterable<Reservation> res = reservationRepository.findAll();
-		List<Reservation> list1 = new ArrayList<>();
-		for(Reservation r : res) {
-			Reservation dto1 = modelMapper.map(r, Reservation.class);
-			list1.add(dto1);
-		}
-		System.out.println(list1.stream().map(Reservation::getResseq));
-		return list1.stream().collect(Collectors.toList());
+	public Iterable<Map<String, Object>> reslist(){
+		return reservationService.reservationTable();
 	}
 
 	 @GetMapping("/onedaylist/{day}")
@@ -109,15 +107,8 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/2")
-	public List<Object> testlist(){
-		Iterable<Reservation> res = reservationRepository.findAll();
-		List<Reservation> list1 = new ArrayList<>();
-		for(Reservation r : res) {
-			Reservation dto1 = modelMapper.map(r, Reservation.class);
-			list1.add(dto1);
-		}
-		System.out.println(list1.stream().map(Reservation::getResseq));
-		return list1.stream().map(Reservation::getResseq).collect(Collectors.toList());
+	public Iterable<Map<String, Object>> testlist(){
+		return reservationService.reservationTable();
 	}
 
 }
