@@ -51,40 +51,38 @@ public class ReservationController {
 		return reservationService.reservationTable();
 	}
 
-	 @GetMapping("/onedaylist/{day}")
-	   public List<Reservation> onedaylist(@PathVariable String day){
-		 System.out.println("들어온 day : >>>>  "+day);
-		 System.out.println("비교할 day : >>>>  "+day.substring(8,10));
-	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
-	      List<Reservation> list2 = new ArrayList<>();
-	      for(Reservation r : res) {
-	         Reservation dto1 = modelMapper.map(r, Reservation.class);
-	         list2.add(dto1);
-	      }
-	      return list2.stream()
-	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-	    		  .filter(t-> new SimpleDateFormat("yyyy-MM-dd").format(new Date(t.getResdate()))
-	    				  .equals(day) ) //&& t.getResdate() < new Date().getTime()
-	    		  .collect(Collectors.toList());
-	   }
+	@GetMapping("/onedaylist/{day}")
+	public List<Reservation> onedaylist(@PathVariable String day){
+		System.out.println("들어온 day : >>>>  "+day);
+		System.out.println("비교할 day : >>>>  "+day.substring(8,10));
+		Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
+		List<Reservation> list2 = new ArrayList<>();
+		for(Reservation r : res) {
+			Reservation dto1 = modelMapper.map(r, Reservation.class);
+			list2.add(dto1);
+		}
+		return list2.stream()
+			.sorted(Comparator.comparing(Reservation::getResseq).reversed())
+			.filter(t-> new SimpleDateFormat("yyyy-MM-dd").format(new Date(t.getResdate()))
+			.equals(day) ) //&& t.getResdate() < new Date().getTime()
+			.collect(Collectors.toList());
+   }
 	 
-	 @GetMapping("/weeklist")
-	   public List<Reservation> weekList(){
-	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
-	      List<Reservation> list2 = new ArrayList<>();
-	      for(Reservation r : res) {
-	         Reservation dto1 = modelMapper.map(r, Reservation.class);
-	         list2.add(dto1);
-	      }
-	      int week = 604800000;
-	      return list2.stream()
-	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-	    		  .filter(t-> new Date(t.getResdate()).getTime() >= (new Date().getTime()-week*1000) 
-	    				  && new Date(t.getResdate()).getTime() <= (new Date().getTime()*1000))
-	    		  .collect(Collectors.toList());
-	   }
-
-
+	@GetMapping("/weeklist")
+   public List<Reservation> weekList(){
+      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
+      List<Reservation> list2 = new ArrayList<>();
+      for(Reservation r : res) {
+         Reservation dto1 = modelMapper.map(r, Reservation.class);
+         list2.add(dto1);
+      }
+      int week = 604800000;
+      return list2.stream()
+    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+    		  .filter(t-> new Date(t.getResdate()).getTime() >= (new Date().getTime()-week*1000) 
+    				  && new Date(t.getResdate()).getTime() <= (new Date().getTime()*1000))
+    		  .collect(Collectors.toList());
+   }
 	
 	@PostMapping("/{matchId}")
 	public boolean createReservation(@PathVariable Long matchId, @RequestBody Person person) {
@@ -110,5 +108,4 @@ public class ReservationController {
 	public Iterable<Map<String, Object>> testlist(){
 		return reservationService.reservationTable();
 	}
-
 }
