@@ -70,17 +70,17 @@ public class LolInit extends Proxy implements ApplicationRunner{
          String[] positions = {
                "top",
                "sungle",
-               "mid",
-               "bot",
+               "mid", 
+               "bot", 
                "supporter"
-         };
+         }; 
          
          List<Map<String,String>> lolList = new ArrayList<>();
          List<Map<String,String>> lolList1 = new ArrayList<>();
 //         	for(int i =1;i<=2;i++) {
 //         		
 //         	}
-            for(int i =1;i<=3;i++) {
+            for(int i =4;i<=6;i++) {
             lolList.addAll(crawler.loltitleCrawling(i));  // title 40*2개 삽입
                lolList1.addAll(crawler.lolidCrawling(i)); // rhost, crawltier, crawlrate 40 * 2개  삽입
             }
