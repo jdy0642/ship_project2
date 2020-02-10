@@ -68,22 +68,37 @@ public class ReservationController {
 			.collect(Collectors.toList());
    }
 	 
-	@GetMapping("/weeklist")
-   public List<Reservation> weekList(){
-      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
-      List<Reservation> list2 = new ArrayList<>();
-      for(Reservation r : res) {
-         Reservation dto1 = modelMapper.map(r, Reservation.class);
-         list2.add(dto1);
-      }
-      int week = 604800000;
-      return list2.stream()
-    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-    		  .filter(t-> new Date(t.getResdate()).getTime() >= (new Date().getTime()-week*1000) 
-    				  && new Date(t.getResdate()).getTime() <= (new Date().getTime()*1000))
-    		  .collect(Collectors.toList());
-   }
-	
+	 @GetMapping("/weeklist")
+	   public List<Reservation> weekList(){
+	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
+	      List<Reservation> list2 = new ArrayList<>();
+	      for(Reservation r : res) {
+	         Reservation dto1 = modelMapper.map(r, Reservation.class);
+	         list2.add(dto1);
+	      }
+	      int week = 604800000;
+	      return list2.stream()
+	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+	    		  .filter(t-> new Date(t.getResdate()).getTime() >= (new Date().getTime()-week*1000) 
+	    				  && new Date(t.getResdate()).getTime() <= (new Date().getTime()*1000))
+	    		  .collect(Collectors.toList());
+	   }
+	 @GetMapping("/mymatch/{personseq}")
+	 public List<Reservation> myMatch(@PathVariable Long personseq) {
+		 p.accept("마이매치");
+		 Person person = new Person();
+		 person.setPersonseq(personseq);
+		 Iterable<Reservation> res =  reservationRepository.findByPersonseq(person);
+		 List<Reservation> list3 = new ArrayList<>();
+		 for(Reservation r : res) {
+	         Reservation dto1 = modelMapper.map(r, Reservation.class);
+	         list3.add(dto1);
+	      }
+		 return list3.stream()
+				 .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+				 .limit(5).collect(Collectors.toList());
+	 }
+
 	@PostMapping("/{matchId}")
 	public boolean createReservation(@PathVariable Long matchId, @RequestBody Person person) {
 		reservation.setPersonseq(person);
