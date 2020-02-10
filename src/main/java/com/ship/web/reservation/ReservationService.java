@@ -1,18 +1,26 @@
-//package com.ship.web.reservation;
-//
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Optional;
-//import java.util.Set;
-//import java.util.Comparator;
-//import java.util.IntSummaryStatistics;
-//import java.util.stream.Collectors;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//@Service
-//public class ReservationService {
-//	@Autowired private ReservationRepository personRepository;
+package com.ship.web.reservation;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.Comparator;
+import java.util.IntSummaryStatistics;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ship.web.proxy.Trunk;
+
+@Service
+public class ReservationService {
+	@Autowired private ReservationRepository reservationRepository;
+	@Autowired private Trunk<Object> tk;
+	
+	public Iterable<Map<String, Object>> reservationTable(){
+		return reservationRepository.findReservationTable().stream()
+				.collect(Collectors.toList());
+	}
 //	
 //	// 자바의 정석 847 collect()
 //	public List<String> namesOfStudents() {
@@ -156,4 +164,4 @@
 ////							Collectors.toSet())));
 ////						
 ////	}
-//}
+}

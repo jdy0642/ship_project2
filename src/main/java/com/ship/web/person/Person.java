@@ -48,41 +48,41 @@ public class Person extends Proxy implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="PERSONSEQ")
 	private Long personseq;
-	@Column(name="USERID", length= 64 ) @NotNull
+	@Column(name="USERID", length= 32 ) @NotNull
 		private String userid;
-	@Column(name="PASSWD") @NotNull
+	@Column(name="PASSWD", length= 32 ) @NotNull
 		private String passwd;
-	@Column(name="NAME") @NotNull
+	@Column(name="NAME", length= 16 ) @NotNull
 		private String name;
-	@Column(name="TEL") @NotNull
+	@Column(name="TEL", length= 16 ) @NotNull
 		private String tel;
-	@Column(name="POINT") 
+	@Column(name="POINT", length= 16 ) 
 		private String point;
-	@Column(name="AGE")@NotNull
+	@Column(name="AGE", length= 16 )@NotNull
 		private int age;
-	@Column(name="MALE")@NotNull
+	@Column(name="MALE", length= 64 )@NotNull
 		private boolean male;
-	@Column(name="SCORE") 
+	@Column(name="SCORE", length= 16 ) 
 		private int score;
-	@Column(name="MVP") 
+	@Column(name="MVP", length= 16 ) 
 		private int mvp;
-	@Column(name="WIN") 
+	@Column(name="WIN", length= 16 ) 
 		private int win;
-	@Column(name="KM") 
+	@Column(name="KM", length= 32 ) 
 		private int km;
 	@Column(name="BOOKMARK") 
 		private boolean bookmark;
-	@Column(name="INTEREST") @NotNull
+	@Column(name="INTEREST", length= 128 ) @NotNull
 		private String interest;
-	@Column(name="LOLBLACK") 
+	@Column(name="LOLBLACK", length= 64 ) 
 		private boolean lolblack;
-	@Column(name="FUTBLACK") 
+	@Column(name="FUTBLACK", length= 64 ) 
 		private boolean futblack;
-	@Column(name="JOB")@NotNull
+	@Column(name="JOB", length= 64 )@NotNull
 		private String job;
-	@Column(name="EMAIL")@NotNull
+	@Column(name="EMAIL", length= 128 )@NotNull
 		private String email;
-	@Column(name="SUMMONERNAME")
+	@Column(name="SUMMONERNAME", length= 64 )
 		private String summonername;
 	enum Level{HIGH, MID, LOW}
 

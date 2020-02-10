@@ -3,9 +3,12 @@ import java.math.BigInteger;
 import com.ship.web.util.Constants;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.hibernate.type.BigIntegerType;
@@ -27,6 +30,7 @@ import com.ship.web.lol.Lol;
 import com.ship.web.person.Person;
 import com.ship.web.person.PersonRepository;
 import com.ship.web.proxy.Proxy;
+import com.ship.web.proxy.Trunk;
 import com.ship.web.util.Printer;
 
 @RestController
@@ -36,38 +40,33 @@ import com.ship.web.util.Printer;
 public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
 	@Autowired private Reservation reservation;
+	@Autowired private ReservationService reservationService;
 	@Autowired private FutsalMatchRepository futsalMatchRepository;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private Printer p;
 	@Autowired private Proxy pxy;
+	@Autowired private Trunk<Object> tr;
 	@GetMapping("/1")
-	public List<Reservation> reslist(){
-		Iterable<Reservation> res = reservationRepository.findAll();
-		List<Reservation> list1 = new ArrayList<>();
+	public Iterable<Map<String, Object>> reslist(){
+		return reservationService.reservationTable();
+	}
+
+	@GetMapping("/onedaylist/{day}")
+	public List<Reservation> onedaylist(@PathVariable String day){
+		System.out.println("들어온 day : >>>>  "+day);
+		System.out.println("비교할 day : >>>>  "+day.substring(8,10));
+		Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
+		List<Reservation> list2 = new ArrayList<>();
 		for(Reservation r : res) {
 			Reservation dto1 = modelMapper.map(r, Reservation.class);
-			list1.add(dto1);
+			list2.add(dto1);
 		}
-		return list1.stream().collect(Collectors.toList());
-	}
-	
-
-	 @GetMapping("/onedaylist/{day}")
-	   public List<Reservation> onedaylist(@PathVariable String day){
-		 System.out.println("들어온 day : >>>>  "+day);
-		 System.out.println("비교할 day : >>>>  "+day.substring(8,10));
-	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
-	      List<Reservation> list2 = new ArrayList<>();
-	      for(Reservation r : res) {
-	         Reservation dto1 = modelMapper.map(r, Reservation.class);
-	         list2.add(dto1);
-	      }
-	      return list2.stream()
-	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-	    		  .filter(t-> new SimpleDateFormat("yyyy-MM-dd").format(new Date(t.getResdate()))
-	    				  .equals(day) ) //&& t.getResdate() < new Date().getTime()
-	    		  .collect(Collectors.toList());
-	   }
+		return list2.stream()
+			.sorted(Comparator.comparing(Reservation::getResseq).reversed())
+			.filter(t-> new SimpleDateFormat("yyyy-MM-dd").format(new Date(t.getResdate()))
+			.equals(day) ) //&& t.getResdate() < new Date().getTime()
+			.collect(Collectors.toList());
+   }
 	 
 	 @GetMapping("/weeklist")
 	   public List<Reservation> weekList(){
@@ -100,7 +99,6 @@ public class ReservationController {
 				 .limit(5).collect(Collectors.toList());
 	 }
 
-	
 	@PostMapping("/{matchId}")
 	public boolean createReservation(@PathVariable Long matchId, @RequestBody Person person) {
 		reservation.setPersonseq(person);
@@ -120,5 +118,9 @@ public class ReservationController {
 		return reservationRepository
 				.findByResdate(res.getResdate()).getKm() == reservation.getKm();
 	}
-
+	
+	@GetMapping("/2")
+	public Iterable<Map<String, Object>> testlist(){
+		return reservationService.reservationTable();
+	}
 }
