@@ -27,17 +27,17 @@ public class PersonInit extends Proxy implements ApplicationRunner  {
 			Person person = null;
 			String[][] mtx = {
 					{"hong", "1", "홍성철", "010-6202-4102", "0", "admin", "30","1","1","1","0","false","1","true","false","false","hongsc1991@naver.com", "Destiny"},
-					{"hong1", "1", "파이리", "31", "41", "teacher1", "22","71","8","9","10","false","2","true","false","false","dfhd2f@naver.com", "미드차이 어쩔래"},
-					{"aaaa", "1", "라이츄", "31", "41", "teacher1", "24","71","8","9","10","false","2","false","false","false","asdvw@naver.com", "yamine"},
-					{"bbb", "1", "피카츄", "31", "41", "teacher1", "37","71","8","9","10","false","2","false","false","false","pica@naver.com", "hideonbush"},
-					{"a", "1", "지우", "31", "41", "teacher1", "32","71","8","9","10","false","2","true","false","false","jiu@naver.com", "꿈의 남자"},
-					{"b", "1", "다간", "31", "41", "teacher1", "19","71","8","9","10","false","2","true","false","false","brave@naver.com", "내가강만식"},
-					{"c", "1", "우뢰매", "31", "41", "teacher1", "40","71","8","9","10","false","2","false","false","false","thunder@naver.com", "초보원딜러"},
-					{"d", "1", "마징가", "31", "41", "teacher1", "27","71","8","9","10","false","2","true","false","false","breastfire@naver.com", "Runaway Crush"},
-					{"e", "1", "메칸더", "31", "41", "teacher1", "26","71","8","9","10","false","2","false","false","false","shild@naver.com", "Roach"},
-					{"f", "1", "김태희", "31", "41", "teacher1", "25","71","8","9","10","false","2","false","false","false","shild@naver.com", "The Marchen"},
-					{"g", "1", "장동건", "31", "41", "teacher1", "30","71","8","9","10","false","2","false","false","false","shild@naver.com", "백수 정글"},
-					{"h", "1", "원빈", "31", "41", "teacher1", "28","71","8","9","10","false","2","false","false","false","shild@naver.com", "짐승마스크"},
+					{"hong1", "1", "파이리", "31", "41", "teacher", "22","71","8","9","10","false","2","true","false","false","dfhd2f@naver.com", "미드차이 어쩔래"},
+					{"aaaa", "1", "라이츄", "31", "41", "teacher", "24","71","8","9","10","false","2","false","false","false","asdvw@naver.com", "yamine"},
+					{"bbb", "1", "피카츄", "31", "41", "teacher", "37","71","8","9","10","false","2","false","false","false","pica@naver.com", "hideonbush"},
+					{"assdf", "1", "지우", "31", "41", "teacher", "32","71","8","9","10","false","2","true","false","false","jiu@naver.com", "꿈의 남자"},
+					{"bgndklf", "1", "다간", "31", "41", "teacher", "19","71","8","9","10","false","2","true","false","false","brave@naver.com", "칼과창방패"},
+					{"cdsf", "1", "우뢰매", "31", "41", "teacher", "40","71","8","9","10","false","2","false","false","false","thunder@naver.com", "초보원딜러"},
+					{"dasdf", "1", "마징가", "31", "41", "teacher", "27","71","8","9","10","false","2","true","false","false","breastfire@naver.com", "Runaway Crush"},
+					{"eadsf", "1", "메칸더", "31", "41", "teacher", "26","71","8","9","10","false","2","false","false","false","shild@naver.com", "Roach"},
+					{"fsdf", "1", "김태희", "31", "41", "teacher", "25","71","8","9","10","false","2","false","false","false","shild@naver.com", "The Marchen"},
+					{"gfsdf", "1", "장동건", "31", "41", "teacher", "30","71","8","9","10","false","2","false","false","false","shild@naver.com", "백수 정글"},
+					{"hdfdf", "1", "원빈", "31", "41", "teacher", "28","71","8","9","10","false","2","false","false","false","shild@naver.com", "짐승마스크"},
 			};
 			for(String[] arr : mtx) {
 				person = new Person();
