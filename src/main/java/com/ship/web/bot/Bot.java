@@ -8,8 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ship.web.futsal.FutsalMatchRepository;
-import com.ship.web.futsal.FutsalMatchService;
+import com.ship.web.futsal.FutsalRepository;
+import com.ship.web.futsal.FutsalService;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +22,7 @@ import org.bitbucket.eunjeon.seunjeon.Morpheme;
 @Setter
 @ToString
 public class Bot extends BotService{
+	private Map<?, ?> distinction;
 	private Map<?, ?> result;
 	private List<Morpheme> analyzer; 
 	private String msg;
@@ -32,6 +33,7 @@ public class Bot extends BotService{
 
 	public void exec() {
 		analyzer = analyzer(msg);
-		result = distinction(analyzer);
+		distinction = distinction(analyzer);
+		result = result((Map<String, List<String>>) distinction);
 	}
 }

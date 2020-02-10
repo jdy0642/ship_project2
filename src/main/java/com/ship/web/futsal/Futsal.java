@@ -32,14 +32,14 @@ import lombok.ToString;
 @Getter
 @Setter(value = AccessLevel.PUBLIC)
 @ToString
-@Table(name = "FUTSALMATCH")
-public class FutsalMatch implements Serializable {
+@Table(name = "FUTSAL")
+public class Futsal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "FUTSALMATCHSEQ")
-	private Long futsalmatchseq;
+	@Column(name = "FUTSALSEQ")
+	private Long futsalseq;
 	@Column(name = "TIME")
 	@NotNull
 	private Long time;
@@ -78,15 +78,15 @@ public class FutsalMatch implements Serializable {
 	private String adminname;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "futsalmatchseq", cascade = CascadeType.ALL, orphanRemoval =true)
+	@OneToMany(mappedBy = "futsal", cascade = CascadeType.ALL, orphanRemoval =true)
 	private List<Reservation> reservations = new ArrayList<>();
 	
 	@Builder
-	private FutsalMatch(@NotNull Long futsalmatchseq, @NotNull Long time, @NotNull String stadiumname,
+	private Futsal(@NotNull Long futsalseq, @NotNull Long time, @NotNull String stadiumname,
 			@NotNull String stadiumaddr, @NotNull String stadiumtel, @NotNull int num, @NotNull String gender,
 			@NotNull int difficulty, @NotNull String shoes, @NotNull String stadiumfacility, @NotNull String stadiumimg,
 			@NotNull int remain, @NotNull String adminname) {
-		this.futsalmatchseq = futsalmatchseq;
+		this.futsalseq = futsalseq;
 		this.time = time;
 		this.stadiumname = stadiumname;
 		this.stadiumaddr = stadiumaddr;

@@ -14,8 +14,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import com.mysql.cj.ParseInfo;
-import com.ship.web.futsal.FutsalMatch;
-import com.ship.web.futsal.FutsalMatchRepository;
+import com.ship.web.futsal.Futsal;
+import com.ship.web.futsal.FutsalRepository;
 import com.ship.web.person.Person;
 import com.ship.web.person.PersonRepository;
 import com.ship.web.proxy.Proxy;
@@ -31,7 +31,7 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 		this.reservationrepository = reservationrepository;
 	}
 	@Autowired private PersonRepository personRepository;
-	@Autowired private FutsalMatchRepository futsalMatchRepository;
+	@Autowired private FutsalRepository futsalMatchRepository;
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		long count = reservationrepository.count();
@@ -41,7 +41,7 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 		}
 	}
 	public void dummyres(int dummycount) {
-		FutsalMatch fut = null;
+		Futsal fut = null;
 		Person person = null;
 		Reservation res = null;
 		int personCount = (int) personRepository.count();
@@ -50,12 +50,12 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 		BiFunction<Integer, Integer, Double> f = (p,t) -> Math.random()*p - t;
 		for(int i=0; i< dummycount; i++) {
 			res = new Reservation();
-			fut = new FutsalMatch();
+			fut = new Futsal();
 			person = new Person();
 			res.setResdate(System.currentTimeMillis()+ (long)(f.apply(30,10)*1000*3600*24));
-			fut.setFutsalmatchseq((long) random(1,futsalCount-1));
+			fut.setFutsalseq((long) random(1,futsalCount-1));
 			person.setPersonseq((long) random(1, personCount-1));
-			res.setFutsalmatchseq(fut);
+			res.setFutsal(fut);
 			res.setPersonseq(person);
 			res.setKm(random(5,20));
 			res.setScore(random(0,4));
