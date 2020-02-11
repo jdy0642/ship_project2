@@ -29,6 +29,7 @@ import com.ship.web.futsal.FutsalRepository;
 import com.ship.web.lol.Lol;
 import com.ship.web.person.Person;
 import com.ship.web.person.PersonRepository;
+import com.ship.web.person.PersonService;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.proxy.Trunk;
 import com.ship.web.util.Printer;
@@ -41,7 +42,8 @@ public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
 	@Autowired private Reservation reservation;
 	@Autowired private ReservationService reservationService;
-	@Autowired private FutsalRepository futsalMatchRepository;
+	@Autowired private FutsalRepository futsalRepository;
+	@Autowired private PersonService personService;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private Printer p;
 	@Autowired private Proxy pxy;
@@ -68,26 +70,42 @@ public class ReservationController {
 			.collect(Collectors.toList());
    }
 	 
-	@GetMapping("/weeklist")
-   public List<Reservation> weekList(){
-      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
-      List<Reservation> list2 = new ArrayList<>();
-      for(Reservation r : res) {
-         Reservation dto1 = modelMapper.map(r, Reservation.class);
-         list2.add(dto1);
-      }
-      int week = 604800000;
-      return list2.stream()
-    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-    		  .filter(t-> new Date(t.getResdate()).getTime() >= (new Date().getTime()-week*1000) 
-    				  && new Date(t.getResdate()).getTime() <= (new Date().getTime()*1000))
-    		  .collect(Collectors.toList());
-   }
-	
+	 @GetMapping("/weeklist")
+	   public List<Reservation> weekList(){
+	      Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
+	      List<Reservation> list2 = new ArrayList<>();
+	      for(Reservation r : res) {
+	         Reservation dto1 = modelMapper.map(r, Reservation.class);
+	         list2.add(dto1);
+	      }
+	      int week = 604800000;
+	      return list2.stream()
+	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+	    		  .filter(t-> new Date(t.getResdate()).getTime() >= (new Date().getTime()-week*1000) 
+	    				  && new Date(t.getResdate()).getTime() <= (new Date().getTime()*1000))
+	    		  .collect(Collectors.toList());
+	   }
+	 @GetMapping("/mymatch/{personseq}")
+	 public List<Reservation> myMatch(@PathVariable Long personseq) {
+		 p.accept("마이매치");
+		 Person person = new Person();
+		 person.setPersonseq(personseq);
+		 Iterable<Reservation> res =  reservationRepository.findByPersonseq(person);
+		 List<Reservation> list3 = new ArrayList<>();
+		 for(Reservation r : res) {
+	         Reservation dto1 = modelMapper.map(r, Reservation.class);
+	         list3.add(dto1);
+	      }
+		 return list3.stream()
+				 .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+				 .limit(5).collect(Collectors.toList());
+	 }
+
 	@PostMapping("/{matchId}")
 	public boolean createReservation(@PathVariable Long matchId, @RequestBody Person person) {
 		reservation.setPersonseq(person);
-		reservation.setFutsal(futsalMatchRepository.findById(matchId).get());
+		personService.updatePoint(String.valueOf(person.getPersonseq()), "-10000");
+		reservation.setFutsal(futsalRepository.findById(matchId).get());
 		reservation.setResdate(System.currentTimeMillis());
 		reservationRepository.save(reservation);
 		return reservationRepository.findByResdate(reservation.getResdate()) != null;
@@ -108,4 +126,5 @@ public class ReservationController {
 	public Iterable<Map<String, Object>> testlist(){
 		return reservationService.reservationTable();
 	}
+	
 }

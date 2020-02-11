@@ -1,5 +1,8 @@
 package com.ship.web.person;
 import java.util.ArrayList;
+
+import com.ship.web.lol.Lol;
+import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.util.Constants;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -33,6 +36,7 @@ public class PersonController {
 	@Autowired private Printer p;
 	@Autowired PersonService personService;
 	@Autowired ModelMapper modelMapper;
+	@Autowired CrawlProxy crawler;
 	@Bean public ModelMapper modelMapper() {return new ModelMapper();}
 	
 	@RequestMapping("/")
@@ -100,6 +104,20 @@ public class PersonController {
 		}
 		return map;
 	}
+	
+	@PutMapping("/save/{userid}")
+	   public void modify(@RequestBody Person person, @PathVariable String userid) {
+		p.accept("세이브 진입");
+		p.accept(userid);
+		Person temp = personRepository.findByUserid(userid);
+			temp.setEmail(person.getEmail());
+			temp.setPasswd(person.getPasswd());
+			temp.setSummonername(person.getSummonername());
+			temp.setTel(person.getTel());
+			temp.setInterest(person.getInterest());
+			personRepository.save(temp);
+	   }
+	
 	@DeleteMapping("/withdrawal/{userid}")
 	public void withdrawal(@PathVariable String userid) {
 		p.accept("회탈 진입");

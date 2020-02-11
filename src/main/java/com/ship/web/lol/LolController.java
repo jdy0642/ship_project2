@@ -46,6 +46,7 @@ public class LolController {
 	@GetMapping("/summoner/userName={summonername}")
 	public ArrayList<HashMap<String, String>> opgg(@PathVariable String summonername){
 		System.out.println("방생성 시 크롤링 db 데이터 진입"+summonername);
+		p.accept(summonername);
 		return crawler.opggCrawling(summonername);
 	}
 	

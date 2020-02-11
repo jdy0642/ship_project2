@@ -35,12 +35,20 @@ public class CrawlProxy extends Proxy{
 			Elements rate = temp.select("div.TierInfo");
 			Elements most = temp.select("div.MostChampionContent");
 			Elements position = temp.select("td.PositionStats");
+			Elements lp = temp.select("span.LeaguePoints");
+			Elements win = temp.select("span.wins");
+			Elements lose = temp.select("span.losses");
+			Elements winratio = temp.select("span.winratio");
 			HashMap<String, String> map = null;
 				map = new HashMap<>();
 				map.put("tier", tier.get(0).text());
 				map.put("rate", rate.get(0).text());
 				map.put("most", most.get(0).text());
 				map.put("position", position.get(0).text());
+				map.put("lp", lp.get(0).text().substring(0,5));
+				map.put("win", win.get(0).text());
+				map.put("lose", lose.get(0).text());
+				map.put("winratio", winratio.get(0).text().substring(9));
 				map.put("photo", photo.get(0).select("img").attr("src"));
 				box.add(map);
 		} catch (Exception e) {
