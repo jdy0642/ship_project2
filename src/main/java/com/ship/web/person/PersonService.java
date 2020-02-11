@@ -124,8 +124,6 @@ public class PersonService {
 					else 					return Person.Level.LOW;}, 
 						Collectors.counting()
 				));
-				
-				
 	}
 //	public Map<Integer, Map<Integer, List<Person>>> multiGrouping() {
 //		// 4. 다중 그룹화 (학년별, 반별)
