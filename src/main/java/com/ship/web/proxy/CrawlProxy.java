@@ -81,9 +81,9 @@ public class CrawlProxy extends Proxy{
 			HashMap<String, String> map = null;
 				map = new HashMap<>();
 				map.put("counter", counter.get(0).text());
-				map.put("counter1", counter.get(0).text().split(" ")[0]);
-				map.put("counter2", counter.get(0).text().split(" ")[5]);
-				map.put("counter3", counter.get(0).text().split(" ")[10]);
+//				map.put("counter1", counter.get(0).text().split(" ")[0]);
+//				map.put("counter2", counter.get(0).text().split(" ")[5]);
+//				map.put("counter3", counter.get(0).text().split(" ")[10]);
 				box.add(map);
 		} catch (Exception e) {
 			e.printStackTrace();
