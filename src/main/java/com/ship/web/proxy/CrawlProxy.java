@@ -56,6 +56,40 @@ public class CrawlProxy extends Proxy{
 		}
 		return box.get();
 	}
+	public ArrayList<HashMap<String, String>> counterCrawl(String champ){
+		box.clear();
+		String cchamp = "";
+		switch (champ) {
+		case "야스오":
+			cchamp = "yasuo";
+			break;
+		case "제드":
+			cchamp = "zed";
+		default:
+			cchamp = champ;
+		}
+		try {
+			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+			String url = "http://www.op.gg/champion/"+ cchamp +"/statistics";
+			Connection.Response page =
+					Jsoup.connect(url)
+					.method(Connection.Method.GET)
+					.userAgent(USER_AGENT)
+					.execute();
+			Document temp = page.parse();
+			Elements counter = temp.select("tbody");
+			HashMap<String, String> map = null;
+				map = new HashMap<>();
+				map.put("counter", counter.get(0).text());
+				map.put("counter1", counter.get(0).text().split(" ")[0]);
+				map.put("counter2", counter.get(0).text().split(" ")[5]);
+				map.put("counter3", counter.get(0).text().split(" ")[10]);
+				box.add(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return box.get();
+	}
 	public ArrayList<HashMap<String, String>> loltitleCrawling(int page){
 		box.clear();
 		try {
