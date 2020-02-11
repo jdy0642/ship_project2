@@ -123,4 +123,5 @@ public class ReservationController {
 	public Iterable<Map<String, Object>> testlist(){
 		return reservationService.reservationTable();
 	}
+	
 }
