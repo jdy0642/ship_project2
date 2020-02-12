@@ -22,7 +22,6 @@ import com.ship.web.util.Constants;
 @CrossOrigin(origins = Constants.LOCAL)
 public class KakaoPayController {
 	@Autowired KaKaoPayService kakaoPayService;
-	@Autowired private PersonRepository personRepository;
 	
 	@GetMapping("/request/{personseq}/{value}")
 	public Map<String, String> request(@PathVariable String personseq, @PathVariable String value) {
