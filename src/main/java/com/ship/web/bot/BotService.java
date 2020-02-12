@@ -11,8 +11,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ship.web.futsal.FutsalMatchService;
-
 import org.bitbucket.eunjeon.seunjeon.Analyzer;
 import org.bitbucket.eunjeon.seunjeon.Morpheme;
 

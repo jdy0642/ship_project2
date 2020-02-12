@@ -24,13 +24,13 @@ public class KakaoPayController {
 	@Autowired KaKaoPayService kakaoPayService;
 	@Autowired private PersonRepository personRepository;
 	
-	@GetMapping("/request/{personseq}")
-	public Map<String, String> request(@PathVariable String personseq) {
-		return kakaoPayService.req(personseq);
+	@GetMapping("/request/{personseq}/{value}")
+	public Map<String, String> request(@PathVariable String personseq, @PathVariable String value) {
+		return kakaoPayService.req(personseq, value);
 	}
 	
 	@PostMapping("/respones")
-	public Map<String, String> respones(@RequestBody Map<String, String> res) {
+	public Map<String, Object> respones(@RequestBody Map<String, String> res) {
 		return kakaoPayService.res(res);
 	}
 

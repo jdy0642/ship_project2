@@ -8,9 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ship.web.futsal.FutsalMatchRepository;
-import com.ship.web.futsal.FutsalMatchService;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

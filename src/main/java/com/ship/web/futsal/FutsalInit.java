@@ -19,20 +19,20 @@ import com.ship.web.proxy.Trunk;
 
 @Component
 public class FutsalInit extends Proxy implements ApplicationRunner{
-	private FutsalMatchRepository futsalMatchRepository;
+	private FutsalRepository futsalRepository;
 	@Autowired CrawlProxy crawler;
 	
 	@Autowired
-	public FutsalInit(FutsalMatchRepository futsalMatchRepository) {
-		this.futsalMatchRepository = futsalMatchRepository;
+	public FutsalInit(FutsalRepository futsalRepository) {
+		this.futsalRepository = futsalRepository;
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		long count = futsalMatchRepository.count();
-		FutsalMatch match = null;
+		long count = futsalRepository.count();
+		Futsal match = null;
 		List<Map<String, String>> stadiumList = new ArrayList<>();
-		List<FutsalMatch> matchList = new ArrayList<FutsalMatch>();
+		List<Futsal> matchList = new ArrayList<Futsal>();
 		String[] locate = {"서울","경기","인천","강원","세종","충청","대전","대구","전라","경상","부산","광주","울산"};
 		String[] img = {"11,12,13","21,22,23","31,32,33","41,42,43","51,52,53","61,62,63",
 				"71,72,73","81,82,83","91,92,93","a1,a2,a3","b1,b2,b3","c1,c2,c3"};
@@ -44,7 +44,7 @@ public class FutsalInit extends Proxy implements ApplicationRunner{
 			}
 			for(int i = 0; i<=5000; i++) {
 				int ranIndex = random(1, stadiumList.size()-1);
-				match = new FutsalMatch();
+				match = new Futsal();
 				match.setTime(System.currentTimeMillis()-(random(1,480)-240)*1000*3600);
 				match.setStadiumname(stadiumList.get(ranIndex).get("name"));
 				match.setStadiumaddr(stadiumList.get(ranIndex).get("address"));
@@ -60,7 +60,7 @@ public class FutsalInit extends Proxy implements ApplicationRunner{
 				match.setAdminname("펭수");
 				matchList.add(match);
 			}
-			futsalMatchRepository.saveAll(matchList);
+			futsalRepository.saveAll(matchList);
 		}
 	}
 }
