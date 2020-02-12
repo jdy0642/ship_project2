@@ -46,6 +46,7 @@ public class LolController {
 	@GetMapping("/summoner/userName={summonername}")
 	public ArrayList<HashMap<String, String>> opgg(@PathVariable String summonername){
 		System.out.println("방생성 시 크롤링 db 데이터 진입"+summonername);
+		p.accept(summonername);
 		return crawler.opggCrawling(summonername);
 	}
 	
@@ -63,7 +64,11 @@ public class LolController {
 	      lol1.setTitle(lol.getTitle());
 	      lolRepository.save(lol1);
 	   }
-	
+	@GetMapping("/chatbot/{champ}")
+	public ArrayList<HashMap<String, String>> counterCrawl(@PathVariable String champ) {
+		p.accept(champ);
+		return crawler.counterCrawl(champ);
+	}
 	@GetMapping("/listpage={page}")
 	public List<Lol> roomlist(@PathVariable int page){
 		System.out.println(page);
@@ -137,6 +142,7 @@ public class LolController {
 	            .limit(page*9) 
 	            .collect(Collectors.toList()); 
 	   }
+	
 	@PostMapping("/createroom")
 	public HashMap<String, Object> createroom(@RequestBody Lol lol){
 		p.accept("방 생성 컨트롤러 진입"+lol);

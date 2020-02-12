@@ -70,10 +70,10 @@ public class LolInit extends Proxy implements ApplicationRunner{
          String[] positions = {
                "top",
                "sungle",
-               "mid",
-               "bot",
+               "mid", 
+               "bot", 
                "supporter"
-         };
+         }; 
          
          List<Map<String,String>> lolList = new ArrayList<>();
          List<Map<String,String>> lolList1 = new ArrayList<>();

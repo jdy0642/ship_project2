@@ -46,34 +46,34 @@ public class FutsalMatch implements Serializable {
 	@Column(name = "STADIUMNAME")
 	@NotNull
 	private String stadiumname;
-	@Column(name = "STADIUMADDR")
+	@Column(name = "STADIUMADDR" , length= 128 )
 	@NotNull
 	private String stadiumaddr;
-	@Column(name = "STADIUMTEL")
+	@Column(name = "STADIUMTEL" , length= 64 )
 	@NotNull
 	private String stadiumtel;
 	@Column(name = "NUM")
 	@NotNull
 	private int num;
-	@Column(name = "GENDER")
+	@Column(name = "GENDER" , length= 16 )
 	@NotNull
 	private String gender;
-	@Column(name = "DIFFICULTY")
+	@Column(name = "DIFFICULTY" , length= 16 )
 	@NotNull
 	private int difficulty;
-	@Column(name = "SHOES")
+	@Column(name = "SHOES" , length= 32 )
 	@NotNull
 	private String shoes;
-	@Column(name = "STADIUMFACILITY")
+	@Column(name = "STADIUMFACILITY" , length= 64 )
 	@NotNull
 	private String stadiumfacility;
 	@Column(name = "STADIUMING")
 	@NotNull
 	private String stadiumimg;
-	@Column(name = "REMAIN")
+	@Column(name = "REMAIN" , length= 16 )
 	@NotNull
 	private int remain;
-	@Column(name = "ADMINNAME")
+	@Column(name = "ADMINNAME" , length= 16 )
 	@NotNull
 	private String adminname;
 

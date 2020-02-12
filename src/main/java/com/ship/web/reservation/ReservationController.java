@@ -2,8 +2,10 @@ package com.ship.web.reservation;
 import com.ship.web.util.Constants;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ship.web.futsal.FutsalMatch;
 import com.ship.web.futsal.FutsalMatchRepository;
 import com.ship.web.person.Person;
+import com.ship.web.person.PersonRepository;
+import com.ship.web.proxy.Proxy;
+import com.ship.web.proxy.Trunk;
+import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/res")
@@ -30,15 +36,26 @@ import com.ship.web.person.Person;
 public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
 	@Autowired private Reservation reservation;
+	@Autowired private ReservationService reservationService;
 	@Autowired private FutsalMatchRepository futsalMatchRepository;
 	@Autowired ModelMapper modelMapper;
+	@Autowired private Printer p;
+	@Autowired private Proxy pxy;
+	@Autowired private Trunk<Object> tr;
 	@GetMapping("/1")
-	public List<Reservation> reslist(){
-		Iterable<Reservation> res = reservationRepository.findAll();
-		List<Reservation> list1 = new ArrayList<>();
+	public Iterable<Map<String, Object>> reslist(){
+		return reservationService.reservationTable();
+	}
+
+	@GetMapping("/onedaylist/{day}")
+	public List<Reservation> onedaylist(@PathVariable String day){
+		System.out.println("들어온 day : >>>>  "+day);
+		System.out.println("비교할 day : >>>>  "+day.substring(8,10));
+		Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
+		List<Reservation> list2 = new ArrayList<>();
 		for(Reservation r : res) {
 			Reservation dto1 = modelMapper.map(r, Reservation.class);
-			list1.add(dto1);
+			list2.add(dto1);
 		}
 		return list1.stream().collect(Collectors.toList());
 	}
@@ -112,6 +129,22 @@ public class ReservationController {
 //	  	}
 		}
 	
+	 @GetMapping("/mymatch/{personseq}")
+	 public List<Reservation> myMatch(@PathVariable Long personseq) {
+		 p.accept("마이매치");
+		 Person person = new Person();
+		 person.setPersonseq(personseq);
+		 Iterable<Reservation> res =  reservationRepository.findByPersonseq(person);
+		 List<Reservation> list3 = new ArrayList<>();
+		 for(Reservation r : res) {
+	         Reservation dto1 = modelMapper.map(r, Reservation.class);
+	         list3.add(dto1);
+	      }
+		 return list3.stream()
+				 .sorted(Comparator.comparing(Reservation::getResseq).reversed())
+				 .limit(5).collect(Collectors.toList());
+	 }
+
 	@PostMapping("/{matchId}")
 	public boolean createReservation(@PathVariable Long matchId, @RequestBody Person person) {
 		reservation.setPersonseq(person);
@@ -139,4 +172,8 @@ public class ReservationController {
 		return "/pay";
 	}
 
+	@GetMapping("/2")
+	public Iterable<Map<String, Object>> testlist(){
+		return reservationService.reservationTable();
+	}
 }

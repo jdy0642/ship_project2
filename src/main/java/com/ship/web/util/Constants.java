@@ -5,7 +5,7 @@ public class Constants {
 		LOCAL = "http://localhost:8081",
 		KAKAO = "http://kapi.kakao.com",
 		J_S3 = "http://shipteamdb.s3-website.ap-northeast-2.amazonaws.com",
-		S_S3 = "http://shipteamdb.s7-website.ap-northeast-2.amazonaws.com",
+		S_S3 = "http://shipteamdb7.s3-website.ap-northeast-2.amazonaws.com",
 		Y_S3 = "",
 		H_S3 = "http://shipteamdb9.s3-website.ap-northeast-2.amazonaws.com";	
 }

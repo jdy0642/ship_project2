@@ -32,19 +32,13 @@ public class FutsalController {
 	@Autowired FutsalMatchService futsalMatchService;
 	@Autowired ModelMapper futModelMapper;
 	@Autowired FutsalMatch fut;
+	
 	@Bean
 	public ModelMapper futModelMapper() {return new ModelMapper();}
 	
 	@GetMapping("/")
 	public List<FutsalMatch> findAll(){
-		Iterable<FutsalMatch> all = futsalMatchRepository.findAll();
-		List<FutsalMatch> list = new ArrayList<>();
-		for(FutsalMatch match : all) {
-			FutsalMatch dto = futModelMapper.map(match, FutsalMatch.class);
-			list.add(dto);
-		}
-		System.out.println("findAll");
-		return list.stream().collect(Collectors.toList());
+		return futsalMatchService.allList();
 	}
 	
 	@PostMapping("/insertdummy")
