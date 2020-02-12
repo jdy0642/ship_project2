@@ -50,18 +50,6 @@ public class ReservationController {
 		return reservationService.reservationTable();
 	}
 
-	@GetMapping("/onedaylist/{day}")
-	public List<Reservation> onedaylist(@PathVariable String day){
-		System.out.println("들어온 day : >>>>  "+day);
-		System.out.println("비교할 day : >>>>  "+day.substring(8,10));
-		Iterable<Reservation> res = reservationRepository.findAll(); // 대문자 수정!
-		List<Reservation> list2 = new ArrayList<>();
-		for(Reservation r : res) {
-			Reservation dto1 = modelMapper.map(r, Reservation.class);
-			list2.add(dto1);
-		}
-		return list1.stream().collect(Collectors.toList());
-	}
 	
 	 @GetMapping("/onedaylist/{day}")
 	   public List<Reservation> onedaylist(@PathVariable String day){
