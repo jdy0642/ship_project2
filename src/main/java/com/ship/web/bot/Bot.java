@@ -19,7 +19,6 @@ import org.bitbucket.eunjeon.seunjeon.Morpheme;
 @Setter
 @ToString
 public class Bot extends BotService{
-	private Map<?, ?> distinction;
 	private Map<?, ?> result;
 	private List<Morpheme> analyzer; 
 	private String msg;
@@ -30,7 +29,6 @@ public class Bot extends BotService{
 
 	public void exec() {
 		analyzer = analyzer(msg);
-		distinction = distinction(analyzer);
-		result = result((Map<String, List<String>>) distinction);
+		result = distinction(analyzer);
 	}
 }
