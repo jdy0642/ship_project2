@@ -29,7 +29,7 @@ import com.ship.web.util.Printer;
 
 @RestController
 @CrossOrigin(origins = Constants.LOCAL)
-//@CrossOrigin(origins = Constants.J_S3)
+//@CrossOrigin(origins = Constants.H_S3)
 
 public class PersonController {
 	@Autowired private PersonRepository personRepository;
@@ -45,6 +45,11 @@ public class PersonController {
 		StringBuilder sb = new StringBuilder();
 		all.forEach(p -> sb.append(p.getName()+" "));
 		return sb.toString();
+	}
+	@GetMapping("/test")
+	public String test() {
+		p.accept("테스트 진입");
+		return "성공";
 	}
 
 	@PostMapping("/login")

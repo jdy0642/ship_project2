@@ -33,7 +33,7 @@ import com.ship.web.util.Printer;
 @RestController
 @RequestMapping("/lol")
 @CrossOrigin(origins = Constants.LOCAL)
-//@CrossOrigin(origins = Constants.J_S3)
+//@CrossOrigin(origins = Constants.H_S3)
 public class LolController {
 	@Autowired CrawlProxy crawler;
 	@Autowired Trunk<Object> trunk;
@@ -64,7 +64,11 @@ public class LolController {
 	      lol1.setTitle(lol.getTitle());
 	      lolRepository.save(lol1);
 	   }
-	
+	@GetMapping("/chatbot/{champ}")
+	public ArrayList<HashMap<String, String>> counterCrawl(@PathVariable String champ) {
+		p.accept(champ);
+		return crawler.counterCrawl(champ);
+	}
 	@GetMapping("/listpage={page}")
 	public List<Lol> roomlist(@PathVariable int page){
 		System.out.println(page);
@@ -138,6 +142,7 @@ public class LolController {
 	            .limit(page*9) 
 	            .collect(Collectors.toList()); 
 	   }
+	
 	@PostMapping("/createroom")
 	public HashMap<String, Object> createroom(@RequestBody Lol lol){
 		p.accept("방 생성 컨트롤러 진입"+lol);

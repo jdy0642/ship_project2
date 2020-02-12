@@ -20,4 +20,6 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
 			"ON f.futsalmatchseq = r.futsalmatchseq", nativeQuery = true)
 	public List<Map<String, Object>> findReservationTable();
 	public Iterable<Reservation> findByPersonseq(Person person);
+	public List<Reservation> findByPersonseq(Person personseq);
+	
 }

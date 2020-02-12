@@ -56,6 +56,40 @@ public class CrawlProxy extends Proxy{
 		}
 		return box.get();
 	}
+	public ArrayList<HashMap<String, String>> counterCrawl(String champ){
+		box.clear();
+		String cchamp = "";
+		switch (champ) {
+		case "야스오":
+			cchamp = "yasuo";
+			break;
+		case "제드":
+			cchamp = "zed";
+		default:
+			cchamp = champ;
+		}
+		try {
+			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+			String url = "http://www.op.gg/champion/"+ cchamp +"/statistics";
+			Connection.Response page =
+					Jsoup.connect(url)
+					.method(Connection.Method.GET)
+					.userAgent(USER_AGENT)
+					.execute();
+			Document temp = page.parse();
+			Elements counter = temp.select("tbody");
+			HashMap<String, String> map = null;
+				map = new HashMap<>();
+				map.put("counter", counter.get(0).text());
+//				map.put("counter1", counter.get(0).text().split(" ")[0]);
+//				map.put("counter2", counter.get(0).text().split(" ")[5]);
+//				map.put("counter3", counter.get(0).text().split(" ")[10]);
+				box.add(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return box.get();
+	}
 	public ArrayList<HashMap<String, String>> loltitleCrawling(int page){
 		box.clear();
 		try {
@@ -79,7 +113,7 @@ public class CrawlProxy extends Proxy{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("loltitle 크롤링("+box.size()+")\n"+page+"/5");
+		System.out.println("loltitle 크롤링 "+box.size()+"개 === "+page);
 		return box.get();
 	}
 	public ArrayList<HashMap<String, String>> lolidCrawling(int page){
@@ -173,5 +207,37 @@ public class CrawlProxy extends Proxy{
 		}
 		System.out.printf("%s %d페이지 완료\n%s\n",search,page,jsonArr.length());
 		return list;
+	}
+	
+	public String kakaoFut(String res, int ea){
+		final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+		final String kakaoKey = "KakaoAK e0678ade6eb9926174c51399604603c9";
+		String url = "http://kapi.kakao.com/v1/payment/ready";
+		List<Map<String, String>> list = new ArrayList<>();
+		JSONObject json = null;
+		Map<String, String> map = null;
+		try {
+			Connection.Response html = Jsoup.connect(url)
+			.method(Connection.Method.POST)
+			.userAgent(USER_AGENT)
+			.header("Authorization", kakaoKey)
+			.ignoreContentType(true)
+			.execute();
+			json = new JSONObject(html.parse().select("body").text());
+			System.out.println(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JSONArray jsonArr = json.getJSONArray("documents");
+//		for(int i = 0; i < jsonArr.length()-1; i++) {
+//			map = new HashMap<>();
+//			JSONObject j = jsonArr.getJSONObject(i);
+//			map.put("name",j.get("place_name").toString());
+//			map.put("address",j.get("address_name").toString());
+//			map.put("tel",j.get("phone").toString());
+//			list.add(map);
+//		}
+		
+		return "/pay";
 	}
 }
