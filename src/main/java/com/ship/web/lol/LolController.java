@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ship.web.futsal.Futsal;
 import com.ship.web.person.Person;
 import com.ship.web.proxy.Box;
 import com.ship.web.proxy.CrawlProxy;
@@ -35,7 +36,6 @@ import com.ship.web.util.Printer;
 @RestController
 @RequestMapping("/lol")
 @CrossOrigin(origins = Constants.LOCAL)
-//@CrossOrigin(origins = Constants.H_S3)
 public class LolController {
 	@Autowired CrawlProxy crawler;
 	@Autowired Trunk<Object> trunk;
@@ -50,6 +50,10 @@ public class LolController {
 		System.out.println("방생성 시 크롤링 db 데이터 진입"+summonername);
 		p.accept(summonername);
 		return crawler.opggCrawling(summonername);
+	}
+	@GetMapping("/{cardseq}")
+	public Lol selectGame(@PathVariable Long cardseq) {
+		return lolRepository.findById(cardseq).get();
 	}
 	
 	@DeleteMapping("/delete/{cardseq}")
@@ -80,10 +84,9 @@ public class LolController {
 		return crawler.metaCrawl(champ2);
 	}
 	
-	@GetMapping("/recommend/{tier}/{rhost}")
-	public List<String> recommend(@PathVariable String tier, @PathVariable String rhost){
+	@GetMapping("/recommend/{tier}")
+	public List<String> recommend(@PathVariable String tier){
 		p.accept(tier);
-		p.accept(rhost);
 		Iterable<Lol> entites = lolRepository.findByTier(tier);
 		List<Lol> list = new ArrayList<>();
 		for(Lol p : entites) {
@@ -91,7 +94,6 @@ public class LolController {
 			list.add(dto);
 		}
 		return list.stream()
-				.filter(l -> !l.getRhost().equals(rhost))
 				.map(Lol::getRhost)
 				.collect(Collectors.toList());
 	}

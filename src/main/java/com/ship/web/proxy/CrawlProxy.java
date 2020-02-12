@@ -24,11 +24,8 @@ public class CrawlProxy extends Proxy{
 		try {
 			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 			String url = "http://www.op.gg/summoner/userName="+summonername;
-			Connection.Response page =
-					Jsoup.connect(url)
-					.method(Connection.Method.GET)
-					.userAgent(USER_AGENT)
-					.execute();
+			Connection.Response page = Jsoup.connect(url).method(Connection.Method.GET)
+											.userAgent(USER_AGENT).execute();
 			Document temp = page.parse();
 			Elements photo = temp.select("img.ChampionImage");
 			Elements tier = temp.select("div.TierRank");
@@ -39,15 +36,17 @@ public class CrawlProxy extends Proxy{
 			Elements win = temp.select("span.wins");
 			Elements lose = temp.select("span.losses");
 			Elements winratio = temp.select("span.winratio");
+			Elements prefer = temp.select("div.PositionStatContent div.Name");
 			HashMap<String, String> map = null;
 				map = new HashMap<>();
-				map.put("tier", tier.get(0).text());
+				map.put("tier", tier.get(0).text().split(" ")[0]);
 				map.put("rate", rate.get(0).text());
-				map.put("most", most.get(0).text());
+				map.put("prefer", prefer.get(0).text());
+				map.put("most", most.get(0).text().split(" ")[0]);
 				map.put("position", position.get(0).text());
-				map.put("lp", lp.get(0).text().substring(0,5));
-				map.put("win", win.get(0).text());
-				map.put("lose", lose.get(0).text());
+				map.put("lp", lp.get(0).text());
+				map.put("win", win.get(0).text().substring(0,1));
+				map.put("lose", lose.get(0).text().substring(0,1));
 				map.put("winratio", winratio.get(0).text().substring(9));
 				map.put("photo", photo.get(0).select("img").attr("src"));
 				box.add(map);
