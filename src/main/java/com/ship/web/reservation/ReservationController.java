@@ -97,8 +97,8 @@ public class ReservationController {
 	      int week = 604800000;
 	      return list2.stream()
 	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-	    		  .filter(t-> t.getResdate() > (new Date().getTime()-week*1000) 
-	    				  && t.getResdate() <= (new Date().getTime()*1000))
+	    		  .filter(t-> t.getResdate() >= (new Date().getTime()-week*1000) 
+	    				  && t.getResdate() < (new Date().getTime()*1000))
 	    		  .collect(Collectors.toList());
 	   }
 	 

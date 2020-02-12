@@ -78,6 +78,10 @@ public class Person extends Proxy implements Serializable{
 		private boolean lolblack;
 	@Column(name="FUTBLACK", length= 64 ) 
 		private boolean futblack;
+	@Column(name="BLACKTIME", length= 64 ) 
+	private String blacktime;
+	@Column(name="BLACKREASON", length= 64 ) 
+	private String blackreason;
 	@Column(name="JOB", length= 64 )@NotNull
 		private String job;
 	@Column(name="EMAIL", length= 128 )@NotNull
@@ -98,9 +102,9 @@ public class Person extends Proxy implements Serializable{
 	@Builder
 	private Person(String userid, String name, String passwd, String tel,
 			 String point, int age, boolean male, int score, int mvp,
-			 int win, int km, boolean bookmark, String interest,
+			 int win, int km, boolean bookmark, String interest,String blacktime, String blackreason,
 			 boolean lolblack, boolean futblack, String job, String email, String summonername) {
-		
+			
 		this.userid = userid;
 		this.name = name;
 		this.passwd = passwd;
@@ -116,6 +120,8 @@ public class Person extends Proxy implements Serializable{
 		this.interest = interest;
 		this.lolblack = lolblack;
 		this.futblack = futblack;
+		this.blacktime = blacktime;
+		this.blackreason = blackreason;
 		this.job = job;
 		this.email = email;
 		this.summonername = summonername;

@@ -45,14 +45,11 @@ public class LolController {
 	
 	@GetMapping("/summoner/userName={summonername}")
 	public ArrayList<HashMap<String, String>> opgg(@PathVariable String summonername){
-		System.out.println("방생성 시 크롤링 db 데이터 진입"+summonername);
-		p.accept(summonername);
 		return crawler.opggCrawling(summonername);
 	}
 	
 	@DeleteMapping("/delete/{cardseq}")
 	public void withdrawal(@PathVariable Long cardseq) {
-		p.accept("방탈 진입");
 		lolRepository
 		.delete(lolRepository
 				.findByCardseq(cardseq));
@@ -69,9 +66,13 @@ public class LolController {
 		p.accept(champ);
 		return crawler.counterCrawl(champ);
 	}
+//	@GetMapping("/chatbot/{champ}")
+//	public ArrayList<HashMap<String, String>> testCrawl(@PathVariable String champ) {
+//		p.accept(champ);
+//		return crawler.testCrawl(champ);
+//	}
 	@GetMapping("/listpage={page}")
 	public List<Lol> roomlist(@PathVariable int page){
-		System.out.println(page);
 		Iterable<Lol> entites = lolRepository.findAll();
 		List<Lol> list = new ArrayList<>();
 		Date date = new Date();
@@ -88,7 +89,6 @@ public class LolController {
 	
 	@GetMapping("/filterpositionlist/position={position}/page={page}")
 	   public List<Lol> filterpositionlist(@PathVariable int page, @PathVariable String position){
-	      System.out.println(page);
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
 	      Date date = new Date();
@@ -106,7 +106,6 @@ public class LolController {
 	   }
 	@GetMapping("/filtertierlist/tier={tier}/page={page}")
 	   public List<Lol> filtertierlist(@PathVariable int page, @PathVariable String tier){
-	      System.out.println(page);
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
 	      Date date = new Date();
@@ -125,7 +124,6 @@ public class LolController {
 	   
 	   @GetMapping("/filtertplist/tier={tier}/position={position}/page={page}")
 	   public List<Lol> filtertplist(@PathVariable int page, @PathVariable String tier, @PathVariable String position){
-	      System.out.println(page);
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
 	      Date date = new Date();
@@ -145,7 +143,6 @@ public class LolController {
 	
 	@PostMapping("/createroom")
 	public HashMap<String, Object> createroom(@RequestBody Lol lol){
-		p.accept("방 생성 컨트롤러 진입"+lol);
 		HashMap<String, Object> map = new HashMap<>();
 		String[] img = {
 				"ahri",

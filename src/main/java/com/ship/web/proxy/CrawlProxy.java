@@ -77,10 +77,62 @@ public class CrawlProxy extends Proxy{
 					.userAgent(USER_AGENT)
 					.execute();
 			Document temp = page.parse();
-			Elements counter = temp.select("tbody");
+			Elements counter = temp.select("table[class=\"champion-stats-header-matchup__table champion-stats-header-matchup__table--strong tabItem\"] tbody tr td[class=\"champion-stats-header-matchup__table__champion\"]");
 			HashMap<String, String> map = null;
 				map = new HashMap<>();
 				map.put("counter", counter.get(0).text());
+				map.put("counter1", counter.get(1).text());
+				map.put("counter2", counter.get(2).text());
+
+				box.add(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return box.get();
+	}
+	
+	public ArrayList<HashMap<String, String>> testCrawl(String position){
+		box.clear();
+		switch (position) {
+		case "탑":
+			position = "TOP";
+			break;
+		case "정글":
+			position = "JUNGLE";
+			break;
+		case "미드":
+			position = "MID";
+			break;
+		case "원딜":
+			position = "ADC";
+			break;
+		case "봇":
+			position = "ADC";
+			break;
+		case "서포터":
+			position = "SUPPORT";
+			break;
+		case "서폿":
+			position = "SUPPORT";
+			break;
+		
+		}
+		try {
+			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+			String url = "http://www.op.gg/champion/statistics";
+			Connection.Response page =
+					Jsoup.connect(url)
+					.method(Connection.Method.GET)
+					.userAgent(USER_AGENT)
+					.execute();
+			Document temp = page.parse();
+			Elements counter = temp.select("tbody[class=\"tabItem champion-trend-tier-"+position+"\"] tr td[class=\"champion-index-table__cell champion-index-table__cell--champion\"] a div[class=\"champion-index-table__name\"]");
+//			Elements counter1 = temp.select("tbody[tabItem champion-trend-tier-TOP] tr[2] td[champion-index-table__cell champion-index-table__cell--champion] a div[champion-index-table__name]");
+			HashMap<String, String> map = null;
+				map = new HashMap<>();
+				map.put("counter", counter.get(0).text());
+				map.put("counter1", counter.get(1).text());
+				map.put("counter2", counter.get(2).text());
 //				map.put("counter1", counter.get(0).text().split(" ")[0]);
 //				map.put("counter2", counter.get(0).text().split(" ")[5]);
 //				map.put("counter3", counter.get(0).text().split(" ")[10]);
@@ -104,7 +156,7 @@ public class CrawlProxy extends Proxy{
 			Elements title = temp.select("section[class=\"article-list article-list--compact\"] div[class=\"article-list-item__title\"] span");
 //			Elements contents = temp.select("div[class=\"article-content\"] p");
 			HashMap<String, String> map = null;
-			for(int i=0; i<40;i++) {
+			for(int i=0; i<10;i++) {
 				map = new HashMap<>();
 				map.put("title", title.get(i).text());
 //				map.put("contents", contents.get(0).text());
