@@ -17,6 +17,7 @@ import org.bitbucket.eunjeon.seunjeon.Morpheme;
 @Service
 public class BotService {
 	final private List<String> time = Arrays.asList("년","월","일","시","분");
+	final private List<String> timeNNG = Arrays.asList("오늘","내일","모래","어제","엊그저께");
 	final private List<String> location = Arrays.asList("풋살장","경기장","풋살");
 	final private List<String> todo = Arrays.asList("해");
 		
@@ -82,8 +83,21 @@ public class BotService {
 				break;
 			case "NNG":{
 				arrTemp.add(i.getSurface());
+				
 				if(location.contains(i.getSurface())) {
 					locationStack.addAll(arrTemp);
+					arrTemp.clear();
+				}else if (timeNNG.contains(i.getSurface())) {
+					int temp = 0;
+					switch (i.getSurface()) {
+						case "오늘": temp = 0; break;
+						case "내일": temp = 1; break;
+						case "모레": temp = 2; break;
+						case "어제": temp = -1; break;
+						case "엊그저께": temp = -2; break;
+						}
+					timeStack.add(new SimpleDateFormat("yyyy년 MM월 dd일")
+							.format(new Date().getTime()+(long)(temp * 1000 * 60 * 60 * 24 )));
 					arrTemp.clear();
 				}
 				}
@@ -118,6 +132,13 @@ public class BotService {
 		map.put("locationStack", locationStack);
 		map.put("todoStack", todoStack);
 		map.put("NNG", arrTemp);
+		return map;
+	}
+	
+	public Map<?, ?> result(Map<String, List<String>> distinction){
+		Map<String, String> map = new HashMap<>();
+		map.put("time", String.join(" ", distinction.get("timeStack")));
+		map.put("location", String.join(" ", distinction.get("locationStack")));
 		return map;
 	}
 	
