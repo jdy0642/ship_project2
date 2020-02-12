@@ -131,5 +131,12 @@ public class ReservationController {
 		return reservationRepository
 				.findByResdate(res.getResdate()).getKm() == reservation.getKm();
 	}
+	
+	@PostMapping("/testres")
+	public String connecttest() {
+	
+		
+		return "/pay";
+	}
 
 }
