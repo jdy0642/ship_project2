@@ -43,13 +43,11 @@ public class ReservationController {
 	@Autowired private PersonService personService;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private Printer p;
-	@Autowired private Proxy pxy;
-	@Autowired private Trunk<Object> tr;
 	@GetMapping("/1")
+	
 	public Iterable<Map<String, Object>> reslist(){
 		return reservationService.reservationTable();
 	}
-
 	
 	 @GetMapping("/onedaylist/{day}")
 	   public List<Reservation> onedaylist(@PathVariable String day){
@@ -159,8 +157,6 @@ public class ReservationController {
 	
 	@PostMapping("/testres")
 	public String connecttest() {
-	
-		
 		return "/pay";
 	}
 

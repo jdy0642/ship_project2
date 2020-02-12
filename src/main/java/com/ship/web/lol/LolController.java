@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ship.web.person.Person;
 import com.ship.web.proxy.Box;
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.proxy.Trunk;
+import com.ship.web.reservation.Reservation;
 import com.ship.web.util.Printer;
 
 @RestController
@@ -57,6 +59,7 @@ public class LolController {
 		.delete(lolRepository
 				.findByCardseq(cardseq));
 	}
+	
 	@PutMapping("/update/{cardseq}")
 	   public void modify(@RequestBody Lol lol, @PathVariable Long cardseq) {
 	      Lol lol1 = lolRepository.findByCardseq(cardseq);
@@ -64,11 +67,35 @@ public class LolController {
 	      lol1.setTitle(lol.getTitle());
 	      lolRepository.save(lol1);
 	   }
+	
 	@GetMapping("/chatbot/{champ}")
 	public ArrayList<HashMap<String, String>> counterCrawl(@PathVariable String champ) {
 		p.accept(champ);
 		return crawler.counterCrawl(champ);
 	}
+	
+	@GetMapping("/metacham/{champ2}")
+	public ArrayList<HashMap<String, String>> metaCrawl(@PathVariable String champ2){
+		p.accept(champ2);
+		return crawler.metaCrawl(champ2);
+	}
+	
+	@GetMapping("/recommend/{tier}/{rhost}")
+	public List<String> recommend(@PathVariable String tier, @PathVariable String rhost){
+		p.accept(tier);
+		p.accept(rhost);
+		Iterable<Lol> entites = lolRepository.findByTier(tier);
+		List<Lol> list = new ArrayList<>();
+		for(Lol p : entites) {
+			Lol dto = modelMapper.map(p, Lol.class);
+			list.add(dto);
+		}
+		return list.stream()
+				.filter(l -> !l.getRhost().equals(rhost))
+				.map(Lol::getRhost)
+				.collect(Collectors.toList());
+	}
+	
 	@GetMapping("/listpage={page}")
 	public List<Lol> roomlist(@PathVariable int page){
 		System.out.println(page);

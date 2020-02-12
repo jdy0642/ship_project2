@@ -1,21 +1,16 @@
 package com.ship.web.person;
 import java.util.ArrayList;
-
-import com.ship.web.lol.Lol;
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.util.Constants;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
