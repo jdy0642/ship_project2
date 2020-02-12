@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ship.web.futsal.FutsalMatch;
-import com.ship.web.futsal.FutsalMatchRepository;
+import com.ship.web.futsal.Futsal;
+import com.ship.web.futsal.FutsalRepository;
+import com.ship.web.lol.Lol;
 import com.ship.web.person.Person;
 import com.ship.web.person.PersonRepository;
+import com.ship.web.person.PersonService;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.proxy.Trunk;
 import com.ship.web.util.Printer;
@@ -37,7 +39,8 @@ public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
 	@Autowired private Reservation reservation;
 	@Autowired private ReservationService reservationService;
-	@Autowired private FutsalMatchRepository futsalMatchRepository;
+	@Autowired private FutsalRepository futsalRepository;
+	@Autowired private PersonService personService;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private Printer p;
 	@Autowired private Proxy pxy;
@@ -148,7 +151,8 @@ public class ReservationController {
 	@PostMapping("/{matchId}")
 	public boolean createReservation(@PathVariable Long matchId, @RequestBody Person person) {
 		reservation.setPersonseq(person);
-		reservation.setFutsalmatchseq(futsalMatchRepository.findById(matchId).get());
+		personService.updatePoint(String.valueOf(person.getPersonseq()), "-10000");
+		reservation.setFutsal(futsalRepository.findById(matchId).get());
 		reservation.setResdate(System.currentTimeMillis());
 		reservationRepository.save(reservation);
 		return reservationRepository.findByResdate(reservation.getResdate()) != null;
@@ -176,4 +180,5 @@ public class ReservationController {
 	public Iterable<Map<String, Object>> testlist(){
 		return reservationService.reservationTable();
 	}
+	
 }

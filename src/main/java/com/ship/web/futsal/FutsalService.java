@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Service
-public class FutsalMatchService {
-	@Autowired FutsalMatchRepository futsalMatchRepository;
+public class FutsalService {
+	@Autowired FutsalRepository futsalMatchRepository;
 	@Autowired ModelMapper modelMapper;
 	
-	public List<FutsalMatch> allList(){
-		Iterable<FutsalMatch> all = futsalMatchRepository.findAll();
-		List<FutsalMatch> list = new ArrayList<>();
-		for(FutsalMatch match : all) {
-			FutsalMatch dto = modelMapper.map(match, FutsalMatch.class);
+	public List<Futsal> allList(){
+		Iterable<Futsal> all = futsalMatchRepository.findAll();
+		List<Futsal> list = new ArrayList<>();
+		for(Futsal match : all) {
+			Futsal dto = modelMapper.map(match, Futsal.class);
 			list.add(dto);
 		}	
 		return list.stream().collect(Collectors.toList());
@@ -27,7 +27,7 @@ public class FutsalMatchService {
 	
 	public List<String> stadiumNameList(){
 		return allList().stream()
-				.map(FutsalMatch::getStadiumname)
+				.map(Futsal::getStadiumname)
 				.collect(Collectors.toList());
 	}
 

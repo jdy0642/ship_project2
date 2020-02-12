@@ -28,27 +28,27 @@ import com.ship.web.util.Constants;
 @CrossOrigin(origins = Constants.LOCAL)
 //@CrossOrigin(origins = Constants.H_S3)
 public class FutsalController {
-	@Autowired FutsalMatchRepository futsalMatchRepository;
-	@Autowired FutsalMatchService futsalMatchService;
+	@Autowired FutsalRepository futsalMatchRepository;
+	@Autowired FutsalService futsalMatchService;
 	@Autowired ModelMapper futModelMapper;
-	@Autowired FutsalMatch fut;
+	@Autowired Futsal fut;
 	
 	@Bean
 	public ModelMapper futModelMapper() {return new ModelMapper();}
 	
 	@GetMapping("/")
-	public List<FutsalMatch> findAll(){
+	public List<Futsal> findAll(){
 		return futsalMatchService.allList();
 	}
 	
 	@PostMapping("/insertdummy")
-	public void insertDummy(@RequestBody List<FutsalMatch> param) {
+	public void insertDummy(@RequestBody List<Futsal> param) {
 		futsalMatchRepository.saveAll(param);
 		System.out.println("insertdummy");
 	}
 	
 	@GetMapping("/match/{matchId}")
-	public FutsalMatch selectMatch(@PathVariable Long matchId) {
+	public Futsal selectMatch(@PathVariable Long matchId) {
 		return futsalMatchRepository.findById(matchId).get();
 	}
 	
@@ -60,7 +60,7 @@ public class FutsalController {
 	}
 	
 	@PostMapping("/register")
-	public boolean createMath(@RequestBody FutsalMatch match) {
+	public boolean createMath(@RequestBody Futsal match) {
 		futsalMatchRepository.save(match);
 		return true;
 	}
