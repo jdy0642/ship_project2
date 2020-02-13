@@ -36,12 +36,10 @@ public class CrawlProxy extends Proxy{
 			Elements win = temp.select("span.wins");
 			Elements lose = temp.select("span.losses");
 			Elements winratio = temp.select("span.winratio");
-			Elements prefer = temp.select("div.PositionStatContent div.Name");
 			HashMap<String, String> map = null;
 				map = new HashMap<>();
 				map.put("tier", tier.get(0).text().split(" ")[0]);
 				map.put("rate", rate.get(0).text());
-				map.put("prefer", prefer.get(0).text());
 				map.put("most", most.get(0).text().split(" ")[0]);
 				map.put("position", position.get(0).text());
 				map.put("lp", lp.get(0).text());
@@ -179,8 +177,8 @@ public class CrawlProxy extends Proxy{
 			HashMap<String, String> map = null;
 			for(int i=0;i<40;i++) {
 				map = new HashMap<>();
-					map.put("rhost", rhost.get(i).text());
-					map.put("crawltier", crawltier.get(i).text());
+					map.put("rhost", rhost.get(i).text()); 
+					map.put("crawltier", crawltier.get(i).text().split(" ")[0]);
 					map.put("crawlrate", crawlrate.get(i).text());
 //					System.out.println(i+"번쨰 id"+rhost.get(i).text());
 //					System.out.println(i+"번쨰 crawltier"+crawltier.get(i).text());
