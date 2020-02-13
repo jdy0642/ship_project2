@@ -26,7 +26,6 @@ import com.ship.web.util.Constants;
 @RestController
 @RequestMapping("/futsal")
 @CrossOrigin(origins = Constants.LOCAL)
-//@CrossOrigin(origins = Constants.H_S3)
 public class FutsalController {
 	@Autowired FutsalRepository futsalMatchRepository;
 	@Autowired FutsalService futsalMatchService;

@@ -24,11 +24,8 @@ public class CrawlProxy extends Proxy{
 		try {
 			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 			String url = "http://www.op.gg/summoner/userName="+summonername;
-			Connection.Response page =
-					Jsoup.connect(url)
-					.method(Connection.Method.GET)
-					.userAgent(USER_AGENT)
-					.execute();
+			Connection.Response page = Jsoup.connect(url).method(Connection.Method.GET)
+											.userAgent(USER_AGENT).execute();
 			Document temp = page.parse();
 			Elements photo = temp.select("img.ChampionImage");
 			Elements tier = temp.select("div.TierRank");
@@ -41,13 +38,13 @@ public class CrawlProxy extends Proxy{
 			Elements winratio = temp.select("span.winratio");
 			HashMap<String, String> map = null;
 				map = new HashMap<>();
-				map.put("tier", tier.get(0).text());
+				map.put("tier", tier.get(0).text().split(" ")[0]);
 				map.put("rate", rate.get(0).text());
-				map.put("most", most.get(0).text());
+				map.put("most", most.get(0).text().split(" ")[0]);
 				map.put("position", position.get(0).text());
-				map.put("lp", lp.get(0).text().substring(0,5));
-				map.put("win", win.get(0).text());
-				map.put("lose", lose.get(0).text());
+				map.put("lp", lp.get(0).text());
+				map.put("win", win.get(0).text().substring(0,1));
+				map.put("lose", lose.get(0).text().substring(0,1));
 				map.put("winratio", winratio.get(0).text().substring(9));
 				map.put("photo", photo.get(0).select("img").attr("src"));
 				box.add(map);
@@ -57,91 +54,86 @@ public class CrawlProxy extends Proxy{
 		return box.get();
 	}
 	public ArrayList<HashMap<String, String>> counterCrawl(String champ){
-		box.clear();
-		String cchamp = "";
-		switch (champ) {
-		case "야스오":
-			cchamp = "yasuo";
-			break;
-		case "제드":
-			cchamp = "zed";
-		default:
-			cchamp = champ;
-		}
-		try {
-			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
-			String url = "http://www.op.gg/champion/"+ cchamp +"/statistics";
-			Connection.Response page =
-					Jsoup.connect(url)
-					.method(Connection.Method.GET)
-					.userAgent(USER_AGENT)
-					.execute();
-			Document temp = page.parse();
-			Elements counter = temp.select("table[class=\"champion-stats-header-matchup__table champion-stats-header-matchup__table--strong tabItem\"] tbody tr td[class=\"champion-stats-header-matchup__table__champion\"]");
-			HashMap<String, String> map = null;
-				map = new HashMap<>();
-				map.put("counter", counter.get(0).text());
-				map.put("counter1", counter.get(1).text());
-				map.put("counter2", counter.get(2).text());
+	      box.clear();
+	      switch (champ) {
+	      case "야스오":
+	    	  champ = "yasuo";
+	         break;
+	      case "제드":
+	    	  champ = "zed";
+	    	  break;
+	      default:
+	    	  break;
+	      }
+	      try {
+	         final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+	         String url = "http://www.op.gg/champion/"+ champ +"/statistics";
+	         Connection.Response page =
+	               Jsoup.connect(url)
+	               .method(Connection.Method.GET)
+	               .userAgent(USER_AGENT)
+	               .execute();
+	         Document temp = page.parse();
+	         Elements counter = temp.select("table[class=\"champion-stats-header-matchup__table champion-stats-header-matchup__table--strong tabItem\"] tbody tr td[class=\"champion-stats-header-matchup__table__champion\"]");
+	         HashMap<String, String> map = null;
+	            map = new HashMap<>();
+	            map.put("counter1", counter.get(0).text());
+	            map.put("counter2", counter.get(1).text());
+	            map.put("counter3", counter.get(2).text());
 
-				box.add(map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return box.get();
-	}
-	
-	public ArrayList<HashMap<String, String>> testCrawl(String position){
-		box.clear();
-		switch (position) {
-		case "탑":
-			position = "TOP";
-			break;
-		case "정글":
-			position = "JUNGLE";
-			break;
-		case "미드":
-			position = "MID";
-			break;
-		case "원딜":
-			position = "ADC";
-			break;
-		case "봇":
-			position = "ADC";
-			break;
-		case "서포터":
-			position = "SUPPORT";
-			break;
-		case "서폿":
-			position = "SUPPORT";
-			break;
-		
-		}
-		try {
-			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
-			String url = "http://www.op.gg/champion/statistics";
-			Connection.Response page =
-					Jsoup.connect(url)
-					.method(Connection.Method.GET)
-					.userAgent(USER_AGENT)
-					.execute();
-			Document temp = page.parse();
-			Elements counter = temp.select("tbody[class=\"tabItem champion-trend-tier-"+position+"\"] tr td[class=\"champion-index-table__cell champion-index-table__cell--champion\"] a div[class=\"champion-index-table__name\"]");
-//			Elements counter1 = temp.select("tbody[tabItem champion-trend-tier-TOP] tr[2] td[champion-index-table__cell champion-index-table__cell--champion] a div[champion-index-table__name]");
-			HashMap<String, String> map = null;
-				map = new HashMap<>();
-				map.put("counter", counter.get(0).text());
-				map.put("counter1", counter.get(1).text());
-				map.put("counter2", counter.get(2).text());
-//				map.put("counter1", counter.get(0).text().split(" ")[0]);
-//				map.put("counter2", counter.get(0).text().split(" ")[5]);
-//				map.put("counter3", counter.get(0).text().split(" ")[10]);
-				box.add(map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return box.get();
-	}
+	            box.add(map);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return box.get();
+	   }
+	public ArrayList<HashMap<String, String>> metaCrawl(String champ2){
+	      box.clear();
+	      switch (champ2) {
+	      case "탑":
+	    	  champ2 = "TOP";
+	         break;
+	      case "정글":
+	    	  champ2 = "JUNGLE";
+	         break;
+	      case "미드":
+	    	  champ2 = "MID";
+	         break;
+	      case "원딜":
+	    	  champ2 = "ADC";
+	         break;
+	      case "봇":
+	    	  champ2 = "ADC";
+	         break;
+	      case "서포터":
+	    	  champ2 = "SUPPORT";
+	         break;
+	      case "서폿":
+	    	  champ2 = "SUPPORT";
+	         break;
+	      
+	      }
+	      try {
+	         final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+	         String url = "http://www.op.gg/champion/statistics";
+	         Connection.Response page =
+	               Jsoup.connect(url)
+	               .method(Connection.Method.GET)
+	               .userAgent(USER_AGENT)
+	               .execute();
+	         Document temp = page.parse();
+	         Elements meta = temp.select("tbody[class=\"tabItem champion-trend-tier-"+champ2+"\"] tr td[class=\"champion-index-table__cell champion-index-table__cell--champion\"] a div[class=\"champion-index-table__name\"]");
+	         HashMap<String, String> map = null;
+	            map = new HashMap<>();
+	            map.put("meta1", meta.get(0).text());
+	            map.put("meta2", meta.get(1).text());
+	            map.put("meta3", meta.get(2).text());
+	            box.add(map);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return box.get();
+	   }
 	public ArrayList<HashMap<String, String>> loltitleCrawling(int page){
 		box.clear();
 		try {
@@ -185,8 +177,8 @@ public class CrawlProxy extends Proxy{
 			HashMap<String, String> map = null;
 			for(int i=0;i<40;i++) {
 				map = new HashMap<>();
-					map.put("rhost", rhost.get(i).text());
-					map.put("crawltier", crawltier.get(i).text());
+					map.put("rhost", rhost.get(i).text()); 
+					map.put("crawltier", crawltier.get(i).text().split(" ")[0]);
 					map.put("crawlrate", crawlrate.get(i).text());
 //					System.out.println(i+"번쨰 id"+rhost.get(i).text());
 //					System.out.println(i+"번쨰 crawltier"+crawltier.get(i).text());

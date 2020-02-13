@@ -57,19 +57,19 @@ public class LolInit extends Proxy implements ApplicationRunner{
                "zoe",
          };
          String[] tiers= {
-               "iron",
-               "bronze",
-               "silver",
-               "gold",
-               "platinum",
-               "diamond",
-               "master",
-               "grandemaster",
-               "challenger"
+               "Iron",
+               "Bronze",
+               "Silver",
+               "Gold",
+               "Platinum",
+               "Diamond",
+               "Master",
+               "Grandemaster",
+               "Challenger"
          };
          String[] positions = {
                "top",
-               "sungle",
+               "jungle",
                "mid", 
                "bot", 
                "supporter"

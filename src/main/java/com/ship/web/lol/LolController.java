@@ -24,16 +24,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ship.web.futsal.Futsal;
+import com.ship.web.person.Person;
 import com.ship.web.proxy.Box;
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.proxy.Trunk;
+import com.ship.web.reservation.Reservation;
 import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/lol")
 @CrossOrigin(origins = Constants.LOCAL)
-//@CrossOrigin(origins = Constants.H_S3)
 public class LolController {
 	@Autowired CrawlProxy crawler;
 	@Autowired Trunk<Object> trunk;
@@ -47,6 +49,10 @@ public class LolController {
 	public ArrayList<HashMap<String, String>> opgg(@PathVariable String summonername){
 		return crawler.opggCrawling(summonername);
 	}
+	@GetMapping("/{cardseq}")
+	public Lol selectGame(@PathVariable Long cardseq) {
+		return lolRepository.findById(cardseq).get();
+	}
 	
 	@DeleteMapping("/delete/{cardseq}")
 	public void withdrawal(@PathVariable Long cardseq) {
@@ -54,6 +60,7 @@ public class LolController {
 		.delete(lolRepository
 				.findByCardseq(cardseq));
 	}
+	
 	@PutMapping("/update/{cardseq}")
 	   public void modify(@RequestBody Lol lol, @PathVariable Long cardseq) {
 	      Lol lol1 = lolRepository.findByCardseq(cardseq);
@@ -61,16 +68,32 @@ public class LolController {
 	      lol1.setTitle(lol.getTitle());
 	      lolRepository.save(lol1);
 	   }
+	
 	@GetMapping("/chatbot/{champ}")
 	public ArrayList<HashMap<String, String>> counterCrawl(@PathVariable String champ) {
 		p.accept(champ);
 		return crawler.counterCrawl(champ);
 	}
-//	@GetMapping("/chatbot/{champ}")
-//	public ArrayList<HashMap<String, String>> testCrawl(@PathVariable String champ) {
-//		p.accept(champ);
-//		return crawler.testCrawl(champ);
-//	}
+	
+	@GetMapping("/metacham/{champ2}")
+	public ArrayList<HashMap<String, String>> metaCrawl(@PathVariable String champ2){
+		p.accept(champ2);
+		return crawler.metaCrawl(champ2);
+	}
+	
+	@GetMapping("/recommend/{tier}")
+	public List<String> recommend(@PathVariable String tier){
+		p.accept(tier);
+		Iterable<Lol> entites = lolRepository.findByTier(tier);
+		List<Lol> list = new ArrayList<>();
+		for(Lol p : entites) {
+			Lol dto = modelMapper.map(p, Lol.class);
+			list.add(dto);
+		}
+		return list.stream()
+				.map(Lol::getRhost)
+				.collect(Collectors.toList());
+	}
 	@GetMapping("/listpage={page}")
 	public List<Lol> roomlist(@PathVariable int page){
 		Iterable<Lol> entites = lolRepository.findAll();
