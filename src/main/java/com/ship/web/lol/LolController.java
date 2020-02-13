@@ -24,16 +24,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ship.web.futsal.Futsal;
+import com.ship.web.person.Person;
 import com.ship.web.proxy.Box;
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.proxy.Trunk;
+import com.ship.web.reservation.Reservation;
 import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/lol")
 @CrossOrigin(origins = Constants.LOCAL)
-//@CrossOrigin(origins = Constants.H_S3)
 public class LolController {
 	@Autowired CrawlProxy crawler;
 	@Autowired Trunk<Object> trunk;
@@ -45,18 +47,20 @@ public class LolController {
 	
 	@GetMapping("/summoner/userName={summonername}")
 	public ArrayList<HashMap<String, String>> opgg(@PathVariable String summonername){
-		System.out.println("방생성 시 크롤링 db 데이터 진입"+summonername);
-		p.accept(summonername);
 		return crawler.opggCrawling(summonername);
+	}
+	@GetMapping("/{cardseq}")
+	public Lol selectGame(@PathVariable Long cardseq) {
+		return lolRepository.findById(cardseq).get();
 	}
 	
 	@DeleteMapping("/delete/{cardseq}")
 	public void withdrawal(@PathVariable Long cardseq) {
-		p.accept("방탈 진입");
 		lolRepository
 		.delete(lolRepository
 				.findByCardseq(cardseq));
 	}
+	
 	@PutMapping("/update/{cardseq}")
 	   public void modify(@RequestBody Lol lol, @PathVariable Long cardseq) {
 	      Lol lol1 = lolRepository.findByCardseq(cardseq);
@@ -64,14 +68,34 @@ public class LolController {
 	      lol1.setTitle(lol.getTitle());
 	      lolRepository.save(lol1);
 	   }
+	
 	@GetMapping("/chatbot/{champ}")
 	public ArrayList<HashMap<String, String>> counterCrawl(@PathVariable String champ) {
 		p.accept(champ);
 		return crawler.counterCrawl(champ);
 	}
+	
+	@GetMapping("/metacham/{champ2}")
+	public ArrayList<HashMap<String, String>> metaCrawl(@PathVariable String champ2){
+		p.accept(champ2);
+		return crawler.metaCrawl(champ2);
+	}
+	
+	@GetMapping("/recommend/{tier}")
+	public List<String> recommend(@PathVariable String tier){
+		p.accept(tier);
+		Iterable<Lol> entites = lolRepository.findByTier(tier);
+		List<Lol> list = new ArrayList<>();
+		for(Lol p : entites) {
+			Lol dto = modelMapper.map(p, Lol.class);
+			list.add(dto);
+		}
+		return list.stream()
+				.map(Lol::getRhost)
+				.collect(Collectors.toList());
+	}
 	@GetMapping("/listpage={page}")
 	public List<Lol> roomlist(@PathVariable int page){
-		System.out.println(page);
 		Iterable<Lol> entites = lolRepository.findAll();
 		List<Lol> list = new ArrayList<>();
 		Date date = new Date();
@@ -88,7 +112,6 @@ public class LolController {
 	
 	@GetMapping("/filterpositionlist/position={position}/page={page}")
 	   public List<Lol> filterpositionlist(@PathVariable int page, @PathVariable String position){
-	      System.out.println(page);
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
 	      Date date = new Date();
@@ -106,7 +129,6 @@ public class LolController {
 	   }
 	@GetMapping("/filtertierlist/tier={tier}/page={page}")
 	   public List<Lol> filtertierlist(@PathVariable int page, @PathVariable String tier){
-	      System.out.println(page);
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
 	      Date date = new Date();
@@ -125,7 +147,6 @@ public class LolController {
 	   
 	   @GetMapping("/filtertplist/tier={tier}/position={position}/page={page}")
 	   public List<Lol> filtertplist(@PathVariable int page, @PathVariable String tier, @PathVariable String position){
-	      System.out.println(page);
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
 	      Date date = new Date();
@@ -145,7 +166,6 @@ public class LolController {
 	
 	@PostMapping("/createroom")
 	public HashMap<String, Object> createroom(@RequestBody Lol lol){
-		p.accept("방 생성 컨트롤러 진입"+lol);
 		HashMap<String, Object> map = new HashMap<>();
 		String[] img = {
 				"ahri",

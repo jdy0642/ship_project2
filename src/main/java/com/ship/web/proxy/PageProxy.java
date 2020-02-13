@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.ship.web.person.PersonRepository;
+import com.ship.web.reservation.ReservationRepository;
 
 import lombok.Data;
 
@@ -19,10 +20,10 @@ public class PageProxy extends Proxy{
 	private boolean existPrev, existNext;
 	private String search;
 	private final int BLOCK_SIZE = 5;
-	@Autowired private PersonRepository personRepository;
+	@Autowired private ReservationRepository reservationRepository;
 	
 	public void paging() {
-		totalCount = (int)personRepository.count();
+		totalCount = (int)reservationRepository.count();
 		System.out.println("프록시 안에서 찍은 전체글 갯수: "+totalCount);
 		pageCount = (totalCount % pageSize != 0) ? (totalCount / pageSize)+1 : totalCount / pageSize;
 		startRow = (pageNum-1)*pageSize;

@@ -1,21 +1,22 @@
 package com.ship.web.person;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import com.ship.web.lol.Lol;
 import com.ship.web.proxy.CrawlProxy;
+import com.ship.web.proxy.PageProxy;
 import com.ship.web.util.Constants;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,6 @@ import com.ship.web.util.Printer;
 
 @RestController
 @CrossOrigin(origins = Constants.LOCAL)
-//@CrossOrigin(origins = Constants.H_S3)
 
 public class PersonController {
 	@Autowired private PersonRepository personRepository;
@@ -37,6 +37,7 @@ public class PersonController {
 	@Autowired PersonService personService;
 	@Autowired ModelMapper modelMapper;
 	@Autowired CrawlProxy crawler;
+	@Autowired PageProxy pager;
 	@Bean public ModelMapper modelMapper() {return new ModelMapper();}
 	
 	@RequestMapping("/")
@@ -55,17 +56,14 @@ public class PersonController {
 	@PostMapping("/login")
 	public HashMap<String, Object> login(@RequestBody Person person) {
 		HashMap<String, Object> map = new HashMap<>();
-		p.accept("로그인 진입");
 		p.accept(String.format("id: %s", person.getUserid()));
 		p.accept(String.format("pwd: %s", person.getPasswd()));
 		person = personRepository.findByUseridAndPasswd
 					(person.getUserid(), person.getPasswd());
 		if(person!= null) {
-			p.accept("로그인 성공");
 			map.put("result","SUCCESS");
 			map.put("person",person);
 		}else {
-			p.accept("로그인 실패");
 			map.put("result","FAIL");
 			map.put("person",person);
 		}
@@ -74,19 +72,32 @@ public class PersonController {
 	
 	@PostMapping("/idcheck")
 	   public HashMap<String, Object> idcheck(@RequestBody Person person) {
-	      p.accept("아이디 체크 진입");
 	      p.accept(person.getUserid());
 	      HashMap<String, Object> map= new HashMap<>();
 	      person = personRepository.findByUserid(person.getUserid());
 	      if(person!= null) {
-	         p.accept("아이디 있음");
 	         map.put("result","SUCCESS");
 	         map.put("person",person);
 	      }else {
-	         p.accept("아이디  없음");
 	         map.put("result","FAIL");
 	         map.put("person",person);
 	      }
+	      return map;
+	   }
+	@PostMapping("/blackcheck/{userid}")
+	   public HashMap<String, Object> blackCheckById(@PathVariable String userid) {
+	      HashMap<String, Object> map= new HashMap<>();
+	      String result = "";
+	      Person person = null;
+	      person = personRepository.findByUserid(userid);
+	      if(person.isFutblack() == true) {
+	    	  map.put("result","SUCCESS");
+		      map.put("blacktime",person.getBlacktime());
+	      }else {
+	    	  map.put("result","FAIL");
+	    	  map.put("blacktime",null);
+	      }
+	      p.accept(result);
 	      return map;
 	   }
 	
@@ -99,11 +110,9 @@ public class PersonController {
 		person = personRepository.save(person);
 		
 		if(person!= null) {
-			p.accept("조인 성공");
 			map.put("result","SUCCESS");
 			map.put("person",person);
 		}else {
-			p.accept("조인 실패");
 			map.put("result","FAIL");
 			map.put("person",person);
 		}
@@ -112,7 +121,6 @@ public class PersonController {
 	
 	@PutMapping("/save/{userid}")
 	   public void modify(@RequestBody Person person, @PathVariable String userid) {
-		p.accept("세이브 진입");
 		p.accept(userid);
 		Person temp = personRepository.findByUserid(userid);
 			temp.setEmail(person.getEmail());
@@ -125,7 +133,6 @@ public class PersonController {
 	
 	@DeleteMapping("/withdrawal/{userid}")
 	public void withdrawal(@PathVariable String userid) {
-		p.accept("회탈 진입");
 		personRepository
 		.delete(personRepository
 				.findByUserid(userid));
@@ -134,7 +141,6 @@ public class PersonController {
 	@GetMapping("/customermanage")
 	public List<Person> memberlist(){
 		Iterable<Person> entites = personRepository.findAll();
-		p.accept("목록 컨트롤러 들어옴");
 		List<Person> list = new ArrayList<>();
 		for(Person p : entites) {
 			Person dto = modelMapper.map(p, Person.class);
@@ -142,28 +148,27 @@ public class PersonController {
 		}
 		return list.stream().sorted(Comparator.comparing(Person::getPersonseq).reversed()).collect(Collectors.toList());
 	}
-	@PostMapping("/createroom")
-	public HashMap<String, Object> createroom(@RequestBody Person person) {
-		p.accept("카드 생성 컨트롤러");
-		HashMap<String, Object> map = new HashMap<>();
-			
-		person = personRepository.save(person);
-		
-		if(person!= null) {
-			p.accept("조인 성공");
-			map.put("result","SUCCESS");
-			map.put("person",person);
-		}else {
-			p.accept("조인 실패");
-			map.put("result","FAIL");
-			map.put("person",person);
-		}
-		return map;
+	@PutMapping("/addBlack/{userid}/{blacktime}/{blackreason}")
+	public void addBlackList(@PathVariable String userid,@PathVariable String blacktime,@PathVariable String blackreason) {
+		Person temp = personRepository.findByUserid(userid);
+			temp.setFutblack(true);
+			temp.setBlacktime(blacktime);
+			temp.setBlackreason(blackreason);
+			personRepository.save(temp);
 	}
+	
+	@PutMapping("/deleteBlack/{userid}")
+	public void deleteBlack(@PathVariable String userid) {
+		Person temp = personRepository.findByUserid(userid);
+			temp.setFutblack(false);
+			temp.setBlacktime(null);
+			temp.setBlackreason(null);
+			personRepository.save(temp);
+	}
+	
 
 	@PutMapping("/update/{userid}")
 	public void update(@RequestBody Person person, @PathVariable String userid) {
-		p.accept("수정 진입");
 		person = personRepository.save(person);
 	}
 //	@GetMapping("/students")

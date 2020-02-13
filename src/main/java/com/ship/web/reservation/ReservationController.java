@@ -43,13 +43,11 @@ public class ReservationController {
 	@Autowired private PersonService personService;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private Printer p;
-	@Autowired private Proxy pxy;
-	@Autowired private Trunk<Object> tr;
 	@GetMapping("/1")
+	
 	public Iterable<Map<String, Object>> reslist(){
 		return reservationService.reservationTable();
 	}
-
 	
 	 @GetMapping("/onedaylist/{day}")
 	   public List<Reservation> onedaylist(@PathVariable String day){
@@ -97,8 +95,8 @@ public class ReservationController {
 	      int week = 604800000;
 	      return list2.stream()
 	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-	    		  .filter(t-> t.getResdate() > (new Date().getTime()-week*1000) 
-	    				  && t.getResdate() <= (new Date().getTime()*1000))
+	    		  .filter(t-> t.getResdate() >= (new Date().getTime()-week*1000) 
+	    				  && t.getResdate() < (new Date().getTime()*1000))
 	    		  .collect(Collectors.toList());
 	   }
 	 
@@ -159,8 +157,6 @@ public class ReservationController {
 	
 	@PostMapping("/testres")
 	public String connecttest() {
-	
-		
 		return "/pay";
 	}
 
