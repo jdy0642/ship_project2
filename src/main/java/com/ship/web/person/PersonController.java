@@ -1,6 +1,10 @@
 package com.ship.web.person;
+import java.awt.Dimension;
 import java.util.ArrayList;
+
+import com.ship.web.lol.Lol;
 import com.ship.web.proxy.CrawlProxy;
+import com.ship.web.proxy.PageProxy;
 import com.ship.web.util.Constants;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -31,6 +35,7 @@ public class PersonController {
 	@Autowired PersonService personService;
 	@Autowired ModelMapper modelMapper;
 	@Autowired CrawlProxy crawler;
+	@Autowired PageProxy pager;
 	@Bean public ModelMapper modelMapper() {return new ModelMapper();}
 	
 	@RequestMapping("/")
