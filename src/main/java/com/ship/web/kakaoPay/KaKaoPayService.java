@@ -21,9 +21,6 @@ import com.ship.web.util.Constants;
 
 @Service
 public class KaKaoPayService {
-	private String tid;
-	private String personseq;
-
 	@Autowired PersonService personService;
 	
 	public Map<String, String> req(String personseq, String value){
@@ -57,8 +54,6 @@ public class KaKaoPayService {
 		//System.out.println(json.get("tid").toString());
 		map.put("msg", "success");
 		map.put("tid", json.get("tid").toString());
-		tid = json.get("tid").toString();
-		this.personseq = personseq;
 		map.put("next_redirect_pc_url", json.get("next_redirect_pc_url").toString());
 		return map;
 	}
@@ -72,7 +67,7 @@ public class KaKaoPayService {
 				+ "cid=TC0ONETIME&"
 				+ "partner_order_id=1001&"
 				+ "partner_user_id=test@test.com&"
-				+ "tid="+tid+"&"
+				+ "tid="+res.get("tid")+"&"
 				+ "pg_token="+res.get("token");
 		try {
 			Connection.Response html = Jsoup.connect(url)
@@ -88,9 +83,8 @@ public class KaKaoPayService {
 			e.printStackTrace();
 		}
 		map.put("msg", "success");
-		map.put("tid", json.get("tid").toString());
-		map.put("person", personService.findBypersonseq(personseq));
-		personService.updatePoint(personseq,json.getJSONObject("amount").get("total").toString());
+		map.put("person", personService.findBypersonseq(res.get("personseq")));
+		personService.updatePoint(res.get("personseq"),json.getJSONObject("amount").get("total").toString());
 		return map;
 	}
 }
