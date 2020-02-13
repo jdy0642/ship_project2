@@ -64,7 +64,6 @@ public class Lol extends Proxy implements Serializable{
    @Column(name="POSITION") 
    private String position;
    
-   
    @Builder
    private Lol(String rhost,String rguest, String lolblack,
          String title, String contents, String tier,

@@ -30,7 +30,7 @@ import org.springframework.util.Assert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ship.web.futsal.FutsalMatch;
+import com.ship.web.futsal.Futsal;
 import com.ship.web.person.Person;
 import com.ship.web.proxy.Proxy;
 import lombok.AccessLevel;
@@ -57,11 +57,11 @@ public class Reservation extends Proxy implements Serializable {
 	@Column(name = "RESDATE")
 	@NotNull
 	private Long resdate;
-	@Column(name = "WIN")
+	@Column(name = "WIN", length= 16 )
 	private String win;
-	@Column(name = "KM")
+	@Column(name = "KM", length= 16 )
 	private int km;
-	@Column(name = "SCORE")
+	@Column(name = "SCORE", length= 16 )
 	private int score;
 	
 
@@ -74,8 +74,8 @@ public class Reservation extends Proxy implements Serializable {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "futsalmatchseq")
-	private FutsalMatch futsalmatchseq;
+	@JoinColumn(name = "futsalseq")
+	private Futsal futsal;
 	
 	@Builder
 	private Reservation(@NotNull Long resseq, @NotNull Long resdate, String win, int km,

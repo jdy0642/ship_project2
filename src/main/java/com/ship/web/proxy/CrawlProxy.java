@@ -24,23 +24,28 @@ public class CrawlProxy extends Proxy{
 		try {
 			final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 			String url = "http://www.op.gg/summoner/userName="+summonername;
-			Connection.Response page =
-					Jsoup.connect(url)
-					.method(Connection.Method.GET)
-					.userAgent(USER_AGENT)
-					.execute();
+			Connection.Response page = Jsoup.connect(url).method(Connection.Method.GET)
+											.userAgent(USER_AGENT).execute();
 			Document temp = page.parse();
 			Elements photo = temp.select("img.ChampionImage");
 			Elements tier = temp.select("div.TierRank");
 			Elements rate = temp.select("div.TierInfo");
 			Elements most = temp.select("div.MostChampionContent");
 			Elements position = temp.select("td.PositionStats");
+			Elements lp = temp.select("span.LeaguePoints");
+			Elements win = temp.select("span.wins");
+			Elements lose = temp.select("span.losses");
+			Elements winratio = temp.select("span.winratio");
 			HashMap<String, String> map = null;
 				map = new HashMap<>();
-				map.put("tier", tier.get(0).text());
+				map.put("tier", tier.get(0).text().split(" ")[0]);
 				map.put("rate", rate.get(0).text());
-				map.put("most", most.get(0).text());
+				map.put("most", most.get(0).text().split(" ")[0]);
 				map.put("position", position.get(0).text());
+				map.put("lp", lp.get(0).text());
+				map.put("win", win.get(0).text().substring(0,1));
+				map.put("lose", lose.get(0).text().substring(0,1));
+				map.put("winratio", winratio.get(0).text().substring(9));
 				map.put("photo", photo.get(0).select("img").attr("src"));
 				box.add(map);
 		} catch (Exception e) {
@@ -48,6 +53,87 @@ public class CrawlProxy extends Proxy{
 		}
 		return box.get();
 	}
+	public ArrayList<HashMap<String, String>> counterCrawl(String champ){
+	      box.clear();
+	      switch (champ) {
+	      case "야스오":
+	    	  champ = "yasuo";
+	         break;
+	      case "제드":
+	    	  champ = "zed";
+	    	  break;
+	      default:
+	    	  break;
+	      }
+	      try {
+	         final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+	         String url = "http://www.op.gg/champion/"+ champ +"/statistics";
+	         Connection.Response page =
+	               Jsoup.connect(url)
+	               .method(Connection.Method.GET)
+	               .userAgent(USER_AGENT)
+	               .execute();
+	         Document temp = page.parse();
+	         Elements counter = temp.select("table[class=\"champion-stats-header-matchup__table champion-stats-header-matchup__table--strong tabItem\"] tbody tr td[class=\"champion-stats-header-matchup__table__champion\"]");
+	         HashMap<String, String> map = null;
+	            map = new HashMap<>();
+	            map.put("counter1", counter.get(0).text());
+	            map.put("counter2", counter.get(1).text());
+	            map.put("counter3", counter.get(2).text());
+
+	            box.add(map);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return box.get();
+	   }
+	public ArrayList<HashMap<String, String>> metaCrawl(String champ2){
+	      box.clear();
+	      switch (champ2) {
+	      case "탑":
+	    	  champ2 = "TOP";
+	         break;
+	      case "정글":
+	    	  champ2 = "JUNGLE";
+	         break;
+	      case "미드":
+	    	  champ2 = "MID";
+	         break;
+	      case "원딜":
+	    	  champ2 = "ADC";
+	         break;
+	      case "봇":
+	    	  champ2 = "ADC";
+	         break;
+	      case "서포터":
+	    	  champ2 = "SUPPORT";
+	         break;
+	      case "서폿":
+	    	  champ2 = "SUPPORT";
+	         break;
+	      
+	      }
+	      try {
+	         final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+	         String url = "http://www.op.gg/champion/statistics";
+	         Connection.Response page =
+	               Jsoup.connect(url)
+	               .method(Connection.Method.GET)
+	               .userAgent(USER_AGENT)
+	               .execute();
+	         Document temp = page.parse();
+	         Elements meta = temp.select("tbody[class=\"tabItem champion-trend-tier-"+champ2+"\"] tr td[class=\"champion-index-table__cell champion-index-table__cell--champion\"] a div[class=\"champion-index-table__name\"]");
+	         HashMap<String, String> map = null;
+	            map = new HashMap<>();
+	            map.put("meta1", meta.get(0).text());
+	            map.put("meta2", meta.get(1).text());
+	            map.put("meta3", meta.get(2).text());
+	            box.add(map);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return box.get();
+	   }
 	public ArrayList<HashMap<String, String>> loltitleCrawling(int page){
 		box.clear();
 		try {
@@ -62,7 +148,7 @@ public class CrawlProxy extends Proxy{
 			Elements title = temp.select("section[class=\"article-list article-list--compact\"] div[class=\"article-list-item__title\"] span");
 //			Elements contents = temp.select("div[class=\"article-content\"] p");
 			HashMap<String, String> map = null;
-			for(int i=0; i<40;i++) {
+			for(int i=0; i<10;i++) {
 				map = new HashMap<>();
 				map.put("title", title.get(i).text());
 //				map.put("contents", contents.get(0).text());
@@ -71,7 +157,7 @@ public class CrawlProxy extends Proxy{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("loltitle 크롤링("+box.size()+")\n"+page+"/5");
+		System.out.println("loltitle 크롤링 "+box.size()+"개 === "+page);
 		return box.get();
 	}
 	public ArrayList<HashMap<String, String>> lolidCrawling(int page){
@@ -91,8 +177,8 @@ public class CrawlProxy extends Proxy{
 			HashMap<String, String> map = null;
 			for(int i=0;i<40;i++) {
 				map = new HashMap<>();
-					map.put("rhost", rhost.get(i).text());
-					map.put("crawltier", crawltier.get(i).text());
+					map.put("rhost", rhost.get(i).text()); 
+					map.put("crawltier", crawltier.get(i).text().split(" ")[0]);
 					map.put("crawlrate", crawlrate.get(i).text());
 //					System.out.println(i+"번쨰 id"+rhost.get(i).text());
 //					System.out.println(i+"번쨰 crawltier"+crawltier.get(i).text());
@@ -165,5 +251,37 @@ public class CrawlProxy extends Proxy{
 		}
 		System.out.printf("%s %d페이지 완료\n%s\n",search,page,jsonArr.length());
 		return list;
+	}
+	
+	public String kakaoFut(String res, int ea){
+		final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+		final String kakaoKey = "KakaoAK e0678ade6eb9926174c51399604603c9";
+		String url = "http://kapi.kakao.com/v1/payment/ready";
+		List<Map<String, String>> list = new ArrayList<>();
+		JSONObject json = null;
+		Map<String, String> map = null;
+		try {
+			Connection.Response html = Jsoup.connect(url)
+			.method(Connection.Method.POST)
+			.userAgent(USER_AGENT)
+			.header("Authorization", kakaoKey)
+			.ignoreContentType(true)
+			.execute();
+			json = new JSONObject(html.parse().select("body").text());
+			System.out.println(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JSONArray jsonArr = json.getJSONArray("documents");
+//		for(int i = 0; i < jsonArr.length()-1; i++) {
+//			map = new HashMap<>();
+//			JSONObject j = jsonArr.getJSONObject(i);
+//			map.put("name",j.get("place_name").toString());
+//			map.put("address",j.get("address_name").toString());
+//			map.put("tel",j.get("phone").toString());
+//			list.add(map);
+//		}
+		
+		return "/pay";
 	}
 }

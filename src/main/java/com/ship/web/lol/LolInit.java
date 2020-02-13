@@ -57,35 +57,38 @@ public class LolInit extends Proxy implements ApplicationRunner{
                "zoe",
          };
          String[] tiers= {
-               "iron",
-               "bronze",
-               "silver",
-               "gold",
-               "platinum",
-               "diamond",
-               "master",
-               "grandemaster",
-               "challenger"
+               "Iron",
+               "Bronze",
+               "Silver",
+               "Gold",
+               "Platinum",
+               "Diamond",
+               "Master",
+               "Grandemaster",
+               "Challenger"
          };
          String[] positions = {
                "top",
-               "sungle",
-               "mid",
-               "bot",
+               "jungle",
+               "mid", 
+               "bot", 
                "supporter"
-         };
+         }; 
          
          List<Map<String,String>> lolList = new ArrayList<>();
          List<Map<String,String>> lolList1 = new ArrayList<>();
 //         	for(int i =1;i<=2;i++) {
 //         		
 //         	}
-            for(int i =1;i<=3;i++) {
-            lolList.addAll(crawler.loltitleCrawling(i));  // title 40*2개 삽입
+         for(int i =1;i<9;i++) {
+         lolList.addAll(crawler.loltitleCrawling(i));
+         }
+            for(int i =1;i<3;i++) {
+              // title 40*2개 삽입
                lolList1.addAll(crawler.lolidCrawling(i)); // rhost, crawltier, crawlrate 40 * 2개  삽입
             }
             
-         for(int i = 0; i < 120 ; i++) {
+         for(int i = 0; i < 80 ; i++) {
             lol = new Lol();
             lol.setTitle(lolList.get(i).get("title"));
             lol.setContents("안녕");
