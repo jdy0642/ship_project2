@@ -35,7 +35,7 @@ public class ReservationInit extends Proxy implements ApplicationRunner  {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		long count = reservationrepository.count();
-		int initdummy = 9999;
+		int initdummy = 3000;
 		if(count < 100) {
 			dummyres(initdummy);
 		}
