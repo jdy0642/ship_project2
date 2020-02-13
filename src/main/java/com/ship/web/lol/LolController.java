@@ -67,7 +67,7 @@ public class LolController {
 	      lol1.setContents(lol.getContents());
 	      lol1.setTitle(lol.getTitle());
 	      lolRepository.save(lol1);
-	   }
+	   } 
 	
 	@GetMapping("/chatbot/{champ}")
 	public ArrayList<HashMap<String, String>> counterCrawl(@PathVariable String champ) {

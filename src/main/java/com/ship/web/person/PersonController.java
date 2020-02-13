@@ -70,19 +70,18 @@ public class PersonController {
 		return map;
 	}
 	
-	@PostMapping("/idcheck")
-	   public HashMap<String, Object> idcheck(@RequestBody Person person) {
-	      p.accept(person.getUserid());
-	      HashMap<String, Object> map= new HashMap<>();
-	      person = personRepository.findByUserid(person.getUserid());
+	@GetMapping("/idcheck/{userid}")
+	   public String idcheck(@PathVariable String userid) {
+	      p.accept("들어온 아이디 체크! =>"+userid);
+	      String result = "";
+	      Person person = null;
+	      person = personRepository.findByUserid(userid);
 	      if(person!= null) {
-	         map.put("result","SUCCESS");
-	         map.put("person",person);
+	         result = "SUCCESS";
 	      }else {
-	         map.put("result","FAIL");
-	         map.put("person",person);
+	    	  result = "FAIL";
 	      }
-	      return map;
+	      return result;
 	   }
 	@PostMapping("/blackcheck/{userid}")
 	   public HashMap<String, Object> blackCheckById(@PathVariable String userid) {
