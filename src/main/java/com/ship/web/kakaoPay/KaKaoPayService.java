@@ -83,8 +83,8 @@ public class KaKaoPayService {
 			e.printStackTrace();
 		}
 		map.put("msg", "success");
-		map.put("person", personService.findBypersonseq(res.get("personseq")));
 		personService.updatePoint(res.get("personseq"),json.getJSONObject("amount").get("total").toString());
+		map.put("person", personService.findBypersonseq(res.get("personseq")));
 		return map;
 	}
 }

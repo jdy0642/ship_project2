@@ -32,5 +32,4 @@ public class KakaoPayController {
 	public Map<String, Object> respones(@RequestBody Map<String, String> res) {
 		return kakaoPayService.res(res);
 	}
-
 }
