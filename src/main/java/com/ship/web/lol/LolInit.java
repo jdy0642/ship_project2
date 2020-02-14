@@ -64,7 +64,7 @@ public class LolInit extends Proxy implements ApplicationRunner{
                "Platinum",
                "Diamond",
                "Master",
-               "Grandemaster",
+               "Grandmaster",
                "Challenger"
          };
          String[] positions = {
