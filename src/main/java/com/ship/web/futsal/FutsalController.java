@@ -30,7 +30,6 @@ public class FutsalController {
 	@Autowired FutsalRepository futsalMatchRepository;
 	@Autowired FutsalService futsalMatchService;
 	@Autowired ModelMapper futModelMapper;
-	@Autowired Futsal fut;
 	
 	@Bean
 	public ModelMapper futModelMapper() {return new ModelMapper();}
@@ -53,7 +52,7 @@ public class FutsalController {
 	
 	@PutMapping("/match/{matchId}")
 	public void updateMatch(@PathVariable Long matchId){
-		fut = futsalMatchRepository.findById(matchId).get();
+		Futsal fut = futsalMatchRepository.findById(matchId).get(); 
 		fut.setRemain(fut.getRemain()-1);
 		futsalMatchRepository.save(fut);
 	}
