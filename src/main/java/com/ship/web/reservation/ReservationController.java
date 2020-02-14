@@ -37,7 +37,6 @@ import com.ship.web.util.Printer;
 //@CrossOrigin(origins = Constants.H_S3)
 public class ReservationController {
 	@Autowired private ReservationRepository reservationRepository;
-	@Autowired private Reservation reservation;
 	@Autowired private ReservationService reservationService;
 	@Autowired private FutsalRepository futsalRepository;
 	@Autowired private PersonService personService;
