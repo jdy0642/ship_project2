@@ -136,12 +136,13 @@ public class ReservationController {
 
 	@PostMapping("/{matchId}")
 	public boolean createReservation(@PathVariable Long matchId, @RequestBody Person person) {
-		reservation.setPersonseq(person);
+		Reservation res = new Reservation();
+		res.setPersonseq(person);
 		personService.updatePoint(String.valueOf(person.getPersonseq()), "-10000");
-		reservation.setFutsal(futsalRepository.findById(matchId).get());
-		reservation.setResdate(System.currentTimeMillis());
-		reservationRepository.save(reservation);
-		return reservationRepository.findByResdate(reservation.getResdate()) != null;
+		res.setFutsal(futsalRepository.findById(matchId).get());
+		res.setResdate(System.currentTimeMillis());
+		reservationRepository.save(res);
+		return reservationRepository.findByResdate(res.getResdate()) != null;
 	}
 	
 	@PutMapping("/{resseq}")
