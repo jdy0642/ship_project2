@@ -148,7 +148,7 @@ public class CrawlProxy extends Proxy{
 			Elements title = temp.select("section[class=\"article-list article-list--compact\"] div[class=\"article-list-item__title\"] span");
 //			Elements contents = temp.select("div[class=\"article-content\"] p");
 			HashMap<String, String> map = null;
-			for(int i=0; i<10;i++) {
+			for(int i=0; i<20;i++) {
 				map = new HashMap<>();
 				map.put("title", title.get(i).text());
 //				map.put("contents", contents.get(0).text());
