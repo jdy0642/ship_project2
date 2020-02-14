@@ -195,6 +195,17 @@ public class LolController {
 		}
 		return map;
 	}
+	
+	@GetMapping("/checksname/{summonername}")
+	public String checksummonername(@PathVariable String summonername) {
+		String result = "";
+		if(crawler.opggCrawling(summonername).size()!=0) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		return result;
+	}
 }
 
 	
