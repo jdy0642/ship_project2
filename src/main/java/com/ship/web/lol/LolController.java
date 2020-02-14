@@ -81,10 +81,10 @@ public class LolController {
 		return crawler.metaCrawl(champ2);
 	}
 	
-	@GetMapping("/recommend/{tier}")
-	public List<String> recommend(@PathVariable String tier){
-		p.accept(tier);
-		Iterable<Lol> entites = lolRepository.findByTier(tier);
+	@GetMapping("/recommend/{crawltier}")
+	public List<String> recommend(@PathVariable String crawltier){
+		p.accept(crawltier);
+		Iterable<Lol> entites = lolRepository.findByCrawltier(crawltier);
 		List<Lol> list = new ArrayList<>();
 		for(Lol p : entites) {
 			Lol dto = modelMapper.map(p, Lol.class);
@@ -194,6 +194,17 @@ public class LolController {
 			map.put("result","FAIL");
 		}
 		return map;
+	}
+	
+	@GetMapping("/checksname/{summonername}")
+	public String checksummonername(@PathVariable String summonername) {
+		String result = "";
+		if(crawler.opggCrawling(summonername).size()!=0) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		return result;
 	}
 }
 

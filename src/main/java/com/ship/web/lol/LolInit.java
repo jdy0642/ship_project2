@@ -64,7 +64,7 @@ public class LolInit extends Proxy implements ApplicationRunner{
                "Platinum",
                "Diamond",
                "Master",
-               "Grandemaster",
+               "Grandmaster",
                "Challenger"
          };
          String[] positions = {
@@ -80,7 +80,7 @@ public class LolInit extends Proxy implements ApplicationRunner{
 //         	for(int i =1;i<=2;i++) {
 //         		
 //         	}
-         for(int i =1;i<9;i++) {
+         for(int i =1;i<5;i++) {
          lolList.addAll(crawler.loltitleCrawling(i));
          }
             for(int i =1;i<3;i++) {
