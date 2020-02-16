@@ -106,6 +106,7 @@ public class PersonController {
 					}else {
 						map.put("result","SUCCESS");
 					      map.put("blacktime",person.getBlacktime());
+					      map.put("blackreason",person.getBlackreason());
 					}
 				  
 			  }else {

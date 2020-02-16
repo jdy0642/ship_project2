@@ -156,8 +156,7 @@ public class LolController {
 	         list.add(dto);
 	      }
 	      return list.stream()
-	            .filter(role->role.getTier().equals(tier))
-	            .filter(role->role.getPosition().equals(position))
+	            .filter(t->t.getTier().equals(tier) && t.getPosition().equals(position))
 	            .sorted(Comparator.comparing(Lol::getCardseq)
 	            .reversed())
 	            .limit(page*9) 
