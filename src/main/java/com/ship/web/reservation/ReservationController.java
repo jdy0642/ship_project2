@@ -50,8 +50,6 @@ public class ReservationController {
 	
 	 @GetMapping("/onedaylist/{day}")
 	   public List<Reservation> onedaylist(@PathVariable String day){
-		 System.out.println("들어온 day : >>>>  "+day);
-		 System.out.println("비교할 day : >>>>  "+day.substring(8,10));
 	      Iterable<Reservation> res = reservationRepository.findAll();// 대문자 수정!
 	      List<Reservation> list2 = new ArrayList<>();
 	      for(Reservation r : res) {
@@ -64,24 +62,6 @@ public class ReservationController {
 	    				  .equals(day) ) //&& t.getResdate() < new Date().getTime()
 	    		  .collect(Collectors.toList());
 	   }
-	 
-//	 @GetMapping("/onedaylist/region={region}/day={day}")
-//	   public Long onedaylist(@PathVariable String day,@PathVariable String region){
-//		 System.out.println("들어온 day : >>>>  "+day);
-//		 System.out.println("비교할 day : >>>>  "+day.substring(8,10));
-//	      Iterable<Reservation> res = reservationRepository.findAll();// 대문자 수정!
-//	      List<Reservation> list2 = new ArrayList<>();
-//	      for(Reservation r : res) {
-//	         Reservation dto1 = modelMapper.map(r, Reservation.class);
-//	         list2.add(dto1);
-//	      }
-//	      return list2.stream()
-//	    		  .sorted(Comparator.comparing(Reservation::getResseq).reversed())
-//	    		  .filter(j->j.getFutsalmatchseq().getStadiumaddr().substring(0, 2).equals(region))
-//	    		  .filter(t-> new SimpleDateFormat("yyyy-MM-dd").format(t.getResdate())
-//	    				  .equals(day) ) //&& t.getResdate() < new Date().getTime()
-//	    		  .collect(Collectors.counting());
-//	   }
 	 
 	 @GetMapping("/weeklist")
 	   public List<Reservation> weekList(){
@@ -99,23 +79,6 @@ public class ReservationController {
 	    		  .collect(Collectors.toList());
 	   }
 	 
-	 @GetMapping("/region")
-	 public Long partitionCountPerRegion(@PathVariable String region, @PathVariable Long resdate) {
-			// 지역별 1등 구장
-//		 reservation.getFutsalmatchseq().getStadiumaddr().substring(0,2).equals(region);
-		 
-		 return null;
-	      
-//	      public Long partioningCountPerGender(boolean gender) {
-//	  		// 2.단순분할 (성별 학생수)
-//	  		return personRepository.findByRole("student").stream()
-//	  				.collect(
-//	  						Collectors
-//	  							.partitioningBy(Person::isMale,
-//	  								Collectors.counting()))
-//	  				.get(gender);
-//	  	}
-		}
 	
 	 @GetMapping("/mymatch/{personseq}")
 	 public List<Reservation> myMatch(@PathVariable Long personseq) {
