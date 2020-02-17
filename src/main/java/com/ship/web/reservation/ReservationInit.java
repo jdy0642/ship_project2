@@ -1,19 +1,13 @@
 package com.ship.web.reservation;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Function;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
-import com.mysql.cj.ParseInfo;
 import com.ship.web.futsal.Futsal;
 import com.ship.web.futsal.FutsalRepository;
 import com.ship.web.person.Person;
@@ -23,8 +17,6 @@ import com.ship.web.proxy.Proxy;
 @Component
 public class ReservationInit extends Proxy implements ApplicationRunner  {
 	private ReservationRepository reservationrepository;
-	
-	private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Autowired
 	public ReservationInit(ReservationRepository reservationrepository) {

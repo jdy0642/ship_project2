@@ -2,13 +2,10 @@ package com.ship.web.reservation;
 import com.ship.web.util.Constants;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ship.web.futsal.Futsal;
 import com.ship.web.futsal.FutsalRepository;
-import com.ship.web.lol.Lol;
 import com.ship.web.person.Person;
-import com.ship.web.person.PersonRepository;
 import com.ship.web.person.PersonService;
-import com.ship.web.proxy.Proxy;
-import com.ship.web.proxy.Trunk;
-import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/res")
@@ -41,7 +31,6 @@ public class ReservationController {
 	@Autowired private FutsalRepository futsalRepository;
 	@Autowired private PersonService personService;
 	@Autowired ModelMapper modelMapper;
-	@Autowired private Printer p;
 	@GetMapping("/1")
 	
 	public Iterable<Map<String, Object>> reslist(){
@@ -82,7 +71,6 @@ public class ReservationController {
 	
 	 @GetMapping("/mymatch/{personseq}")
 	 public List<Reservation> myMatch(@PathVariable Long personseq) {
-		 p.accept("마이매치");
 		 Person person = new Person();
 		 person.setPersonseq(personseq);
 		 Iterable<Reservation> res =  reservationRepository.findByPersonseq(person);
@@ -118,11 +106,6 @@ public class ReservationController {
 				.findByResdate(res.getResdate()).getKm() == reservation.getKm();
 	}
 	
-	@PostMapping("/testres")
-	public String connecttest() {
-		return "/pay";
-	}
-
 	@GetMapping("/2")
 	public Iterable<Map<String, Object>> testlist(){
 		return reservationService.reservationTable();
