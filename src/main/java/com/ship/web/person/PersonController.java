@@ -1,5 +1,7 @@
 package com.ship.web.person;
 import java.awt.Dimension;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.ship.web.lol.Lol;
@@ -7,6 +9,7 @@ import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.PageProxy;
 import com.ship.web.util.Constants;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,18 +87,33 @@ public class PersonController {
 	      return result;
 	   }
 	@PostMapping("/blackcheck/{userid}")
-	   public HashMap<String, Object> blackCheckById(@PathVariable String userid) {
+	   public HashMap<String, Object> blackCheckById(@PathVariable String userid) throws ParseException {
 	      HashMap<String, Object> map= new HashMap<>();
 	      String result = "";
 	      Person person = null;
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	      
 	      person = personRepository.findByUserid(userid);
-	      if(person.isFutblack() == true) {
-	    	  map.put("result","SUCCESS");
-		      map.put("blacktime",person.getBlacktime());
-	      }else {
-	    	  map.put("result","FAIL");
-	    	  map.put("blacktime",null);
-	      }
+//			if(sdf.parse(person.getBlacktime()).getTime() <= new Date().getTime()) {
+//				deleteBlack(userid);}
+			
+	      
+			  if(person.isFutblack() == true) {
+					if(sdf.parse(person.getBlacktime()).getTime() <= new Date().getTime()) {
+					deleteBlack(userid);
+					map.put("result","FAIL");
+					  map.put("blacktime",null);
+					}else {
+						map.put("result","SUCCESS");
+					      map.put("blacktime",person.getBlacktime());
+					      map.put("blackreason",person.getBlackreason());
+					}
+				  
+			  }else {
+				  map.put("result","FAIL");
+				  map.put("blacktime",null);
+			  }
+		
 	      p.accept(result);
 	      return map;
 	   }
