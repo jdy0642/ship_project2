@@ -1,15 +1,8 @@
 package com.ship.web.futsal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ship.web.proxy.CrawlProxy;
-import com.ship.web.proxy.Proxy;
 import com.ship.web.util.Constants;
 
 @RestController
@@ -42,7 +32,6 @@ public class FutsalController {
 	@PostMapping("/insertdummy")
 	public void insertDummy(@RequestBody List<Futsal> param) {
 		futsalMatchRepository.saveAll(param);
-		System.out.println("insertdummy");
 	}
 	
 	@GetMapping("/match/{matchId}")
@@ -61,14 +50,5 @@ public class FutsalController {
 	public boolean createMath(@RequestBody Futsal match) {
 		futsalMatchRepository.save(match);
 		return true;
-	}
-	
-	@GetMapping("/test")
-	public Map<?, ?> test(){
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("msg", String.valueOf(System.currentTimeMillis()));
-		CrawlProxy cPxy = new CrawlProxy();
-		cPxy.kakaoCrawlFutMatch("서울 풋살장",1);
-		return map;
 	}
 }

@@ -1,21 +1,15 @@
 package com.ship.web.lol;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.Proxy;
-
-import lombok.Setter;
 @Component
 public class LolInit extends Proxy implements ApplicationRunner{
    private LolRepository lolRepository;
@@ -25,15 +19,6 @@ public class LolInit extends Proxy implements ApplicationRunner{
    public LolInit(LolRepository lolRepository) {
       this.lolRepository = lolRepository;
    }
-//   @Override
-//   public void run(ApplicationArguments args) throws Exception {
-//      // TODO Auto-generated method stub
-//      long count = lolRepository.count();
-//      for(int i = 1; i<=3; i++) {
-//         stadiumList.addAll(crawler.lolCrawling(i));
-//      }
-//      
-//   }
    @Override
    public void run(ApplicationArguments args) throws Exception {
       long count = lolRepository.count();
@@ -77,15 +62,11 @@ public class LolInit extends Proxy implements ApplicationRunner{
          
          List<Map<String,String>> lolList = new ArrayList<>();
          List<Map<String,String>> lolList1 = new ArrayList<>();
-//         	for(int i =1;i<=2;i++) {
-//         		
-//         	}
          for(int i =1;i<5;i++) {
          lolList.addAll(crawler.loltitleCrawling(i));
          }
             for(int i =1;i<3;i++) {
-              // title 40*2개 삽입
-               lolList1.addAll(crawler.lolidCrawling(i)); // rhost, crawltier, crawlrate 40 * 2개  삽입
+               lolList1.addAll(crawler.lolidCrawling(i)); 
             }
             
          for(int i = 0; i < 80 ; i++) {
