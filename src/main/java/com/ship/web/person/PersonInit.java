@@ -1,8 +1,5 @@
 package com.ship.web.person;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -13,8 +10,6 @@ import com.ship.web.proxy.Proxy;
 @Component
 public class PersonInit extends Proxy implements ApplicationRunner  {
 	private PersonRepository personRepository;
-	
-	private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Autowired
 	public PersonInit(PersonRepository personRepository) {

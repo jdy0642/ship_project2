@@ -1,21 +1,13 @@
 package com.ship.web.kakaoPay;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import com.ship.web.person.Person;
-import com.ship.web.person.PersonRepository;
 import com.ship.web.person.PersonService;
 import com.ship.web.util.Constants;
 
@@ -51,7 +43,6 @@ public class KaKaoPayService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//System.out.println(json.get("tid").toString());
 		map.put("msg", "success");
 		map.put("tid", json.get("tid").toString());
 		map.put("next_redirect_pc_url", json.get("next_redirect_pc_url").toString());
@@ -77,7 +68,6 @@ public class KaKaoPayService {
 			.header("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
 			.ignoreContentType(true)
 			.execute();
-			//System.out.println(html.parse().body().text());
 			json = new JSONObject(html.parse().body().text());
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -4,18 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.Proxy;
-import com.ship.web.proxy.Trunk;
 
 @Component
 public class FutsalInit extends Proxy implements ApplicationRunner{

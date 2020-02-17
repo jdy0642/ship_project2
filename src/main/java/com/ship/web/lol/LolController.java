@@ -2,18 +2,12 @@ package com.ship.web.lol;
 
 import java.util.ArrayList;
 import com.ship.web.util.Constants;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,15 +17,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ship.web.futsal.Futsal;
-import com.ship.web.person.Person;
 import com.ship.web.proxy.Box;
 import com.ship.web.proxy.CrawlProxy;
 import com.ship.web.proxy.Proxy;
 import com.ship.web.proxy.Trunk;
-import com.ship.web.reservation.Reservation;
-import com.ship.web.util.Printer;
 
 @RestController
 @RequestMapping("/lol")
@@ -41,7 +30,6 @@ public class LolController {
 	@Autowired Trunk<Object> trunk;
 	@Autowired Box<Object> box;
 	@Autowired Proxy pxy;
-	@Autowired Printer p;
 	@Autowired ModelMapper modelMapper;
 	@Autowired LolRepository lolRepository; // test commit
 	
@@ -71,19 +59,16 @@ public class LolController {
 	
 	@GetMapping("/chatbot/{champ}")
 	public ArrayList<HashMap<String, String>> counterCrawl(@PathVariable String champ) {
-		p.accept(champ);
 		return crawler.counterCrawl(champ);
 	}
 	
 	@GetMapping("/metacham/{champ2}")
 	public ArrayList<HashMap<String, String>> metaCrawl(@PathVariable String champ2){
-		p.accept(champ2);
 		return crawler.metaCrawl(champ2);
 	}
 	
 	@GetMapping("/recommend/{crawltier}")
 	public List<String> recommend(@PathVariable String crawltier){
-		p.accept(crawltier);
 		Iterable<Lol> entites = lolRepository.findByCrawltier(crawltier);
 		List<Lol> list = new ArrayList<>();
 		for(Lol p : entites) {
@@ -98,7 +83,6 @@ public class LolController {
 	public List<Lol> roomlist(@PathVariable int page){
 		Iterable<Lol> entites = lolRepository.findAll();
 		List<Lol> list = new ArrayList<>();
-		Date date = new Date();
 		for(Lol l : entites) {
 			Lol dto = modelMapper.map(l,Lol.class);
 			list.add(dto);
@@ -114,8 +98,6 @@ public class LolController {
 	   public List<Lol> filterpositionlist(@PathVariable int page, @PathVariable String position){
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
-	      Date date = new Date();
-	      
 	      for(Lol l : entites) {
 	         Lol dto = modelMapper.map(l,Lol.class);
 	         list.add(dto);
@@ -127,12 +109,11 @@ public class LolController {
 	            .limit(page*9) 
 	            .collect(Collectors.toList()); 
 	   }
+	
 	@GetMapping("/filtertierlist/tier={tier}/page={page}")
 	   public List<Lol> filtertierlist(@PathVariable int page, @PathVariable String tier){
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
-	      Date date = new Date();
-	      
 	      for(Lol l : entites) {
 	         Lol dto = modelMapper.map(l,Lol.class);
 	         list.add(dto);
@@ -149,8 +130,6 @@ public class LolController {
 	   public List<Lol> filtertplist(@PathVariable int page, @PathVariable String tier, @PathVariable String position){
 	      Iterable<Lol> entites = lolRepository.findAll();
 	      List<Lol> list = new ArrayList<>();
-	      Date date = new Date();
-	      
 	      for(Lol l : entites) {
 	         Lol dto = modelMapper.map(l,Lol.class);
 	         list.add(dto);
@@ -183,7 +162,6 @@ public class LolController {
 				"Yasuo",
 				"zoe",
 		};
-		
 		lol.setImgurl(img[pxy.random(0, 14)]);
 		lol = lolRepository.save(lol);
 		if(lol != null) {
