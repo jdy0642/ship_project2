@@ -1,7 +1,6 @@
 package com.ship.web.proxy;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +79,6 @@ public class CrawlProxy extends Proxy{
 	            map.put("counter1", counter.get(0).text());
 	            map.put("counter2", counter.get(1).text());
 	            map.put("counter3", counter.get(2).text());
-
 	            box.add(map);
 	      } catch (Exception e) {
 	         e.printStackTrace();
@@ -146,18 +144,15 @@ public class CrawlProxy extends Proxy{
 					.execute();
 			Document temp = pagetemp.parse();
 			Elements title = temp.select("section[class=\"article-list article-list--compact\"] div[class=\"article-list-item__title\"] span");
-//			Elements contents = temp.select("div[class=\"article-content\"] p");
 			HashMap<String, String> map = null;
 			for(int i=0; i<20;i++) {
 				map = new HashMap<>();
 				map.put("title", title.get(i).text());
-//				map.put("contents", contents.get(0).text());
 				box.add(map);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("loltitle 크롤링 "+box.size()+"개 === "+page);
 		return box.get();
 	}
 	public ArrayList<HashMap<String, String>> lolidCrawling(int page){
@@ -180,9 +175,6 @@ public class CrawlProxy extends Proxy{
 					map.put("rhost", rhost.get(i).text()); 
 					map.put("crawltier", crawltier.get(i).text().split(" ")[0]);
 					map.put("crawlrate", crawlrate.get(i).text());
-//					System.out.println(i+"번쨰 id"+rhost.get(i).text());
-//					System.out.println(i+"번쨰 crawltier"+crawltier.get(i).text());
-//					System.out.println(i+"번쨰 crawlrate \n"+crawlrate.get(i).text());
 					box.add(map);
 			}
 		} catch (Exception e) {
@@ -202,8 +194,6 @@ public class CrawlProxy extends Proxy{
 			.userAgent(USER_AGENT)
 			.ignoreContentType(true)
 			.execute();
-			System.out.println(html.toString());
-			System.out.println("------------------------------------------------------------------------------------------");
 			json = new JSONObject(html.parse().select("body").text());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -219,7 +209,6 @@ public class CrawlProxy extends Proxy{
 			map.put("tel",j.get("tel").toString());
 			list.add(map);
 		}
-		System.out.printf("%d 페이지 완료\n",page);
 		return list;
 	}
 	public List<Map<String, String>> kakaoCrawlFutMatch(String search, int page){
@@ -249,7 +238,6 @@ public class CrawlProxy extends Proxy{
 			map.put("tel",j.get("phone").toString());
 			list.add(map);
 		}
-		System.out.printf("%s %d페이지 완료\n%s\n",search,page,jsonArr.length());
 		return list;
 	}
 	
@@ -257,9 +245,8 @@ public class CrawlProxy extends Proxy{
 		final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 		final String kakaoKey = "KakaoAK e0678ade6eb9926174c51399604603c9";
 		String url = "http://kapi.kakao.com/v1/payment/ready";
-		List<Map<String, String>> list = new ArrayList<>();
+		@SuppressWarnings("unused")
 		JSONObject json = null;
-		Map<String, String> map = null;
 		try {
 			Connection.Response html = Jsoup.connect(url)
 			.method(Connection.Method.POST)
@@ -268,20 +255,9 @@ public class CrawlProxy extends Proxy{
 			.ignoreContentType(true)
 			.execute();
 			json = new JSONObject(html.parse().select("body").text());
-			System.out.println(json);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		JSONArray jsonArr = json.getJSONArray("documents");
-//		for(int i = 0; i < jsonArr.length()-1; i++) {
-//			map = new HashMap<>();
-//			JSONObject j = jsonArr.getJSONObject(i);
-//			map.put("name",j.get("place_name").toString());
-//			map.put("address",j.get("address_name").toString());
-//			map.put("tel",j.get("phone").toString());
-//			list.add(map);
-//		}
-		
 		return "/pay";
 	}
 }
